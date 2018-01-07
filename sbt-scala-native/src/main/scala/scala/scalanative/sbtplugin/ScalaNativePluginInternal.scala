@@ -60,10 +60,10 @@ object ScalaNativePluginInternal {
     taskKey[Seq[File]]("Compile LLVM IR to native object files.")
 
   val nativeUnpackLib =
-    taskKey[File]("Unpack native lib.")
+    taskKey[Seq[File]]("Unpack native lib.")
 
   val nativeCompileLib =
-    taskKey[File]("Precompile C/C++ code in native lib.")
+    taskKey[Seq[File]]("Precompile C/C++ code in native lib.")
 
   val nativeLinkLL =
     taskKey[File]("Link native object files into the final binary")
@@ -200,95 +200,96 @@ object ScalaNativePluginInternal {
       val logger    = streams.value.log
       val classpath = (fullClasspath in Compile).value
 
-      val lib = cwd / "lib"
-      val jar =
-        classpath
-          .map(entry => entry.data.abs)
-          .collectFirst {
-            case p if p.contains("scala-native") && p.contains("nativelib") =>
-              file(p)
-          }
-          .get
-      val jarhash     = Hash(jar).toSeq
-      val jarhashfile = lib / "jarhash"
-      def unpacked =
-        lib.exists &&
-          jarhashfile.exists &&
-          jarhash == IO.readBytes(jarhashfile).toSeq
+      classpath
+        .map(entry => entry.data.abs)
+        .collect {
+          case p if p.contains("scala-native") && p.contains("nativelib") =>
+            file(p)
+        }.map { jar =>
+        val lib = cwd / s"${jar.getName}-lib"
 
-      if (!unpacked) {
-        IO.delete(lib)
-        IO.unzip(jar, lib)
-        IO.write(jarhashfile, Hash(jar))
+        val jarhash     = Hash(jar).toSeq
+        val jarhashfile = lib / "jarhash"
+        def unpacked =
+          lib.exists &&
+            jarhashfile.exists &&
+            jarhash == IO.readBytes(jarhashfile).toSeq
+
+        if (!unpacked) {
+          IO.delete(lib)
+          IO.unzip(jar, lib)
+          IO.write(jarhashfile, Hash(jar))
+        }
+
+        lib
       }
-
-      lib
     },
     nativeCompileLib := {
       val linked    = nativeLinkNIR.value
-      val cwd       = nativeWorkdir.value
+      //val cwd       = nativeWorkdir.value
       val clang     = nativeClang.value
       val clangpp   = nativeClangPP.value
       val gc        = nativeGC.value
       val opts      = "-O2" +: nativeCompileOptions.value
       val logger    = streams.value.log
-      val nativelib = nativeUnpackLib.value
-      val cpaths    = (cwd ** "*.c").get.map(_.abs)
-      val cpppaths  = (cwd ** "*.cpp").get.map(_.abs)
-      val paths     = cpaths ++ cpppaths
+      nativeUnpackLib.value.map { lib =>
+        val cpaths    = (lib ** "*.c").get.map(_.abs)
+        val cpppaths  = (lib ** "*.cpp").get.map(_.abs)
+        val paths     = cpaths ++ cpppaths
 
-      // predicate to check if given file path shall be compiled
-      // we only include sources of the current gc and exclude
-      // all optional dependencies if they are not necessary
-      val sep       = java.io.File.separator
-      val libPath   = crossTarget.value + sep + "native" + sep + "lib"
-      val optPath   = libPath + sep + "optional"
-      val gcPath    = libPath + sep + "gc"
-      val gcSelPath = gcPath + sep + gc
+        // predicate to check if given file path shall be compiled
+        // we only include sources of the current gc and exclude
+        // all optional dependencies if they are not necessary
+        val sep       = java.io.File.separator
+        val libPath   = lib.getCanonicalPath
+        val optPath   = libPath + sep + "optional"
+        val gcPath    = libPath + sep + "gc"
+        val gcSelPath = gcPath + sep + gc
 
-      def include(path: String) = {
-        if (path.contains(optPath)) {
-          val name = file(path).getName.split("\\.").head
-          linked.links.map(_.name).contains(name)
-        } else if (path.contains(gcPath)) {
-          path.contains(gcSelPath)
-        } else {
-          true
-        }
-      }
-
-      // delete .o files for all excluded source files
-      paths.foreach { path =>
-        if (!include(path)) {
-          val ofile = file(path + ".o")
-          if (ofile.exists) {
-            IO.delete(ofile)
+        def include(path: String) = {
+          if (path.contains(optPath)) {
+            val name = file(path).getName.split("\\.").head
+            linked.links.map(_.name).contains(name)
+          } else if (path.contains(gcPath)) {
+            path.contains(gcSelPath)
+          } else {
+            true
           }
         }
-      }
 
-      // generate .o files for all included source files in parallel
-      paths.par.foreach {
-        path =>
-          val opath = path + ".o"
-          if (include(path) && !file(opath).exists) {
-            val isCpp    = path.endsWith(".cpp")
-            val compiler = if (isCpp) clangpp.abs else clang.abs
-            val flags    = (if (isCpp) Seq("-std=c++11") else Seq()) ++ opts
-            val compilec = Seq(compiler) ++ flags ++ Seq("-c",
-                                                         path,
-                                                         "-o",
-                                                         opath)
-
-            logger.running(compilec)
-            val result = Process(compilec, cwd) ! logger
-            if (result != 0) {
-              sys.error("Failed to compile native library runtime code.")
+        // delete .o files for all excluded source files
+        paths.foreach { path =>
+          if (!include(path)) {
+            val ofile = file(path + ".o")
+            if (ofile.exists) {
+              IO.delete(ofile)
             }
           }
-      }
+        }
 
-      nativelib
+        // generate .o files for all included source files in parallel
+        paths.par.foreach {
+          path =>
+            val opath = path + ".o"
+            if (include(path) && !file(opath).exists) {
+              val isCpp    = path.endsWith(".cpp")
+              val compiler = if (isCpp) clangpp.abs else clang.abs
+              val flags    = (if (isCpp) Seq("-std=c++11") else Seq()) ++ opts
+              val compilec = Seq(compiler) ++ flags ++ Seq("-c",
+                                                           path,
+                                                           "-o",
+                                                           opath)
+
+              logger.running(compilec)
+              val result = Process(compilec, lib) ! logger
+              if (result != 0) {
+                sys.error("Failed to compile native library runtime code.")
+              }
+            }
+        }
+
+        lib
+      }
     },
     nativeLinkNIR := {
       val logger   = streams.value.log

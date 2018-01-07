@@ -1,36 +1,32 @@
 package java.nio
 
-// Ported from Scala.js
+import scala.scalanative.native._
 
-private[nio] final class HeapByteBuffer private (_capacity: Int,
-                                                 _array0: Array[Byte],
-                                                 _arrayOffset0: Int,
-                                                 _initialPosition: Int,
-                                                 _initialLimit: Int,
-                                                 _readOnly: Boolean)
-    extends ByteBuffer(_capacity, _array0, _arrayOffset0) {
+class DirectByteBuffer(size: Int, val ptr: Ptr[Byte]) extends ByteBuffer(size, null, 0) {
+  position(0)
+  limit(size)
 
-  position(_initialPosition)
-  limit(_initialLimit)
+  def this(address: Long, capacity: Int, obj: Object) = {
+    this(capacity, obj.cast[Ptr[Byte]])
+  }
 
-  private[this] implicit def newHeapByteBuffer =
-    HeapByteBuffer.NewHeapByteBuffer
+  def attachment: Any = ptr
 
-  def isReadOnly(): Boolean = _readOnly
+  def isReadOnly(): Boolean = false
 
-  def isDirect(): Boolean = false
+  def isDirect(): Boolean = true
 
   @noinline
   def slice(): ByteBuffer =
-    GenHeapBuffer(this).generic_slice()
+    ??? //GenHeapBuffer(this).generic_slice()
 
   @noinline
   def duplicate(): ByteBuffer =
-    GenHeapBuffer(this).generic_duplicate()
+    ??? //GenHeapBuffer(this).generic_duplicate()
 
   @noinline
   def asReadOnlyBuffer(): ByteBuffer =
-    GenHeapBuffer(this).generic_asReadOnlyBuffer()
+    ??? //GenHeapBuffer(this).generic_asReadOnlyBuffer()
 
   @noinline
   def get(): Byte =
@@ -79,7 +75,7 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asCharBuffer(): CharBuffer =
-    HeapByteBufferCharView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferCharView.fromHeapByteBuffer(this)
 
   @noinline def getShort(): Short =
     arrayBits.loadShort(getPosAndAdvanceRead(2))
@@ -95,7 +91,7 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asShortBuffer(): ShortBuffer =
-    HeapByteBufferShortView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferShortView.fromHeapByteBuffer(this)
 
   @noinline def getInt(): Int =
     arrayBits.loadInt(getPosAndAdvanceRead(4))
@@ -111,7 +107,7 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asIntBuffer(): IntBuffer =
-    HeapByteBufferIntView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferIntView.fromHeapByteBuffer(this)
 
   @noinline def getLong(): Long =
     arrayBits.loadLong(getPosAndAdvanceRead(8))
@@ -127,7 +123,7 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asLongBuffer(): LongBuffer =
-    HeapByteBufferLongView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferLongView.fromHeapByteBuffer(this)
 
   @noinline def getFloat(): Float =
     arrayBits.loadFloat(getPosAndAdvanceRead(4))
@@ -143,7 +139,7 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asFloatBuffer(): FloatBuffer =
-    HeapByteBufferFloatView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferFloatView.fromHeapByteBuffer(this)
 
   @noinline def getDouble(): Double =
     arrayBits.loadDouble(getPosAndAdvanceRead(8))
@@ -159,63 +155,29 @@ private[nio] final class HeapByteBuffer private (_capacity: Int,
   }
 
   def asDoubleBuffer(): DoubleBuffer =
-    HeapByteBufferDoubleView.fromHeapByteBuffer(this)
+    ??? //HeapByteBufferDoubleView.fromHeapByteBuffer(this)
 
   // Internal API
 
   @inline
   private[nio] def load(index: Int): Byte =
-    GenHeapBuffer(this).generic_load(index)
+    !(ptr + index)
 
   @inline
   private[nio] def store(index: Int, elem: Byte): Unit =
-    GenHeapBuffer(this).generic_store(index, elem)
+    !(ptr + index) = elem
 
   @inline
   override private[nio] def load(startIndex: Int,
                                  dst: Array[Byte],
                                  offset: Int,
                                  length: Int): Unit =
-    GenHeapBuffer(this).generic_load(startIndex, dst, offset, length)
+    ???
 
   @inline
   override private[nio] def store(startIndex: Int,
                                   src: Array[Byte],
                                   offset: Int,
                                   length: Int): Unit =
-    GenHeapBuffer(this).generic_store(startIndex, src, offset, length)
-}
-
-private[nio] object HeapByteBuffer {
-  private[nio] implicit object NewHeapByteBuffer
-      extends GenHeapBuffer.NewHeapBuffer[ByteBuffer, Byte] {
-    def apply(capacity: Int,
-              array: Array[Byte],
-              arrayOffset: Int,
-              initialPosition: Int,
-              initialLimit: Int,
-              readOnly: Boolean): ByteBuffer = {
-      new HeapByteBuffer(capacity,
-                         array,
-                         arrayOffset,
-                         initialPosition,
-                         initialLimit,
-                         readOnly)
-    }
-  }
-
-  @noinline
-  private[nio] def wrap(array: Array[Byte],
-                        arrayOffset: Int,
-                        capacity: Int,
-                        initialPosition: Int,
-                        initialLength: Int,
-                        isReadOnly: Boolean): ByteBuffer = {
-    GenHeapBuffer.generic_wrap(array,
-                               arrayOffset,
-                               capacity,
-                               initialPosition,
-                               initialLength,
-                               isReadOnly)
-  }
+    ???
 }

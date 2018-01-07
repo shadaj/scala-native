@@ -2,16 +2,14 @@ package java.nio
 
 // Ported from Scala.js
 private[nio] object ByteArrayBits {
-  def apply(array: Array[Byte],
-            arrayOffset: Int,
+  def apply(buffer: ByteBuffer,
             isBigEndian: Boolean,
             indexMultiplier: Int = 1): ByteArrayBits =
-    new ByteArrayBits(array, arrayOffset, isBigEndian, indexMultiplier)
+    new ByteArrayBits(buffer, isBigEndian, indexMultiplier)
 }
 
 @inline
-private[nio] final class ByteArrayBits(array: Array[Byte],
-                                       arrayOffset: Int,
+private[nio] final class ByteArrayBits(buffer: ByteBuffer,
                                        isBigEndian: Boolean,
                                        indexMultiplier: Int) {
 
@@ -192,58 +190,58 @@ private[nio] final class ByteArrayBits(array: Array[Byte],
 
   @inline
   private def load2Bytes(index: Int): (Byte, Byte) = {
-    val idx = indexMultiplier * index + arrayOffset
-    (array(idx), array(idx + 1))
+    val idx = indexMultiplier * index
+    (buffer.get(idx), buffer.get(idx + 1))
   }
 
   @inline
   private def load4Bytes(index: Int): (Byte, Byte, Byte, Byte) = {
-    val idx = indexMultiplier * index + arrayOffset
-    (array(idx), array(idx + 1), array(idx + 2), array(idx + 3))
+    val idx = indexMultiplier * index
+    (buffer.get(idx), buffer.get(idx + 1), buffer.get(idx + 2), buffer.get(idx + 3))
   }
 
   @inline
   private def load8Bytes(
       index: Int): (Byte, Byte, Byte, Byte, Byte, Byte, Byte, Byte) = {
-    val idx = indexMultiplier * index + arrayOffset
-    (array(idx),
-     array(idx + 1),
-     array(idx + 2),
-     array(idx + 3),
-     array(idx + 4),
-     array(idx + 5),
-     array(idx + 6),
-     array(idx + 7))
+    val idx = indexMultiplier * index
+    (buffer.get(idx),
+     buffer.get(idx + 1),
+     buffer.get(idx + 2),
+     buffer.get(idx + 3),
+     buffer.get(idx + 4),
+     buffer.get(idx + 5),
+     buffer.get(idx + 6),
+     buffer.get(idx + 7))
   }
 
   @inline
   private def store2Bytes(index: Int, bs: (Byte, Byte)): Unit = {
-    val idx = indexMultiplier * index + arrayOffset
-    array(idx) = bs._1
-    array(idx + 1) = bs._2
+    val idx = indexMultiplier * index
+    buffer.put(idx, bs._1)
+    buffer.put(idx + 1, bs._2)
   }
 
   @inline
   private def store4Bytes(index: Int, bs: (Byte, Byte, Byte, Byte)): Unit = {
-    val idx = indexMultiplier * index + arrayOffset
-    array(idx) = bs._1
-    array(idx + 1) = bs._2
-    array(idx + 2) = bs._3
-    array(idx + 3) = bs._4
+    val idx = indexMultiplier * index
+    buffer.put(idx, bs._1)
+    buffer.put(idx + 1, bs._2)
+    buffer.put(idx + 2, bs._3)
+    buffer.put(idx + 3, bs._4)
   }
 
   @inline
   private def store8Bytes(
       index: Int,
       bs: (Byte, Byte, Byte, Byte, Byte, Byte, Byte, Byte)): Unit = {
-    val idx = indexMultiplier * index + arrayOffset
-    array(idx) = bs._1
-    array(idx + 1) = bs._2
-    array(idx + 2) = bs._3
-    array(idx + 3) = bs._4
-    array(idx + 4) = bs._5
-    array(idx + 5) = bs._6
-    array(idx + 6) = bs._7
-    array(idx + 7) = bs._8
+    val idx = indexMultiplier * index
+    buffer.put(idx, bs._1)
+    buffer.put(idx + 1, bs._2)
+    buffer.put(idx + 2, bs._3)
+    buffer.put(idx + 3, bs._4)
+    buffer.put(idx + 4, bs._5)
+    buffer.put(idx + 5, bs._6)
+    buffer.put(idx + 6, bs._7)
+    buffer.put(idx + 7, bs._8)
   }
 }
