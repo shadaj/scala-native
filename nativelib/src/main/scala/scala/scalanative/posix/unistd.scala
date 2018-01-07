@@ -7,7 +7,7 @@ import scalanative.posix.sys.stat.{uid_t, gid_t}
 @extern
 object unistd {
 
-  type off_t = CLongLong
+  type off_t = CInt
 
   def sleep(seconds: CUnsignedInt): CUnsignedInt                  = extern
   def usleep(usecs: CUnsignedInt): CInt                           = extern

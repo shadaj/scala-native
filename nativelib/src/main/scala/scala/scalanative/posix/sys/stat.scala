@@ -20,7 +20,7 @@ object stat {
                         ino_t, // st_ino
                         uid_t, // st_uid
                         gid_t, // st_gid
-                        off_t, // st_size
+                        CLongLong, // st_size
                         time.time_t, // st_atime
                         time.time_t, // st_mtime
                         time.time_t, // st_ctime

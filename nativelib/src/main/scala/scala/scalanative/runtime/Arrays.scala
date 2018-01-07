@@ -83,7 +83,7 @@ object Array {
       val toPtr   = to.at(toPos).cast[Ptr[Byte]]
       val size    = to.stride * len
 
-      `llvm.memmove.p0i8.p0i8.i64`(toPtr, fromPtr, size, 1, false)
+      `llvm.memmove.p0i8.p0i8.i32`(toPtr, fromPtr, size, 1, false)
     }
   }
 }
@@ -120,9 +120,9 @@ final class BooleanArray private () extends Array[Boolean] {
     val arrinfo = typeof[BooleanArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Boolean] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[BooleanArray]
@@ -171,9 +171,9 @@ final class CharArray private () extends Array[Char] {
     val arrinfo = typeof[CharArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Char] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[CharArray]
@@ -222,9 +222,9 @@ final class ByteArray private () extends Array[Byte] {
     val arrinfo = typeof[ByteArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Byte] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[ByteArray]
@@ -273,9 +273,9 @@ final class ShortArray private () extends Array[Short] {
     val arrinfo = typeof[ShortArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Short] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[ShortArray]
@@ -324,9 +324,9 @@ final class IntArray private () extends Array[Int] {
     val arrinfo = typeof[IntArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Int] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[IntArray]
@@ -375,9 +375,9 @@ final class LongArray private () extends Array[Long] {
     val arrinfo = typeof[LongArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Long] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[LongArray]
@@ -426,9 +426,9 @@ final class FloatArray private () extends Array[Float] {
     val arrinfo = typeof[FloatArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Float] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[FloatArray]
@@ -477,9 +477,9 @@ final class DoubleArray private () extends Array[Double] {
     val arrinfo = typeof[DoubleArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Double] * length
     val arr     = GC.alloc_atomic(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[DoubleArray]
@@ -528,9 +528,9 @@ final class ObjectArray private () extends Array[Object] {
     val arrinfo = typeof[ObjectArray].cast[Ptr[ClassType]]
     val arrsize = sizeof[Header] + sizeof[Object] * length
     val arr     = GC.alloc(arrinfo, arrsize)
-    `llvm.memcpy.p0i8.p0i8.i64`(arr.cast[Ptr[Byte]],
+    `llvm.memcpy.p0i8.p0i8.i32`(arr.cast[Ptr[Byte]],
                                 this.cast[Ptr[Byte]],
-                                arrsize,
+                                arrsize.toInt,
                                 1,
                                 false)
     arr.cast[ObjectArray]

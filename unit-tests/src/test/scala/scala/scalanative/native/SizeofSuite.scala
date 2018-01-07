@@ -35,7 +35,7 @@ object SizeofSuite extends tests.Suite {
   }
 
   test("Ptr") {
-    assert(sizeof[Ptr[_]] == 8)
+    assert(sizeof[Ptr[_]] == 4)
   }
 
   test("CStruct1[Byte]") {

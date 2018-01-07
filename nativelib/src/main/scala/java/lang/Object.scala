@@ -10,7 +10,7 @@ class _Object {
 
   @inline def __hashCode(): scala.Int = {
     val addr = this.cast[Word]
-    addr.toInt ^ (addr >> 32).toInt
+    addr.toInt
   }
 
   @inline def __toString(): String =
@@ -46,16 +46,16 @@ class _Object {
     // hashCode. Otherwise, whenever hashCode is overriden, we also update the
     // vtable entry for scala_## to point to the override directly.
     val addr = this.cast[Word]
-    addr.toInt ^ (addr >> 32).toInt
+    addr.toInt
   }
 
   protected def __clone(): _Object = {
     val ty    = runtime.getType(this)
     val size  = ty.size
-    val clone = runtime.GC.alloc(ty, size)
-    `llvm.memcpy.p0i8.p0i8.i64`(clone.cast[Ptr[scala.Byte]],
+    val clone = runtime.GC.alloc(ty, size.asInstanceOf[Word])
+    `llvm.memcpy.p0i8.p0i8.i32`(clone.cast[Ptr[scala.Byte]],
                                 this.cast[Ptr[scala.Byte]],
-                                size,
+                                size.toInt,
                                 1,
                                 false)
     clone.cast[_Object]

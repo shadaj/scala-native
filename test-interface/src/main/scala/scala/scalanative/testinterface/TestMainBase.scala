@@ -26,9 +26,53 @@ abstract class TestMainBase {
 
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
-    val serverPort   = args.head.toInt
-    val clientSocket = new Socket("127.0.0.1", serverPort)
-    testRunner(Array.empty, null, clientSocket)
+//    val serverPort   = args.head.toInt
+//    val clientSocket = new Socket("127.0.0.1", serverPort)
+//    testRunner(Array.empty, null, clientSocket)
+    if (args.isEmpty) {
+      tests.keys.foreach { cn =>
+        runSingleTest(cn)
+      }
+    } else {
+      args.toList.foreach { name =>
+        runSingleTest(name)
+      }
+    }
+  }
+
+  val singleTestLogger = new Logger {
+    def debug(msg: String): Unit = Console.err.println("DEBUG: " + msg)
+
+    def error(msg: String): Unit = Console.err.println("ERROR: " + msg)
+
+    val ansiCodesSupported = true
+
+    def warn(msg: String): Unit = Console.err.println("WARN: " + msg)
+
+    def trace(t: Throwable): Unit = {
+      Console.err.println("TRACE:")
+      t.printStackTrace()
+    }
+
+    def info(msg: String): Unit = Console.err.println("INFO: " + msg)
+  }
+  val singleTestEventHandler = new EventHandler {
+    def handle(event: SbtEvent): Unit = {}
+  }
+
+  private def runSingleTest(value: String): Unit = {
+    val runner = frameworks(0).runner(Array.empty,
+      Array.empty,
+      new PreloadedClassLoader(tests))
+    val taskDef = new TaskDef(
+      value,
+      DeserializedSubclassFingerprint(isModule = true,
+        "tests.Suite",
+        requireNoArgConstructor = false),
+      false,
+      Array(new SuiteSelector))
+    val Array(task: Task) = runner.tasks(Array(taskDef))
+    task.execute(singleTestEventHandler, Array(singleTestLogger))
   }
 
   /** Test runner loop.

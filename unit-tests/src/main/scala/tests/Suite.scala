@@ -7,7 +7,7 @@ import scala.reflect.ClassTag
 
 final case object AssertionFailed extends Exception
 
-final case class Test(name: String, run: () => Boolean)
+final case class Test(name: String, run: () => Option[Throwable])
 
 abstract class Suite {
   private val tests = new mutable.UnrolledBuffer[Test]
@@ -67,9 +67,9 @@ abstract class Suite {
     tests += Test(name, { () =>
       try {
         body
-        true
+        None
       } catch {
-        case _: Throwable => false
+        case t: Throwable => Some(t)
       }
     })
 
@@ -77,9 +77,9 @@ abstract class Suite {
     tests += Test(name, { () =>
       try {
         body
-        false
+        Some(AssertionFailed)
       } catch {
-        case _: Throwable => true
+        case _: Throwable => None
       }
     })
 
@@ -91,12 +91,15 @@ abstract class Suite {
     tests.foreach { test =>
       val testSuccess = test.run()
       val (status, statusStr, color) =
-        if (testSuccess) (Status.Success, "  [ok] ", Console.GREEN)
-        else (Status.Failure, "  [fail] ", Console.RED)
+        if (testSuccess.isEmpty) (Status.Success, "  [ok] ", Console.GREEN)
+        else (Status.Failure, s"  [fail] ", Console.RED)
       val event = NativeEvent(className, test.name, NativeFingerprint, status)
       loggers.foreach(_.info(color + statusStr + test.name + Console.RESET))
+      if (testSuccess.isDefined) {
+        testSuccess.get.printStackTrace()
+      }
       eventHandler.handle(event)
-      success = success && testSuccess
+      success = success && testSuccess.isEmpty
 
     }
 

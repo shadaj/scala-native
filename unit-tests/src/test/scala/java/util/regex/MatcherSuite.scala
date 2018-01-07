@@ -1,5 +1,4 @@
-package java.util
-package regex
+package java.util.regex
 
 // Tests are inspired by those projects under Apache2 License:
 // j2objc: https://github.com/google/j2objc/blob/master/jre_emul/Tests/java/util/regex/MatcherTest.java#L1

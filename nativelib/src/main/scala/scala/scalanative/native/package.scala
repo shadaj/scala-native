@@ -7,10 +7,10 @@ import scalanative.runtime.undefined
 package object native {
 
   /** Int on 32-bit architectures and Long on 64-bit ones. */
-  type Word = Long
+  type Word = Int
 
   /** UInt on 32-bit architectures and ULong on 64-bit ones. */
-  type UWord = ULong
+  type UWord = UInt
 
   /** The C 'char' type. */
   type CChar = Byte
@@ -28,7 +28,7 @@ package object native {
   type CUnsignedLong = UWord
 
   /** The C 'unsigned long int' type. */
-  type CUnsignedLongInt = ULong
+  type CUnsignedLongInt = UInt
 
   /** The C 'unsigned long long' type. */
   type CUnsignedLongLong = ULong
@@ -46,7 +46,7 @@ package object native {
   type CLong = Word
 
   /** The C 'long int' type. */
-  type CLongInt = Long
+  type CLongInt = Int
 
   /** The C 'long long' type. */
   type CLongLong = Long

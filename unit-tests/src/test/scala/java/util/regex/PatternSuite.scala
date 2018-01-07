@@ -1,5 +1,4 @@
-package java.util
-package regex
+package java.util.regex
 
 import scala.collection.immutable.List
 

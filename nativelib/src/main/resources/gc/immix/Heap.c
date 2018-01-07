@@ -51,6 +51,9 @@ Heap *Heap_Create(size_t initialSmallHeapSize, size_t initialLargeHeapSize) {
     Heap *heap = malloc(sizeof(Heap));
 
     size_t memoryLimit = Heap_getMemoryLimit();
+    if (memoryLimit > 256 * 1024 * 1024L) {
+        memoryLimit = 256 * 1024 * 1024L;
+    }
     heap->memoryLimit = memoryLimit;
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);

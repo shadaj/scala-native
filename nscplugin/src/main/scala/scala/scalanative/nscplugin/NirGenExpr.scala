@@ -827,6 +827,14 @@ trait NirGenExpr { self: NirGenPhase =>
           binaryOperationType(lty, rty)
         }
 
+      // https://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.19
+      def shiftSizeMasking(mask: Int): Tree = {
+        Apply(
+          Select(right, TermName("$amp")),
+          List(Literal(Constant(mask)).setType(IntTpe))
+        ).setType(right.tpe).setSymbol((IntClass.info member nme.AND).alternatives.head)
+      }
+
       val binres = opty match {
         case _: Type.F =>
           code match {
@@ -879,11 +887,44 @@ trait NirGenExpr { self: NirGenPhase =>
             case AND =>
               genBinaryOp(Op.Bin(Bin.And, _, _, _), left, right, opty)
             case LSL =>
-              genBinaryOp(Op.Bin(Bin.Shl, _, _, _), left, right, opty)
+              genBinaryOp(
+                Op.Bin(Bin.Shl, _, _, _),
+                left,
+                if (opty == nir.Type.Int) {
+                  shiftSizeMasking(0x1f)
+                } else if (opty == nir.Type.Long) {
+                  shiftSizeMasking(0x3f)
+                } else {
+                  right
+                },
+                opty
+              )
             case LSR =>
-              genBinaryOp(Op.Bin(Bin.Lshr, _, _, _), left, right, opty)
+              genBinaryOp(
+                Op.Bin(Bin.Lshr, _, _, _),
+                left,
+                if (opty == nir.Type.Int) {
+                  shiftSizeMasking(0x1f)
+                } else if (opty == nir.Type.Long) {
+                  shiftSizeMasking(0x3f)
+                } else {
+                  right
+                },
+                opty
+              )
             case ASR =>
-              genBinaryOp(Op.Bin(Bin.Ashr, _, _, _), left, right, opty)
+              genBinaryOp(
+                Op.Bin(Bin.Ashr, _, _, _),
+                left,
+                if (opty == nir.Type.Int) {
+                  shiftSizeMasking(0x1f)
+                } else if (opty == nir.Type.Long) {
+                  shiftSizeMasking(0x3f)
+                } else {
+                  right
+                },
+                opty
+              )
 
             case EQ =>
               genBinaryOp(Op.Comp(Comp.Ieq, _, _, _), left, right, opty)
