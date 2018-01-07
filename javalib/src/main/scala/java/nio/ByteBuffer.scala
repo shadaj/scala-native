@@ -8,7 +8,11 @@ object ByteBuffer {
   def allocate(capacity: Int): ByteBuffer =
     wrap(new Array[Byte](capacity))
 
-  def allocateDirect(capacity: Int): ByteBuffer = allocate(capacity)
+  def allocateDirect(capacity: Int): ByteBuffer = {
+    import scala.scalanative.native.stdlib
+    val ptr = stdlib.malloc(capacity)
+    new DirectByteBuffer(capacity, ptr)
+  }
 
   def wrap(array: Array[Byte], offset: Int, length: Int): ByteBuffer =
     HeapByteBuffer.wrap(array, 0, array.length, offset, length, false)
