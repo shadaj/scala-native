@@ -3,11 +3,13 @@ sudo: required
 scala:
   - "2.11.8"
 
-os: linux
-dist: trusty
-jdk: oraclejdk8
-language: scala
-
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      jdk: oraclejdk8
+      language: scala
+      env: SCALANATIVE_GC=boehm
 env:
   matrix:
     - SCALANATIVE_GC=boehm SBT_VERSION=0.13.16
