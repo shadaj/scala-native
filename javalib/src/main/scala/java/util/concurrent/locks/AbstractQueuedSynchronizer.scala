@@ -34,7 +34,7 @@ abstract class AbstractQueuedSynchronizer
   private def enq(node: Node): Node = {
     while (true) {
       val t: Node = tail
-      if (t == null) {
+      if (t.asInstanceOf[CInt] == 0) {
         if (compareAndSetHead(new Node()))
           tail.store(head)
       } else {
@@ -53,7 +53,7 @@ abstract class AbstractQueuedSynchronizer
     val node: Node = new Node(Thread.currentThread(), mode)
 
     val pred: Node = tail
-    if (pred != null) {
+    if (pred.asInstanceOf[CInt] != 0) {
       node.prev.store(pred)
       if (compareAndSetTail(pred, node)) {
         pred.next.store(node)
@@ -76,16 +76,17 @@ abstract class AbstractQueuedSynchronizer
       compareAndSetWaitStatus(node, ws, 0)
 
     var s: Node = node.next
-    if (s == null || s.waitStatus > 0) {
+    if (s.asInstanceOf[CInt] == 0 || s.waitStatus > 0) {
       s = null
       var t: Node = tail
-      while (t != null && t != node) {
+      println(t.asInstanceOf[CInt])
+      while (t.asInstanceOf[CInt] != 0 && t != node) {
         if (t.waitStatus <= 0)
           s = t
         t = t.prev
       }
     }
-    if (s != null)
+    if (s.asInstanceOf[CInt] != 0)
       LockSupport.unpark(s.thread)
   }
 
@@ -95,7 +96,7 @@ abstract class AbstractQueuedSynchronizer
     while (!break) {
       continue = false
       val h: Node = head
-      if (h != null && h != tail.load().asInstanceOf[Node]) {
+      if (h.asInstanceOf[CInt] != 0 && h != tail.load().asInstanceOf[Node]) {
         val ws: Int = h.waitStatus
         if (ws == Node.SIGNAL) {
           if (!compareAndSetWaitStatus(h, Node.SIGNAL, 0))
@@ -113,15 +114,15 @@ abstract class AbstractQueuedSynchronizer
     val h: Node = head
     setHead(node)
 
-    if (propagate > 0 || h == null || h.waitStatus < 0) {
+    if (propagate > 0 || h.asInstanceOf[CInt] == 0 || h.waitStatus < 0) {
       val s: Node = node.next
-      if (s == null || s.isShared)
+      if (s.asInstanceOf[CInt] == 0 || s.isShared)
         doReleaseShared()
     }
   }
 
   private def cancelAcquire(node: Node): Unit = {
-    if (node == null)
+    if (node.asInstanceOf[CInt] == 0)
       return
     node.thread.store(null.asInstanceOf[Thread])
 
@@ -144,7 +145,7 @@ abstract class AbstractQueuedSynchronizer
           (ws <= 0 && compareAndSetWaitStatus(pred, ws, Node.SIGNAL))) &&
           pred.thread != null) {
         val next: Node = node.next
-        if (next != null && next.waitStatus <= 0)
+        if (next.asInstanceOf[CInt] != 0 && next.waitStatus <= 0)
           compareAndSetNext(pred, pred.next, next)
       } else {
         unparkSuccessor(node)
@@ -363,7 +364,7 @@ abstract class AbstractQueuedSynchronizer
   final def release(arg: Int): Boolean = {
     if (tryRelease(arg)) {
       val h: Node = head
-      if (h != null && h.waitStatus != 0)
+      if (h.asInstanceOf[CInt] != 0 && h.waitStatus != 0)
         unparkSuccessor(h)
       return true
     }
@@ -398,7 +399,7 @@ abstract class AbstractQueuedSynchronizer
 
   final def hasQueuedThreads(): Boolean = head != tail
 
-  final def hasContented(): Boolean = head != null
+  final def hasContented(): Boolean = head.asInstanceOf[CInt] != 0
 
   final def getFirstQueuedThread(): Thread =
     if (head == tail) null else fullGetFirstQueuedThread()
@@ -408,15 +409,15 @@ abstract class AbstractQueuedSynchronizer
     val s: Node    = h.next
     val st: Thread = s.thread
 
-    if ((h != null && s != null &&
+    if ((h.asInstanceOf[CInt] != 0 && s.asInstanceOf[CInt] != 0 &&
         s.prev == head && st != null) ||
-        (h != null && s != null &&
+        (h.asInstanceOf[CInt] != 0 && s.asInstanceOf[CInt] != 0 &&
         s.prev == head && st != null))
       return st
 
     var t: Node             = tail
     var firstThread: Thread = null
-    while (t != null && t != head.load().asInstanceOf[Node]) {
+    while (t.asInstanceOf[CInt] != 0 && t != head.load().asInstanceOf[Node]) {
       val tt: Thread = t.thread
       if (tt != null)
         firstThread = tt
@@ -429,7 +430,7 @@ abstract class AbstractQueuedSynchronizer
     if (thread == null)
       throw new NullPointerException()
     var p: Node = tail
-    while (p != null) {
+    while (p.asInstanceOf[CInt] != 0) {
       if (p.thread == thread)
         return true
       p = p.prev
@@ -440,7 +441,7 @@ abstract class AbstractQueuedSynchronizer
   final def apparentlyFirstQueuedIsExclusive(): Boolean = {
     val h: Node = head
     val s: Node = h.next
-    h != null && s != null &&
+    h.asInstanceOf[CInt] != 0 && s.asInstanceOf[CInt] != 0 &&
     !s.isShared && s.thread != null
   }
 
@@ -448,13 +449,13 @@ abstract class AbstractQueuedSynchronizer
     val t: Node = tail
     val h: Node = head
     val s: Node = h.next
-    h != t && (s == null || s.thread != Thread.currentThread())
+    h != t && (s.asInstanceOf[CInt] == 0 || s.thread != Thread.currentThread())
   }
 
   final def getQueueLength: Int = {
     var n       = 0
     var p: Node = tail
-    while (p != null) {
+    while (p.asInstanceOf[CInt] != 0) {
       if (p.thread != null)
         n += 1
       p = p.prev
@@ -465,7 +466,7 @@ abstract class AbstractQueuedSynchronizer
   final def getQueuedThreads(): util.Collection[Thread] = {
     val list: util.ArrayList[Thread] = new util.ArrayList[Thread]()
     var p: Node                      = tail
-    while (p != null) {
+    while (p.asInstanceOf[CInt] != 0) {
       val t: Thread = p.thread
       if (t != null)
         list.add(t)
@@ -477,7 +478,7 @@ abstract class AbstractQueuedSynchronizer
   final def getExclusiveQueuedThreads(): util.Collection[Thread] = {
     val list: util.ArrayList[Thread] = new util.ArrayList[Thread]()
     var p: Node                      = tail
-    while (p != null) {
+    while (p.asInstanceOf[CInt] != 0) {
       if (!p.isShared) {
         val t: Thread = p.thread
         if (t != null)
@@ -491,7 +492,7 @@ abstract class AbstractQueuedSynchronizer
   final def getSharedQueuedThreads(): util.Collection[Thread] = {
     val list: util.ArrayList[Thread] = new util.ArrayList[Thread]()
     var p: Node                      = tail
-    while (p != null) {
+    while (p.asInstanceOf[CInt] != 0) {
       if (p.isShared) {
         val t: Thread = p.thread
         if (t != null)
@@ -509,9 +510,9 @@ abstract class AbstractQueuedSynchronizer
   }
 
   final def isOnSyncQueue(node: Node): Boolean = {
-    if (node.waitStatus == Node.CONDITION || node.prev == null)
+    if (node.waitStatus == Node.CONDITION || node.prev.asInstanceOf[CInt] == 0)
       return false
-    if (node.next != null)
+    if (node.next.asInstanceOf[CInt] != 0)
       return true
 
     findNodeFromTail(node)
@@ -522,7 +523,7 @@ abstract class AbstractQueuedSynchronizer
     while (true) {
       if (t == node)
         return true
-      if (t == null)
+      if (t.asInstanceOf[CInt] == 0)
         return false
       t = t.prev
     }
@@ -606,12 +607,12 @@ abstract class AbstractQueuedSynchronizer
     private def addConditionWaiter(): Node = {
       var t: Node = lastWaiter
 
-      if (t != null && t.waitStatus != Node.CONDITION) {
+      if (t.asInstanceOf[CInt] != 0 && t.waitStatus != Node.CONDITION) {
         unlinkCancelledWaiters()
         t = lastWaiter
       }
       val node: Node = new Node(Thread.currentThread(), Node.CONDITION)
-      if (t == null)
+      if (t.asInstanceOf[CInt] == 0)
         firstWaiter = node
       else
         t.nextWaiter = node
@@ -623,11 +624,11 @@ abstract class AbstractQueuedSynchronizer
       var first: Node = f
       do {
         firstWaiter = first.nextWaiter
-        if (firstWaiter == null)
+        if (firstWaiter.asInstanceOf[CInt] == 0)
           lastWaiter = null
         first.nextWaiter = null
         first = firstWaiter
-      } while (!transferForSignal(first) && first != null)
+      } while (!transferForSignal(first) && first.asInstanceOf[CInt] != 0)
     }
 
     private def doSignalAll(f: Node) = {
@@ -639,21 +640,21 @@ abstract class AbstractQueuedSynchronizer
         first.nextWaiter = null
         transferForSignal(first)
         first = next
-      } while (first != null)
+      } while (first.asInstanceOf[CInt] != 0)
     }
 
     private def unlinkCancelledWaiters(): Unit = {
       var t: Node     = firstWaiter
       var trail: Node = null
-      while (t != null) {
+      while (t.asInstanceOf[CInt] != 0) {
         val next: Node = t.nextWaiter
         if (t.waitStatus != Node.CONDITION) {
           t.nextWaiter = null
-          if (trail == null)
+          if (trail.asInstanceOf[CInt] == 0)
             firstWaiter = next
           else
             trail.nextWaiter = next
-          if (next == null)
+          if (next.asInstanceOf[CInt] == 0)
             lastWaiter = trail
         } else
           trail = t
@@ -665,7 +666,7 @@ abstract class AbstractQueuedSynchronizer
       if (!isHeldExclusively())
         throw new IllegalMonitorStateException()
       val first: Node = firstWaiter
-      if (first != null)
+      if (first.asInstanceOf[CInt] != 0)
         doSignal(first)
     }
 
@@ -673,7 +674,7 @@ abstract class AbstractQueuedSynchronizer
       if (!isHeldExclusively())
         throw new IllegalMonitorStateException()
       val first: Node = firstWaiter
-      if (first != null)
+      if (first.asInstanceOf[CInt] != 0)
         doSignalAll(first)
     }
 
@@ -718,7 +719,7 @@ abstract class AbstractQueuedSynchronizer
       }
       if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
         interruptMode = REINTERRUPT
-      if (node.nextWaiter != null)
+      if (node.nextWaiter.asInstanceOf[CInt] != 0)
         unlinkCancelledWaiters()
       if (interruptMode != 0)
         reportInterruptAfterWait(interruptMode)
@@ -753,7 +754,7 @@ abstract class AbstractQueuedSynchronizer
       }
       if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
         interruptMode = REINTERRUPT
-      if (node.nextWaiter != null)
+      if (node.nextWaiter.asInstanceOf[CInt] != 0)
         unlinkCancelledWaiters()
       if (interruptMode != 0)
         reportInterruptAfterWait(interruptMode)
@@ -785,7 +786,7 @@ abstract class AbstractQueuedSynchronizer
       }
       if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
         interruptMode = REINTERRUPT
-      if (node.nextWaiter != null)
+      if (node.nextWaiter.asInstanceOf[CInt] != 0)
         unlinkCancelledWaiters()
       if (interruptMode != 0)
         reportInterruptAfterWait(interruptMode)
@@ -824,7 +825,7 @@ abstract class AbstractQueuedSynchronizer
       }
       if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
         interruptMode = REINTERRUPT
-      if (node.nextWaiter != null)
+      if (node.nextWaiter.asInstanceOf[CInt] != 0)
         unlinkCancelledWaiters()
       if (interruptMode != 0)
         reportInterruptAfterWait(interruptMode)
@@ -838,7 +839,7 @@ abstract class AbstractQueuedSynchronizer
       if (!isHeldExclusively())
         throw new IllegalMonitorStateException()
       var w: Node = firstWaiter
-      while (w != null) {
+      while (w.asInstanceOf[CInt] != 0) {
         if (w.waitStatus == Node.CONDITION)
           return true
         w = w.nextWaiter
@@ -851,7 +852,7 @@ abstract class AbstractQueuedSynchronizer
         throw new IllegalMonitorStateException()
       var n       = 0
       var w: Node = firstWaiter
-      while (w != null) {
+      while (w.asInstanceOf[CInt] != 0) {
         if (w.waitStatus == Node.CONDITION)
           n += 1
         w = w.nextWaiter
@@ -864,7 +865,7 @@ abstract class AbstractQueuedSynchronizer
         throw new IllegalMonitorStateException()
       val list: util.ArrayList[Thread] = new util.ArrayList[Thread]()
       var w: Node                      = firstWaiter
-      while (w != null) {
+      while (w.asInstanceOf[CInt] != 0) {
         if (w.waitStatus == Node.CONDITION) {
           val t: Thread = w.thread
           if (t != null)
@@ -887,8 +888,9 @@ abstract class AbstractQueuedSynchronizer
 
   }
 
-  private final def compareAndSetHead(update: Node): Boolean =
+  private final def compareAndSetHead(update: Node): Boolean = {
     head.compareAndSwapStrong(head, update)
+  }
 
   private final def compareAndSetTail(expect: Node, update: Node): Boolean =
     tail.compareAndSwapStrong(expect, update)
@@ -933,7 +935,7 @@ object AbstractQueuedSynchronizer {
     var waitStatus: CAtomicInt = CAtomicInt()
 
     //volatile
-    var prev: CAtomicRef[Node] = CAtomicRef[Node]
+    var prev: CAtomicRef[Node] = CAtomicRef[Node]()
 
     //volatile
     var next: CAtomicRef[Node] = CAtomicRef[Node]
@@ -959,7 +961,7 @@ object AbstractQueuedSynchronizer {
 
     def predecessor(): Node = {
       val p = prev
-      if (p == null)
+      if (p.asInstanceOf[CInt] == 0)
         throw new NullPointerException()
       else p
     }
