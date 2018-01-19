@@ -2,15 +2,15 @@ package java.lang
 
 import java.util
 
-import scala.scalanative.native.stdlib.{free, malloc}
 import scala.scalanative.native.{
   CFunctionPtr,
   CInt,
   Ptr,
-  ULong,
+  UWord,
   signal,
   sizeof,
-  stackalloc
+  stackalloc,
+  _
 }
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -70,9 +70,7 @@ class Thread private (
     group.add(this)
     livenessState.store(internalRunnable)
     underlying = pthread_self()
-    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
-    !threadPtr = this
-    pthread_setspecific(myThreadKey, threadPtr.asInstanceOf[Ptr[scala.Byte]])
+    pthread_setspecific(myThreadKey, this.cast[Ptr[scala.Byte]])
   }
 
   // Indicates if the thread was already started
@@ -89,7 +87,7 @@ class Thread private (
    * NOTE: This is used to keep track of the pthread linked to this Thread,
    * it might be easier/better to handle this at lower level
    */
-  private var underlying: pthread_t = 0.asInstanceOf[ULong]
+  private var underlying: pthread_t = 0.asInstanceOf[UWord]
 
   private val sleepMutex   = new Object
   private val joinMutex    = new Object
@@ -310,24 +308,21 @@ class Thread private (
     // adding the thread to the thread group
     group.add(this)
 
-    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
-    !threadPtr = this
-
     val id = stackalloc[pthread_t]
-    // pthread_attr_t is a struct, not a ULong
+    // pthread_attr_t is a struct, not a UWord
     val attrs = stackalloc[scala.Byte](pthread_attr_t_size)
       .asInstanceOf[Ptr[pthread_attr_t]]
     pthread_attr_init(attrs)
     NativeThread.attrSetPriority(attrs, Thread.toNativePriority(priority))
     if (stackSize > 0) {
-      pthread_attr_setstacksize(attrs, stackSize)
+      pthread_attr_setstacksize(attrs, stackSize.toInt)
     }
 
     val status =
       pthread_create(id,
                      attrs,
                      callRunRoutine,
-                     threadPtr.asInstanceOf[Ptr[scala.Byte]])
+                     this.cast[Ptr[scala.Byte]])
     if (status != 0)
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
@@ -460,10 +455,10 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    val thread = !p.asInstanceOf[Ptr[Thread]]
-    pthread_setspecific(myThreadKey, p)
-    free(p)
-    if (thread.underlying == 0L.asInstanceOf[ULong]) {
+    val thread = p.cast[Thread]
+    pthread_setspecific(myThreadKey, thread.cast[Ptr[scala.Byte]])
+//    free(p)
+    if (thread.underlying == 0.asInstanceOf[UWord]) {
       // the called hasn't set the underlying thread id yet
       // make sure it is initialized
       thread.underlying = pthread_self()
@@ -556,9 +551,9 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   def activeCount: Int = currentThread().group.activeCount()
 
   def currentThreadInternal(): Thread with ThreadBase = {
-    val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
+    val ptr = pthread_getspecific(myThreadKey).cast[Thread]
     if (ptr != null) {
-      !ptr
+      ptr
     } else {
       null
     }
@@ -569,7 +564,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     if (value != null) {
       value
     } else {
-      if (mainThread.underlying == 0L.asInstanceOf[ULong]) {
+      if (mainThread.underlying == 0.asInstanceOf[UWord]) {
         // main thread uninitialized, so it must be the only thread
         mainThread
       } else {

@@ -289,20 +289,20 @@ object CAtomicInt extends CAtomic {
 
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 34)
 
-class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
+class CAtomicLong(default: CLongLong = 0.asInstanceOf[CLongLong]) extends CAtomic {
 
-  private[this] val atm = Atomic.alloc(sizeof[CLong]).cast[Ptr[CLong]]
+  private[this] val atm = Atomic.alloc(sizeof[CLongLong]).cast[Ptr[CLongLong]]
   init_long(atm, default)
 
-  def load(): CLong = load_long(atm)
+  def load(): CLongLong = load_long(atm)
 
-  def store(value: CLong): Unit = store_long(atm, value)
+  def store(value: CLongLong): Unit = store_long(atm, value)
 
   def free(): Unit = Atomic.free(atm.cast[Ptr[Byte]])
 
-  def compareAndSwapStrong(expected: CLong,
-                           desired: CLong): (Boolean, CLong) = {
-    val expectedPtr = stackalloc[CLong]
+  def compareAndSwapStrong(expected: CLongLong,
+                           desired: CLongLong): (Boolean, CLongLong) = {
+    val expectedPtr = stackalloc[CLongLong]
     !expectedPtr = expected
 
     if (compare_and_swap_strong_long(atm, expectedPtr, desired)) {
@@ -312,8 +312,8 @@ class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
     }
   }
 
-  def compareAndSwapWeak(expected: CLong, desired: CLong): (Boolean, CLong) = {
-    val expectedPtr = stackalloc[CLong]
+  def compareAndSwapWeak(expected: CLongLong, desired: CLongLong): (Boolean, CLongLong) = {
+    val expectedPtr = stackalloc[CLongLong]
     !expectedPtr = expected
 
     if (compare_and_swap_weak_long(atm, expectedPtr, desired)) {
@@ -323,46 +323,46 @@ class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
     }
   }
 
-  def addFetch(value: CLong): CLong = {
+  def addFetch(value: CLongLong): CLongLong = {
     fetchAdd(value)
     load()
   }
 
-  def fetchAdd(value: CLong): CLong = atomic_add_long(atm, value)
+  def fetchAdd(value: CLongLong): CLongLong = atomic_add_long(atm, value)
 
-  def subFetch(value: CLong): CLong = {
+  def subFetch(value: CLongLong): CLongLong = {
     fetchSub(value)
     load()
   }
 
-  def fetchSub(value: CLong): CLong = atomic_sub_long(atm, value)
+  def fetchSub(value: CLongLong): CLongLong = atomic_sub_long(atm, value)
 
-  def andFetch(value: CLong): CLong = {
+  def andFetch(value: CLongLong): CLongLong = {
     fetchAnd(value)
     load()
   }
 
-  def fetchAnd(value: CLong): CLong = atomic_and_long(atm, value)
+  def fetchAnd(value: CLongLong): CLongLong = atomic_and_long(atm, value)
 
-  def orFetch(value: CLong): CLong = {
+  def orFetch(value: CLongLong): CLongLong = {
     fetchOr(value)
     load()
   }
 
-  def fetchOr(value: CLong): CLong = atomic_or_long(atm, value)
+  def fetchOr(value: CLongLong): CLongLong = atomic_or_long(atm, value)
 
-  def xorFetch(value: CLong): CLong = {
+  def xorFetch(value: CLongLong): CLongLong = {
     fetchXor(value)
     load()
   }
 
-  def fetchXor(value: CLong): CLong = atomic_xor_long(atm, value)
+  def fetchXor(value: CLongLong): CLongLong = atomic_xor_long(atm, value)
 
   override def toString: String = load().toString
 
   override def equals(that: Any): Boolean = that match {
     case o: CAtomicLong => o.load() == load()
-    case o: CLong       => load() == o
+    case o: CLongLong       => load() == o
     case _              => false
   }
 
@@ -370,7 +370,7 @@ class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
 
 object CAtomicLong extends CAtomic {
 
-  def apply(initValue: CLong) = new CAtomicLong(initValue)
+  def apply(initValue: CLongLong) = new CAtomicLong(initValue)
 
   def apply() = new CAtomicLong()
 
@@ -1046,8 +1046,14 @@ object CAtomicCSize extends CAtomic {
 
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 122)
 
-class CAtomicRef[T <: AnyRef](default: T = 0L.asInstanceOf[T])
-    extends CAtomicLong(default.asInstanceOf[Long]) {}
+class CAtomicRef[T <: AnyRef](default: T = 0.asInstanceOf[T])
+    extends CAtomicInt(default.asInstanceOf[Int]) {
+  def store(value: T): Unit = super.store(value.asInstanceOf[Int])
+  def compareAndSwapStrong(expected: T, desired: T): (CBool, T) = {
+    val t = super.compareAndSwapStrong(expected.asInstanceOf[Int], desired.asInstanceOf[Int])
+    (t._1, t._2.asInstanceOf[T])
+  }
+}
 
 object CAtomicRef extends CAtomic {
 
@@ -1059,9 +1065,6 @@ object CAtomicRef extends CAtomic {
 
 // Helper object, can be imported for ease of use
 object CAtomicsImplicits {
-
-  implicit def toLong[T <: AnyRef](r: T): CLong = r.asInstanceOf[CLong]
-  implicit def toRef[T <: AnyRef](l: CLong): T  = l.asInstanceOf[T]
   implicit def underlying[T <: AnyRef](a: CAtomicRef[T]): T =
     a.load().asInstanceOf[T]
   implicit def cas[T](v: (Boolean, T)): Boolean = v._1
@@ -1072,7 +1075,7 @@ object CAtomicsImplicits {
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 141)
   implicit def underlying(a: CAtomicInt): CInt = a.load()
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 141)
-  implicit def underlying(a: CAtomicLong): CLong = a.load()
+  implicit def underlying(a: CAtomicLong): CLongLong = a.load()
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 141)
   implicit def underlying(a: CAtomicUnsignedByte): Byte = a.load()
 // ###sourceLocation(file: "/home/remi/perso/Projects/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 141)

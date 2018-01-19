@@ -59,8 +59,8 @@ final class Monitor private[runtime] (shadow: Boolean) {
     val deadlineNanos   = overflownNanos % 1000000000
     val deadLineSeconds = curSeconds + millis / 1000 + overflownNanos / 1000000000
 
-    !tsPtr._1 = deadLineSeconds
-    !tsPtr._2 = deadlineNanos
+    !tsPtr._1 = deadLineSeconds.toInt
+    !tsPtr._2 = deadlineNanos.toInt
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
     if (thread != null) {
