@@ -29,14 +29,24 @@ final class Monitor private[runtime] (shadow: Boolean) {
     .asInstanceOf[Ptr[pthread_cond_t]]
   pthread_cond_init(condPtr, Monitor.condAttrPtr)
 
-  def _notify(): Unit    = pthread_cond_signal(condPtr)
-  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
+  def _notify(): Unit    = {
+    pthread_mutex_lock(mutexPtr)
+    pthread_cond_signal(condPtr)
+    pthread_mutex_unlock(mutexPtr)
+  }
+  def _notifyAll(): Unit = {
+    pthread_mutex_lock(mutexPtr)
+    pthread_cond_broadcast(condPtr)
+    pthread_mutex_unlock(mutexPtr)
+  }
   def _wait(): Unit = {
     val thread = ThreadBase.currentThreadInternal
     if (thread != null) {
       thread.setLockState(Waiting)
     }
+    pthread_mutex_lock(mutexPtr)
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
+    pthread_mutex_unlock(mutexPtr)
     if (thread != null) {
       thread.setLockState(Normal)
     }
@@ -50,6 +60,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
     if (thread != null) {
       thread.setLockState(TimedWaiting)
     }
+    pthread_mutex_lock(mutexPtr)
     val tsPtr = stackalloc[timespec]
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds     = !tsPtr._1
@@ -63,6 +74,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
     !tsPtr._2 = deadlineNanos.toInt
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
+    pthread_mutex_unlock(mutexPtr)
     if (thread != null) {
       thread.setLockState(Normal)
     }
