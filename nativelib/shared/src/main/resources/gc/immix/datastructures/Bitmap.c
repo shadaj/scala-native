@@ -3,6 +3,7 @@
 #include "../Constants.h"
 #include "../Log.h"
 #include "../utils/MathUtils.h"
+#include <stdio.h>
 
 Bitmap *Bitmap_Alloc(size_t size, word_t *offset) {
     assert(size % BITMAP_GRANULARITY == 0);
@@ -23,8 +24,9 @@ size_t addressToIndex(ubyte_t *offset, ubyte_t *addr) {
 }
 
 void Bitmap_SetBit(Bitmap *bitmap, ubyte_t *addr) {
-    assert(addr >= bitmap->offset &&
-           addr < bitmap->offset + bitmap->size * MIN_BLOCK_SIZE);
+    assert(addr >= bitmap->offset);
+    assert(addr < bitmap->offset + bitmap->size * MIN_BLOCK_SIZE);
+
     size_t index = addressToIndex(bitmap->offset, addr);
     bitmap->words[WORD_OFFSET(index)] |= (1LLU << BIT_OFFSET(index));
 }

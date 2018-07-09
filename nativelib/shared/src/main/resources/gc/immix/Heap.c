@@ -10,6 +10,7 @@
 #include "utils/MathUtils.h"
 #include "StackTrace.h"
 #include "Memory.h"
+#include "../../platform.h"
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -19,7 +20,15 @@
 #define HEAP_MEM_FD -1
 #define HEAP_MEM_FD_OFFSET 0
 
-size_t Heap_getMemoryLimit() { return getMemorySize(); }
+size_t Heap_getMemoryLimit() {
+    #ifdef PLATFORM_32
+    return 64 * 1024 * 1024;
+    #endif
+
+    #ifdef PLATFORM_64
+    return getMemorySize();
+    #endif
+}
 
 /**
  * Maps `MAX_SIZE` of memory and returns the first address aligned on
@@ -63,6 +72,7 @@ Heap *Heap_Create(size_t initialSmallHeapSize, size_t initialLargeHeapSize) {
                                        initialSmallHeapSize / BLOCK_TOTAL_SIZE);
 
     // Init heap for large objects
+    #ifdef PLATFORM_64
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
     heap->largeHeapSize = initialLargeHeapSize;
     heap->largeAllocator =
@@ -70,6 +80,7 @@ Heap *Heap_Create(size_t initialSmallHeapSize, size_t initialLargeHeapSize) {
     heap->largeHeapStart = largeHeapStart;
     heap->largeHeapEnd =
         (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+    #endif
 
     return heap;
 }
@@ -79,7 +90,11 @@ Heap *Heap_Create(size_t initialSmallHeapSize, size_t initialLargeHeapSize) {
  * trigger a collection of both the small and the large heap.
  */
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
+    #ifdef PLATFORM_32
+    return Heap_AllocSmall(heap, objectSize);
+    #endif
 
+    #ifdef PLATFORM_64
     // Add header
     uint32_t size = objectSize + OBJECT_HEADER_SIZE;
 
@@ -117,10 +132,11 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
             return Object_ToMutatorAddress(object);
         }
     }
+    #endif
 }
 
 word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
-
+    
     Heap_Collect(heap, stack);
 
     Object *object = (Object *)Allocator_Alloc(heap->allocator, size);

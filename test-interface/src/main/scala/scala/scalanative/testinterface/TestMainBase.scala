@@ -23,12 +23,53 @@ abstract class TestMainBase {
 
   /** A mapping from class name to instantiated test object. */
   def tests: Map[String, AnyRef]
+  
+  val singleTestLogger = new Logger {
+    def debug(msg: String): Unit = Console.err.println("DEBUG: " + msg)
+
+    def error(msg: String): Unit = Console.err.println("ERROR: " + msg)
+
+    val ansiCodesSupported = true
+
+    def warn(msg: String): Unit = Console.err.println("WARN: " + msg)
+
+    def trace(t: Throwable): Unit = {
+      Console.err.println("TRACE:")
+      t.printStackTrace()
+    }
+
+    def info(msg: String): Unit = Console.err.println("INFO: " + msg)
+  }
+
+  val singleTestEventHandler = new EventHandler {
+    def handle(event: SbtEvent): Unit = {}
+  }
+
+  private def runSingleTest(value: String): Unit = {
+    val runner = frameworks(0).runner(Array.empty,
+                                      Array.empty,
+                                      new PreloadedClassLoader(tests))
+    val taskDef = new TaskDef(
+      value,
+      DeserializedSubclassFingerprint(isModule = true,
+                                      "tests.Suite",
+                                      requireNoArgConstructor = false),
+      false,
+      Array(new SuiteSelector))
+    val Array(task: Task) = runner.tasks(Array(taskDef))
+    task.execute(singleTestEventHandler, Array(singleTestLogger))
+  }
 
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
-    val serverPort   = args.head.toInt
-    val clientSocket = new Socket("127.0.0.1", serverPort)
-    testRunner(Array.empty, null, clientSocket)
+    if (args.isEmpty) {
+      tests.keys.foreach(runSingleTest)
+    } else {
+      println("launched with args " + args.toList)
+      val serverPort   = args.head.toInt
+      val clientSocket = new Socket("127.0.0.1", serverPort)
+      testRunner(Array.empty, null, clientSocket)
+    }
   }
 
   /** Test runner loop.
@@ -41,8 +82,12 @@ abstract class TestMainBase {
   private def testRunner(tasks: Array[Task],
                          runner: Runner,
                          clientSocket: Socket): Unit = {
+    println("in runner")
     val stream = new DataInputStream(clientSocket.getInputStream)
-    receive(stream) match {
+    println("created stream")
+    val rec = receive(stream)
+    println(rec)
+    rec match {
       case Command.NewRunner(id, args, remoteArgs) =>
         val runner = frameworks(id).runner(args.toArray,
                                            remoteArgs.toArray,
@@ -51,8 +96,11 @@ abstract class TestMainBase {
 
       case Command.SendInfo(id, None) =>
         val fps  = frameworks(id).fingerprints()
+        println(fps)
         val name = frameworks(id).name()
+        println(name)
         val info = Command.SendInfo(id, Some(FrameworkInfo(name, fps.toSeq)))
+        println(info)
         send(clientSocket)(info)
         testRunner(tasks, runner, clientSocket)
 
