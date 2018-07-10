@@ -22,7 +22,7 @@
 
 size_t Heap_getMemoryLimit() {
     #ifdef PLATFORM_32
-    return 64 * 1024 * 1024;
+    return 256 * 1024 * 1024;
     #endif
 
     #ifdef PLATFORM_64
@@ -136,7 +136,6 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
 }
 
 word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
-    
     Heap_Collect(heap, stack);
 
     Object *object = (Object *)Allocator_Alloc(heap->allocator, size);
@@ -224,7 +223,10 @@ void Heap_Recycle(Heap *heap) {
         // block_print(blockHeader);
         current += WORDS_IN_BLOCK;
     }
+
+    #ifdef PLATFORM_64
     LargeAllocator_Sweep(heap->largeAllocator);
+    #endif
 
     if (Allocator_ShouldGrow(heap->allocator)) {
         double growth;

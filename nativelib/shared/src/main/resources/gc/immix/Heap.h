@@ -5,6 +5,7 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include "../../platform.h"
 
 typedef struct {
     size_t memoryLimit;
@@ -19,8 +20,13 @@ typedef struct {
 } Heap;
 
 static inline bool Heap_IsWordInLargeHeap(Heap *heap, word_t *word) {
+    #ifdef PLATFORM_64
     return word != NULL && word >= heap->largeHeapStart &&
            word < heap->largeHeapEnd;
+    #endif
+    #ifdef PLATFORM_32
+    return false;
+    #endif
 }
 
 static inline bool Heap_IsWordInSmallHeap(Heap *heap, word_t *word) {
