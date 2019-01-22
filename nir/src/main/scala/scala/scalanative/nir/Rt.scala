@@ -10,6 +10,7 @@ object Rt {
   val Type    = StructValue(Seq(Int, Int, Ptr))
   val Runtime = Ref(Global.Top("scala.scalanative.runtime.package$"))
 
+  val BoxedPtr        = Ref(Global.Top("scala.scalanative.native.Ptr"))
   val BoxedNull       = Ref(Global.Top("scala.runtime.Null$"))
   val BoxedUnit       = Ref(Global.Top("scala.runtime.BoxedUnit"))
   val BoxedUnitModule = Ref(Global.Top("scala.scalanative.runtime.BoxedUnit$"))
