@@ -8,29 +8,29 @@ import scalanative.runtime.Intrinsics._
 sealed abstract class Tag[T] {
   def size: Int
   def alignment: Int
-  def offset(idx: Int): Int = throwUndefined()
-  def load(ptr: native.Ptr[T]): T = throwUndefined()
-  def store(ptr: native.Ptr[T], value: T): Unit = throwUndefined()
+  @noinline def offset(idx: Int): Int = throwUndefined()
+  @noinline def load(ptr: native.Ptr[T]): T = throwUndefined()
+  @noinline def store(ptr: native.Ptr[T], value: T): Unit = throwUndefined()
 }
 
 object Tag {
-  final case class Ptr[T](of: Tag[T])
+  case class Ptr[T](of: Tag[T])
       extends Tag[native.Ptr[T]] {
-    @inline final def size: Int = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(ptr: native.Ptr[native.Ptr[T]]): native.Ptr[T] =
+    @alwaysinline def size: Int = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(ptr: native.Ptr[native.Ptr[T]]): native.Ptr[T] =
       fromRawPtr[T](loadRawPtr(toRawPtr(ptr)))
-    @inline final override def store(ptr: native.Ptr[native.Ptr[T]], value: native.Ptr[T]): Unit =
+    @alwaysinline override def store(ptr: native.Ptr[native.Ptr[T]], value: native.Ptr[T]): Unit =
       storeRawPtr(toRawPtr(ptr), toRawPtr(value))
   }
 
-  final case class Class[T <: AnyRef](of: java.lang.Class[T])
+  case class Class[T <: AnyRef](of: java.lang.Class[T])
       extends Tag[T] {
-    @inline final def size: Int = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(ptr: native.Ptr[T]): T =
+    @alwaysinline def size: Int = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(ptr: native.Ptr[T]): T =
       loadObject(toRawPtr(ptr)).asInstanceOf[T]
-    @inline final override def store(ptr: native.Ptr[T], value: T): Unit =
+    @alwaysinline override def store(ptr: native.Ptr[T], value: T): Unit =
       storeObject(toRawPtr(ptr), value.asInstanceOf[Object])
   }
 
@@ -50,9 +50,9 @@ object Tag {
   % for (name, T, size) in prims:
 
   object ${name} extends Tag[${T}] {
-    @inline final def size: Int = ${size}
-    @inline final def alignment: Int = ${size}
-    @inline final override def load(ptr: native.Ptr[${T}]): ${T} =
+    @alwaysinline def size: Int = ${size}
+    @alwaysinline def alignment: Int = ${size}
+    @alwaysinline override def load(ptr: native.Ptr[${T}]): ${T} =
       % if name == 'Unit':
       loadObject(toRawPtr(ptr)).asInstanceOf[Unit]
       % elif name.startswith('U'):
@@ -61,7 +61,7 @@ object Tag {
       % else:
       load${name}(toRawPtr(ptr))
       % end
-    @inline final override def store(ptr: native.Ptr[${T}], value: ${T}): Unit =
+    @alwaysinline override def store(ptr: native.Ptr[${T}], value: ${T}): Unit =
       % if name == 'Unit':
       storeObject(toRawPtr(ptr), value.asInstanceOf[Object])
       % elif name.startswith('U'):
@@ -77,8 +77,8 @@ object Tag {
   % for N in range(0, 10):
 
   object Nat${N} extends Tag[native.Nat._${N}] {
-    @noinline final def size: Int = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
   % end
@@ -89,20 +89,20 @@ object Tag {
 
   % end
 
-  final case class Digit[N <: native.Nat.Base, M <: native.Nat](n: Tag[N], m: Tag[M])
+  case class Digit[N <: native.Nat.Base, M <: native.Nat](n: Tag[N], m: Tag[M])
       extends Tag[native.Nat.Digit[N, M]]
   {
-    @inline final def size: Int = throwUndefined()
-    @inline final def alignment: Int = throwUndefined()
+    @alwaysinline def size: Int = throwUndefined()
+    @alwaysinline def alignment: Int = throwUndefined()
   }
 
-  final case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
+  case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
       extends Tag[native.CArray[T, N]]
   % for N in range(1, 23):
       with Field${N}[native.CArray[T, N], T]
   % end
   {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var mul = 1
       def natToInt(tag: Tag[_]): Int = tag match {
         % for N in range(0, 10):
@@ -117,13 +117,13 @@ object Tag {
       }
       of.size * natToInt(n)
     }
-    @inline final def alignment: Int = of.alignment
-    @inline override def offset(idx: Int): Int = of.size * idx
+    @alwaysinline def alignment: Int = of.alignment
+    @alwaysinline override def offset(idx: Int): Int = of.size * idx
   }
 
   private[scalanative] sealed trait CStruct
 
-  @inline private[scalanative] def align(offset: Int, alignment: Int) = {
+  @alwaysinline private[scalanative] def align(offset: Int, alignment: Int) = {
     val alignmentMask = alignment - 1
     val padding =
       if ((offset & alignmentMask) == 0) 0
@@ -137,28 +137,28 @@ object Tag {
   %   TagTs   = ["Tag[{}]".format(T) for T in Ts]
   %   args    = ", ".join("_{}: {}".format(i + 1, T) for (i, T) in enumerate(TagTs))
 
-  final case class CStruct${N}${JustTs}(${args})
+  case class CStruct${N}${JustTs}(${args})
     extends Tag[native.CStruct${N}${JustTs}]
     with CStruct
   % for M in range(1, N + 1):
     with Field${M}[native.CStruct${N}${JustTs}, ${Ts[M - 1]}]
   % end
   {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
       % for i in range(1, N + 1):
       res = align(res, _${i}.alignment) + _${i}.size
       % end
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
       % for i in range(1, N + 1):
       res = res max _${i}.alignment
       % end
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
       % for fld in range(1, N + 1):
       case ${fld - 1} =>
         var res = 0
@@ -174,28 +174,28 @@ object Tag {
 
   % end
 
-  implicit def materializePtrTag[T](implicit tag: Tag[T]): Tag[native.Ptr[T]] =
+  @alwaysinline implicit def materializePtrTag[T](implicit tag: Tag[T]): Tag[native.Ptr[T]] =
     Tag.Ptr(tag)
-  implicit def materializeClassTag[T <: AnyRef: ClassTag]: Tag[T] =
+  @alwaysinline implicit def materializeClassTag[T <: AnyRef: ClassTag]: Tag[T] =
     Tag.Class(implicitly[ClassTag[T]].runtimeClass.asInstanceOf[java.lang.Class[T]])
   % for (name, T, _) in prims:
-  implicit def materialize${name}Tag: Tag[${T}] =
+  @alwaysinline implicit def materialize${name}Tag: Tag[${T}] =
     ${name}
   % end
   % for N in range(0, 10):
-  implicit def materializeNat${N}Tag: Tag[native.Nat._${N}] =
+  @alwaysinline implicit def materializeNat${N}Tag: Tag[native.Nat._${N}] =
     Nat${N}
   %end
-  implicit def materializeNatDigitTag[N <: native.Nat.Base: Tag, M <: native.Nat: Tag]: Tag[native.Nat.Digit[N, M]] =
+  @alwaysinline implicit def materializeNatDigitTag[N <: native.Nat.Base: Tag, M <: native.Nat: Tag]: Tag[native.Nat.Digit[N, M]] =
     Tag.Digit(implicitly[Tag[N]], implicitly[Tag[M]])
-  implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]: Tag.CArray[T, N] =
+  @alwaysinline implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]: Tag.CArray[T, N] =
     Tag.CArray(implicitly[Tag[T]], implicitly[Tag[N]])
   % for N in range(0, 23):
   %   Ts      = ["T" + str(i) for i in range(1, N + 1)]
   %   BoundTs = "" if N == 0 else "[" + ", ".join(map(lambda T: T + ": Tag", Ts)) + "]"
   %   JustTs  = "" if N == 0 else "[" + ", ".join(Ts) + "]"
   %   tags    = ", ".join("implicitly[Tag[{}]]".format(T) for T in Ts)
-  implicit def materializeCStruct${N}Tag${BoundTs}: Tag.CStruct${N}${JustTs} =
+  @alwaysinline implicit def materializeCStruct${N}Tag${BoundTs}: Tag.CStruct${N}${JustTs} =
     Tag.CStruct${N}(${tags})
   % end
 }

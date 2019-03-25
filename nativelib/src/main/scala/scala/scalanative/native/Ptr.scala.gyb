@@ -19,37 +19,37 @@ final class Ptr[T](private[scalanative] val rawptr: RawPtr) {
         false
     })
 
-  @inline override def toString: String =
+  @alwaysinline override def toString: String =
     "Ptr@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-  @inline def toInt: scala.Int =
+  @alwaysinline def toInt: scala.Int =
     Intrinsics.castRawPtrToInt(rawptr)
 
-  @inline def toLong: scala.Int =
+  @alwaysinline def toLong: scala.Int =
     Intrinsics.castRawPtrToInt(rawptr)
 
-  @inline def unary_!(implicit tag: Tag[T]): T =
+  @alwaysinline def unary_!(implicit tag: Tag[T]): T =
     tag.load(this)
 
-  @inline def `unary_!_=`(value: T)(implicit tag: Tag[T]): Unit =
+  @alwaysinline def `unary_!_=`(value: T)(implicit tag: Tag[T]): Unit =
     tag.store(this, value)
 
-  @inline def +(offset: Word)(implicit tag: Tag[T]): Ptr[T] =
+  @alwaysinline def +(offset: Word)(implicit tag: Tag[T]): Ptr[T] =
     new Ptr(elemRawPtr(rawptr, offset * sizeof[T]))
 
-  @inline def -(offset: Word)(implicit tag: Tag[T]): Ptr[T] =
+  @alwaysinline def -(offset: Word)(implicit tag: Tag[T]): Ptr[T] =
     new Ptr(elemRawPtr(rawptr, -offset * sizeof[T]))
 
-  @inline def -(other: Ptr[T])(implicit tag: Tag[T]): CPtrDiff = {
+  @alwaysinline def -(other: Ptr[T])(implicit tag: Tag[T]): CPtrDiff = {
     val left  = castRawPtrToLong(rawptr)
     val right = castRawPtrToLong(other.rawptr)
     (left - right) / sizeof[T]
   }
 
-  @inline def apply(offset: Word)(implicit tag: Tag[T]): T =
+  @alwaysinline def apply(offset: Word)(implicit tag: Tag[T]): T =
     (this + offset).unary_!
 
-  @inline def update(offset: Word, value: T)(implicit tag: Tag[T]): Unit =
+  @alwaysinline def update(offset: Word, value: T)(implicit tag: Tag[T]): Unit =
     (this + offset).`unary_!_=`(value)
 
   % for N in range(1, 23):

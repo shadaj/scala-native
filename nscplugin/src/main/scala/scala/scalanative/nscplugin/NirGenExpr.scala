@@ -1284,7 +1284,7 @@ trait NirGenExpr { self: NirGenPhase =>
         buf.conv(Conv.Zext, ty, arg, unwind)
 
       case Apply(_, Seq(argp)) if code >= UINT_TO_FLOAT && code <= ULONG_TO_DOUBLE =>
-        val ty  = genType(app.tpe, box = false)
+        val ty  = genType(app.tpe)
         val arg = genExpr(argp)
 
         buf.conv(Conv.Uitofp, ty, arg, unwind)

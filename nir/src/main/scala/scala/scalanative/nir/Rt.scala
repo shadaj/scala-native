@@ -27,11 +27,13 @@ object Rt {
   val ReverseBytesSig     = Sig.Method("reverseBytes", Seq(Int, Int))
   val NumberOfLeadingZerosSig =
     Sig.Method("numberOfLeadingZeros", Seq(Int, Int))
-  val CosSig  = Sig.Method("cos", Seq(Double, Double))
-  val SinSig  = Sig.Method("sin", Seq(Double, Double))
-  val PowSig  = Sig.Method("pow", Seq(Double, Double, Double))
-  val MaxSig  = Sig.Method("max", Seq(Double, Double, Double))
-  val SqrtSig = Sig.Method("sqrt", Seq(Double, Double))
+  val CosSig        = Sig.Method("cos", Seq(Double, Double))
+  val SinSig        = Sig.Method("sin", Seq(Double, Double))
+  val PowSig        = Sig.Method("pow", Seq(Double, Double, Double))
+  val MaxSig        = Sig.Method("max", Seq(Double, Double, Double))
+  val SqrtSig       = Sig.Method("sqrt", Seq(Double, Double))
+  val FromRawPtrSig = Sig.Method("fromRawPtr", Seq(Ptr, BoxedPtr))
+  val ToRawPtrSig   = Sig.Method("toRawPtr", Seq(BoxedPtr, Ptr))
 
   val GetRawTypeTy   = Function(Seq(Runtime, Object), Ptr)
   val GetRawTypeName = Global.Member(Runtime.name, GetRawTypeSig)

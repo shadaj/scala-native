@@ -318,12 +318,23 @@ trait Eval { self: Interflow =>
         eval(v)
       case Op.Sizeof(ty) =>
         Val.Long(MemoryLayout.sizeOf(ty))
-      case Op.Box(Type.Ref(boxname, _, _), value) =>
-        Val.Virtual(state.allocBox(boxname, eval(value)))
+      case Op.Box(boxty @ Type.Ref(boxname, _, _), value) =>
+        // BoxedPtr is special because null boxes to null,
+        // which breaks the invariant that all virtual allocations
+        // are in fact non-null. We handle boxed pointers as a
+        // delayed op instead.
+        if (boxname != Rt.BoxedPtr.name) {
+          Val.Virtual(state.allocBox(boxname, eval(value)))
+        } else {
+          delay(Op.Box(boxty, eval(value)))
+        }
       case Op.Unbox(boxty @ Type.Ref(boxname, _, _), value) =>
         eval(value) match {
           case VirtualRef(_, cls, Array(value)) if boxname == cls.name =>
             value
+          case DelayedRef(Op.Box(Type.Ref(innername, _, _), innervalue))
+              if innername == boxname =>
+            innervalue
           case value =>
             emit(Op.Unbox(boxty, materialize(value)))
         }

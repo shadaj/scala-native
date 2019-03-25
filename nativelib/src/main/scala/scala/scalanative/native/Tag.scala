@@ -7,44 +7,45 @@ import scalanative.runtime._
 import scalanative.runtime.Intrinsics._
 
 sealed abstract class Tag[T] {
+  def foo: Unit = ()
   def size: Int
   def alignment: Int
-  def offset(idx: Int): Int                     = throwUndefined()
-  def load(ptr: native.Ptr[T]): T               = throwUndefined()
-  def store(ptr: native.Ptr[T], value: T): Unit = throwUndefined()
+  @noinline def offset(idx: Int): Int                     = throwUndefined()
+  @noinline def load(ptr: native.Ptr[T]): T               = throwUndefined()
+  @noinline def store(ptr: native.Ptr[T], value: T): Unit = throwUndefined()
 }
 
 object Tag {
-  final case class Ptr[T](of: Tag[T]) extends Tag[native.Ptr[T]] {
-    @inline final def size: Int      = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(
+  case class Ptr[T](of: Tag[T]) extends Tag[native.Ptr[T]] {
+    @alwaysinline def size: Int      = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(
         ptr: native.Ptr[native.Ptr[T]]): native.Ptr[T] =
       fromRawPtr[T](loadRawPtr(toRawPtr(ptr)))
-    @inline final override def store(ptr: native.Ptr[native.Ptr[T]],
+    @alwaysinline override def store(ptr: native.Ptr[native.Ptr[T]],
                                      value: native.Ptr[T]): Unit =
       storeRawPtr(toRawPtr(ptr), toRawPtr(value))
   }
 
-  final case class Class[T <: AnyRef](of: java.lang.Class[T]) extends Tag[T] {
-    @inline final def size: Int      = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(ptr: native.Ptr[T]): T =
+  case class Class[T <: AnyRef](of: java.lang.Class[T]) extends Tag[T] {
+    @alwaysinline def size: Int      = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(ptr: native.Ptr[T]): T =
       loadObject(toRawPtr(ptr)).asInstanceOf[T]
-    @inline final override def store(ptr: native.Ptr[T], value: T): Unit =
+    @alwaysinline override def store(ptr: native.Ptr[T], value: T): Unit =
       storeObject(toRawPtr(ptr), value.asInstanceOf[Object])
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Unit extends Tag[scala.Unit] {
-    @inline final def size: Int                                              = 8
-    @inline final def alignment: Int                                         = 8
-    @inline final override def load(ptr: native.Ptr[scala.Unit]): scala.Unit =
+    @alwaysinline def size: Int                                              = 8
+    @alwaysinline def alignment: Int                                         = 8
+    @alwaysinline override def load(ptr: native.Ptr[scala.Unit]): scala.Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 57)
       loadObject(toRawPtr(ptr)).asInstanceOf[Unit]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Unit],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Unit],
                                      value: scala.Unit): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 66)
       storeObject(toRawPtr(ptr), value.asInstanceOf[Object])
@@ -54,14 +55,14 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Boolean extends Tag[scala.Boolean] {
-    @inline final def size: Int      = 1
-    @inline final def alignment: Int = 1
-    @inline final override def load(
+    @alwaysinline def size: Int      = 1
+    @alwaysinline def alignment: Int = 1
+    @alwaysinline override def load(
         ptr: native.Ptr[scala.Boolean]): scala.Boolean =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadBoolean(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Boolean],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Boolean],
                                      value: scala.Boolean): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeBoolean(toRawPtr(ptr), value)
@@ -71,13 +72,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Char extends Tag[scala.Char] {
-    @inline final def size: Int                                              = 2
-    @inline final def alignment: Int                                         = 2
-    @inline final override def load(ptr: native.Ptr[scala.Char]): scala.Char =
+    @alwaysinline def size: Int                                              = 2
+    @alwaysinline def alignment: Int                                         = 2
+    @alwaysinline override def load(ptr: native.Ptr[scala.Char]): scala.Char =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadChar(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Char],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Char],
                                      value: scala.Char): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeChar(toRawPtr(ptr), value)
@@ -87,13 +88,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Byte extends Tag[scala.Byte] {
-    @inline final def size: Int                                              = 1
-    @inline final def alignment: Int                                         = 1
-    @inline final override def load(ptr: native.Ptr[scala.Byte]): scala.Byte =
+    @alwaysinline def size: Int                                              = 1
+    @alwaysinline def alignment: Int                                         = 1
+    @alwaysinline override def load(ptr: native.Ptr[scala.Byte]): scala.Byte =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadByte(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Byte],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Byte],
                                      value: scala.Byte): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeByte(toRawPtr(ptr), value)
@@ -103,14 +104,14 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object UByte extends Tag[native.UByte] {
-    @inline final def size: Int      = 1
-    @inline final def alignment: Int = 1
-    @inline final override def load(
+    @alwaysinline def size: Int      = 1
+    @alwaysinline def alignment: Int = 1
+    @alwaysinline override def load(
         ptr: native.Ptr[native.UByte]): native.UByte =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 60)
       loadByte(toRawPtr(ptr)).toUByte
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[native.UByte],
+    @alwaysinline override def store(ptr: native.Ptr[native.UByte],
                                      value: native.UByte): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 69)
       storeByte(toRawPtr(ptr), value.toByte)
@@ -120,13 +121,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Short extends Tag[scala.Short] {
-    @inline final def size: Int                                                = 2
-    @inline final def alignment: Int                                           = 2
-    @inline final override def load(ptr: native.Ptr[scala.Short]): scala.Short =
+    @alwaysinline def size: Int                                                = 2
+    @alwaysinline def alignment: Int                                           = 2
+    @alwaysinline override def load(ptr: native.Ptr[scala.Short]): scala.Short =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadShort(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Short],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Short],
                                      value: scala.Short): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeShort(toRawPtr(ptr), value)
@@ -136,14 +137,14 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object UShort extends Tag[native.UShort] {
-    @inline final def size: Int      = 2
-    @inline final def alignment: Int = 2
-    @inline final override def load(
+    @alwaysinline def size: Int      = 2
+    @alwaysinline def alignment: Int = 2
+    @alwaysinline override def load(
         ptr: native.Ptr[native.UShort]): native.UShort =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 60)
       loadShort(toRawPtr(ptr)).toUShort
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[native.UShort],
+    @alwaysinline override def store(ptr: native.Ptr[native.UShort],
                                      value: native.UShort): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 69)
       storeShort(toRawPtr(ptr), value.toShort)
@@ -153,13 +154,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Int extends Tag[scala.Int] {
-    @inline final def size: Int                                            = 4
-    @inline final def alignment: Int                                       = 4
-    @inline final override def load(ptr: native.Ptr[scala.Int]): scala.Int =
+    @alwaysinline def size: Int                                            = 4
+    @alwaysinline def alignment: Int                                       = 4
+    @alwaysinline override def load(ptr: native.Ptr[scala.Int]): scala.Int =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadInt(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Int],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Int],
                                      value: scala.Int): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeInt(toRawPtr(ptr), value)
@@ -169,13 +170,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object UInt extends Tag[native.UInt] {
-    @inline final def size: Int                                                = 4
-    @inline final def alignment: Int                                           = 4
-    @inline final override def load(ptr: native.Ptr[native.UInt]): native.UInt =
+    @alwaysinline def size: Int                                                = 4
+    @alwaysinline def alignment: Int                                           = 4
+    @alwaysinline override def load(ptr: native.Ptr[native.UInt]): native.UInt =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 60)
       loadInt(toRawPtr(ptr)).toUInt
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[native.UInt],
+    @alwaysinline override def store(ptr: native.Ptr[native.UInt],
                                      value: native.UInt): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 69)
       storeInt(toRawPtr(ptr), value.toInt)
@@ -185,13 +186,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Long extends Tag[scala.Long] {
-    @inline final def size: Int                                              = 8
-    @inline final def alignment: Int                                         = 8
-    @inline final override def load(ptr: native.Ptr[scala.Long]): scala.Long =
+    @alwaysinline def size: Int                                              = 8
+    @alwaysinline def alignment: Int                                         = 8
+    @alwaysinline override def load(ptr: native.Ptr[scala.Long]): scala.Long =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadLong(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Long],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Long],
                                      value: scala.Long): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeLong(toRawPtr(ptr), value)
@@ -201,14 +202,14 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object ULong extends Tag[native.ULong] {
-    @inline final def size: Int      = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(
+    @alwaysinline def size: Int      = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(
         ptr: native.Ptr[native.ULong]): native.ULong =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 60)
       loadLong(toRawPtr(ptr)).toULong
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[native.ULong],
+    @alwaysinline override def store(ptr: native.Ptr[native.ULong],
                                      value: native.ULong): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 69)
       storeLong(toRawPtr(ptr), value.toLong)
@@ -218,13 +219,13 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Float extends Tag[scala.Float] {
-    @inline final def size: Int                                                = 4
-    @inline final def alignment: Int                                           = 4
-    @inline final override def load(ptr: native.Ptr[scala.Float]): scala.Float =
+    @alwaysinline def size: Int                                                = 4
+    @alwaysinline def alignment: Int                                           = 4
+    @alwaysinline override def load(ptr: native.Ptr[scala.Float]): scala.Float =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadFloat(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Float],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Float],
                                      value: scala.Float): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeFloat(toRawPtr(ptr), value)
@@ -234,14 +235,14 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 51)
 
   object Double extends Tag[scala.Double] {
-    @inline final def size: Int      = 8
-    @inline final def alignment: Int = 8
-    @inline final override def load(
+    @alwaysinline def size: Int      = 8
+    @alwaysinline def alignment: Int = 8
+    @alwaysinline override def load(
         ptr: native.Ptr[scala.Double]): scala.Double =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 62)
       loadDouble(toRawPtr(ptr))
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 64)
-    @inline final override def store(ptr: native.Ptr[scala.Double],
+    @alwaysinline override def store(ptr: native.Ptr[scala.Double],
                                      value: scala.Double): Unit =
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 71)
       storeDouble(toRawPtr(ptr), value)
@@ -253,71 +254,71 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat0 extends Tag[native.Nat._0] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat1 extends Tag[native.Nat._1] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat2 extends Tag[native.Nat._2] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat3 extends Tag[native.Nat._3] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat4 extends Tag[native.Nat._4] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat5 extends Tag[native.Nat._5] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat6 extends Tag[native.Nat._6] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat7 extends Tag[native.Nat._7] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat8 extends Tag[native.Nat._8] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 78)
 
   object Nat9 extends Tag[native.Nat._9] {
-    @noinline final def size: Int      = throwUndefined()
-    @noinline final def alignment: Int = throwUndefined()
+    @noinline def size: Int      = throwUndefined()
+    @noinline def alignment: Int = throwUndefined()
   }
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 85)
@@ -412,14 +413,13 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 91)
 
-  final case class Digit[N <: native.Nat.Base, M <: native.Nat](n: Tag[N],
-                                                                m: Tag[M])
+  case class Digit[N <: native.Nat.Base, M <: native.Nat](n: Tag[N], m: Tag[M])
       extends Tag[native.Nat.Digit[N, M]] {
-    @inline final def size: Int      = throwUndefined()
-    @inline final def alignment: Int = throwUndefined()
+    @alwaysinline def size: Int      = throwUndefined()
+    @alwaysinline def alignment: Int = throwUndefined()
   }
 
-  final case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
+  case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
       extends Tag[native.CArray[T, N]]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 102)
       with Field1[native.CArray[T, N], T]
@@ -467,7 +467,7 @@ object Tag {
       with Field22[native.CArray[T, N], T]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 104)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var mul = 1
       def natToInt(tag: Tag[_]): Int = tag match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 109)
@@ -500,13 +500,13 @@ object Tag {
       }
       of.size * natToInt(n)
     }
-    @inline final def alignment: Int           = of.alignment
-    @inline override def offset(idx: Int): Int = of.size * idx
+    @alwaysinline def alignment: Int                 = of.alignment
+    @alwaysinline override def offset(idx: Int): Int = of.size * idx
   }
 
   private[scalanative] sealed trait CStruct
 
-  @inline private[scalanative] def align(offset: Int, alignment: Int) = {
+  @alwaysinline private[scalanative] def align(offset: Int, alignment: Int) = {
     val alignmentMask = alignment - 1
     val padding =
       if ((offset & alignmentMask) == 0) 0
@@ -516,22 +516,22 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct0()
+  case class CStruct0()
       extends Tag[native.CStruct0]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 170)
       case _ =>
         throwUndefined()
@@ -540,28 +540,28 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct1[T1](_1: Tag[T1])
+  case class CStruct1[T1](_1: Tag[T1])
       extends Tag[native.CStruct1[T1]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
       with Field1[native.CStruct1[T1], T1]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -575,7 +575,7 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct2[T1, T2](_1: Tag[T1], _2: Tag[T2])
+  case class CStruct2[T1, T2](_1: Tag[T1], _2: Tag[T2])
       extends Tag[native.CStruct2[T1, T2]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -584,7 +584,7 @@ object Tag {
       with Field2[native.CStruct2[T1, T2], T2]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -593,7 +593,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -602,7 +602,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -623,7 +623,7 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct3[T1, T2, T3](_1: Tag[T1], _2: Tag[T2], _3: Tag[T3])
+  case class CStruct3[T1, T2, T3](_1: Tag[T1], _2: Tag[T2], _3: Tag[T3])
       extends Tag[native.CStruct3[T1, T2, T3]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -634,7 +634,7 @@ object Tag {
       with Field3[native.CStruct3[T1, T2, T3], T3]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -645,7 +645,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -656,7 +656,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -686,10 +686,10 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct4[T1, T2, T3, T4](_1: Tag[T1],
-                                            _2: Tag[T2],
-                                            _3: Tag[T3],
-                                            _4: Tag[T4])
+  case class CStruct4[T1, T2, T3, T4](_1: Tag[T1],
+                                      _2: Tag[T2],
+                                      _3: Tag[T3],
+                                      _4: Tag[T4])
       extends Tag[native.CStruct4[T1, T2, T3, T4]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -702,7 +702,7 @@ object Tag {
       with Field4[native.CStruct4[T1, T2, T3, T4], T4]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -715,7 +715,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -728,7 +728,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -769,11 +769,11 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct5[T1, T2, T3, T4, T5](_1: Tag[T1],
-                                                _2: Tag[T2],
-                                                _3: Tag[T3],
-                                                _4: Tag[T4],
-                                                _5: Tag[T5])
+  case class CStruct5[T1, T2, T3, T4, T5](_1: Tag[T1],
+                                          _2: Tag[T2],
+                                          _3: Tag[T3],
+                                          _4: Tag[T4],
+                                          _5: Tag[T5])
       extends Tag[native.CStruct5[T1, T2, T3, T4, T5]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -788,7 +788,7 @@ object Tag {
       with Field5[native.CStruct5[T1, T2, T3, T4, T5], T5]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -803,7 +803,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -818,7 +818,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -872,12 +872,12 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct6[T1, T2, T3, T4, T5, T6](_1: Tag[T1],
-                                                    _2: Tag[T2],
-                                                    _3: Tag[T3],
-                                                    _4: Tag[T4],
-                                                    _5: Tag[T5],
-                                                    _6: Tag[T6])
+  case class CStruct6[T1, T2, T3, T4, T5, T6](_1: Tag[T1],
+                                              _2: Tag[T2],
+                                              _3: Tag[T3],
+                                              _4: Tag[T4],
+                                              _5: Tag[T5],
+                                              _6: Tag[T6])
       extends Tag[native.CStruct6[T1, T2, T3, T4, T5, T6]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -894,7 +894,7 @@ object Tag {
       with Field6[native.CStruct6[T1, T2, T3, T4, T5, T6], T6]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -911,7 +911,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -928,7 +928,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -997,13 +997,13 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct7[T1, T2, T3, T4, T5, T6, T7](_1: Tag[T1],
-                                                        _2: Tag[T2],
-                                                        _3: Tag[T3],
-                                                        _4: Tag[T4],
-                                                        _5: Tag[T5],
-                                                        _6: Tag[T6],
-                                                        _7: Tag[T7])
+  case class CStruct7[T1, T2, T3, T4, T5, T6, T7](_1: Tag[T1],
+                                                  _2: Tag[T2],
+                                                  _3: Tag[T3],
+                                                  _4: Tag[T4],
+                                                  _5: Tag[T5],
+                                                  _6: Tag[T6],
+                                                  _7: Tag[T7])
       extends Tag[native.CStruct7[T1, T2, T3, T4, T5, T6, T7]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -1022,7 +1022,7 @@ object Tag {
       with Field7[native.CStruct7[T1, T2, T3, T4, T5, T6, T7], T7]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -1041,7 +1041,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -1060,7 +1060,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -1146,14 +1146,14 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct8[T1, T2, T3, T4, T5, T6, T7, T8](_1: Tag[T1],
-                                                            _2: Tag[T2],
-                                                            _3: Tag[T3],
-                                                            _4: Tag[T4],
-                                                            _5: Tag[T5],
-                                                            _6: Tag[T6],
-                                                            _7: Tag[T7],
-                                                            _8: Tag[T8])
+  case class CStruct8[T1, T2, T3, T4, T5, T6, T7, T8](_1: Tag[T1],
+                                                      _2: Tag[T2],
+                                                      _3: Tag[T3],
+                                                      _4: Tag[T4],
+                                                      _5: Tag[T5],
+                                                      _6: Tag[T6],
+                                                      _7: Tag[T7],
+                                                      _8: Tag[T8])
       extends Tag[native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -1174,7 +1174,7 @@ object Tag {
       with Field8[native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8], T8]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -1195,7 +1195,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -1216,7 +1216,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -1321,15 +1321,15 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9](_1: Tag[T1],
-                                                                _2: Tag[T2],
-                                                                _3: Tag[T3],
-                                                                _4: Tag[T4],
-                                                                _5: Tag[T5],
-                                                                _6: Tag[T6],
-                                                                _7: Tag[T7],
-                                                                _8: Tag[T8],
-                                                                _9: Tag[T9])
+  case class CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9](_1: Tag[T1],
+                                                          _2: Tag[T2],
+                                                          _3: Tag[T3],
+                                                          _4: Tag[T4],
+                                                          _5: Tag[T5],
+                                                          _6: Tag[T6],
+                                                          _7: Tag[T7],
+                                                          _8: Tag[T8],
+                                                          _9: Tag[T9])
       extends Tag[native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -1352,7 +1352,7 @@ object Tag {
       with Field9[native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9], T9]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -1375,7 +1375,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -1398,7 +1398,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -1524,17 +1524,16 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
-      _1: Tag[T1],
-      _2: Tag[T2],
-      _3: Tag[T3],
-      _4: Tag[T4],
-      _5: Tag[T5],
-      _6: Tag[T6],
-      _7: Tag[T7],
-      _8: Tag[T8],
-      _9: Tag[T9],
-      _10: Tag[T10])
+  case class CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](_1: Tag[T1],
+                                                                _2: Tag[T2],
+                                                                _3: Tag[T3],
+                                                                _4: Tag[T4],
+                                                                _5: Tag[T5],
+                                                                _6: Tag[T6],
+                                                                _7: Tag[T7],
+                                                                _8: Tag[T8],
+                                                                _9: Tag[T9],
+                                                                _10: Tag[T10])
       extends Tag[native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]]
       with CStruct
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 144)
@@ -1560,7 +1559,7 @@ object Tag {
                    T10]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -1585,7 +1584,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -1610,7 +1609,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -1759,7 +1758,7 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
+  case class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
       _1: Tag[T1],
       _2: Tag[T2],
       _3: Tag[T3],
@@ -1820,7 +1819,7 @@ object Tag {
         T11]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -1847,7 +1846,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -1874,7 +1873,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -2048,7 +2047,7 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
+  case class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
       _1: Tag[T1],
       _2: Tag[T2],
       _3: Tag[T3],
@@ -2114,7 +2113,7 @@ object Tag {
         T12]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -2143,7 +2142,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -2172,7 +2171,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -2373,31 +2372,20 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct13[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13])
+  case class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
+      _1: Tag[T1],
+      _2: Tag[T2],
+      _3: Tag[T3],
+      _4: Tag[T4],
+      _5: Tag[T5],
+      _6: Tag[T6],
+      _7: Tag[T7],
+      _8: Tag[T8],
+      _9: Tag[T9],
+      _10: Tag[T10],
+      _11: Tag[T11],
+      _12: Tag[T12],
+      _13: Tag[T13])
       extends Tag[
         native.CStruct13[T1,
                          T2,
@@ -2610,7 +2598,7 @@ object Tag {
                    T13]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -2641,7 +2629,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -2672,7 +2660,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -2902,33 +2890,33 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct14[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14])
+  case class CStruct14[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14])
       extends Tag[
         native.CStruct14[T1,
                          T2,
@@ -3171,7 +3159,7 @@ object Tag {
                    T14]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -3204,7 +3192,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -3237,7 +3225,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -3498,35 +3486,35 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct15[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15])
+  case class CStruct15[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15])
       extends Tag[
         native.CStruct15[T1,
                          T2,
@@ -3801,7 +3789,7 @@ object Tag {
                    T15]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -3836,7 +3824,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -3871,7 +3859,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -4165,37 +4153,37 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct16[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16])
+  case class CStruct16[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16])
       extends Tag[
         native.CStruct16[T1,
                          T2,
@@ -4504,7 +4492,7 @@ object Tag {
                    T16]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -4541,7 +4529,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -4578,7 +4566,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -4907,39 +4895,39 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct17[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17])
+  case class CStruct17[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17])
       extends Tag[
         native.CStruct17[T1,
                          T2,
@@ -5284,7 +5272,7 @@ object Tag {
                    T17]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -5323,7 +5311,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -5362,7 +5350,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -5728,41 +5716,41 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct18[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17,
-                             T18](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17],
-                                  _18: Tag[T18])
+  case class CStruct18[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17,
+                       T18](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17],
+                            _18: Tag[T18])
       extends Tag[
         native.CStruct18[T1,
                          T2,
@@ -6145,7 +6133,7 @@ object Tag {
                    T18]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -6186,7 +6174,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -6227,7 +6215,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -6632,43 +6620,43 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct19[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17,
-                             T18,
-                             T19](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17],
-                                  _18: Tag[T18],
-                                  _19: Tag[T19])
+  case class CStruct19[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17,
+                       T18,
+                       T19](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17],
+                            _18: Tag[T18],
+                            _19: Tag[T19])
       extends Tag[
         native.CStruct19[T1,
                          T2,
@@ -7091,7 +7079,7 @@ object Tag {
                    T19]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -7134,7 +7122,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -7177,7 +7165,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -7623,45 +7611,45 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct20[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17,
-                             T18,
-                             T19,
-                             T20](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17],
-                                  _18: Tag[T18],
-                                  _19: Tag[T19],
-                                  _20: Tag[T20])
+  case class CStruct20[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17,
+                       T18,
+                       T19,
+                       T20](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17],
+                            _18: Tag[T18],
+                            _19: Tag[T19],
+                            _20: Tag[T20])
       extends Tag[
         native.CStruct20[T1,
                          T2,
@@ -8126,7 +8114,7 @@ object Tag {
                    T20]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -8171,7 +8159,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -8216,7 +8204,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -8705,47 +8693,47 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct21[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17,
-                             T18,
-                             T19,
-                             T20,
-                             T21](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17],
-                                  _18: Tag[T18],
-                                  _19: Tag[T19],
-                                  _20: Tag[T20],
-                                  _21: Tag[T21])
+  case class CStruct21[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17,
+                       T18,
+                       T19,
+                       T20,
+                       T21](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17],
+                            _18: Tag[T18],
+                            _19: Tag[T19],
+                            _20: Tag[T20],
+                            _21: Tag[T21])
       extends Tag[
         native.CStruct21[T1,
                          T2,
@@ -9254,7 +9242,7 @@ object Tag {
                    T21]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -9301,7 +9289,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -9348,7 +9336,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -9882,49 +9870,49 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 139)
 
-  final case class CStruct22[T1,
-                             T2,
-                             T3,
-                             T4,
-                             T5,
-                             T6,
-                             T7,
-                             T8,
-                             T9,
-                             T10,
-                             T11,
-                             T12,
-                             T13,
-                             T14,
-                             T15,
-                             T16,
-                             T17,
-                             T18,
-                             T19,
-                             T20,
-                             T21,
-                             T22](_1: Tag[T1],
-                                  _2: Tag[T2],
-                                  _3: Tag[T3],
-                                  _4: Tag[T4],
-                                  _5: Tag[T5],
-                                  _6: Tag[T6],
-                                  _7: Tag[T7],
-                                  _8: Tag[T8],
-                                  _9: Tag[T9],
-                                  _10: Tag[T10],
-                                  _11: Tag[T11],
-                                  _12: Tag[T12],
-                                  _13: Tag[T13],
-                                  _14: Tag[T14],
-                                  _15: Tag[T15],
-                                  _16: Tag[T16],
-                                  _17: Tag[T17],
-                                  _18: Tag[T18],
-                                  _19: Tag[T19],
-                                  _20: Tag[T20],
-                                  _21: Tag[T21],
-                                  _22: Tag[T22])
+  case class CStruct22[T1,
+                       T2,
+                       T3,
+                       T4,
+                       T5,
+                       T6,
+                       T7,
+                       T8,
+                       T9,
+                       T10,
+                       T11,
+                       T12,
+                       T13,
+                       T14,
+                       T15,
+                       T16,
+                       T17,
+                       T18,
+                       T19,
+                       T20,
+                       T21,
+                       T22](_1: Tag[T1],
+                            _2: Tag[T2],
+                            _3: Tag[T3],
+                            _4: Tag[T4],
+                            _5: Tag[T5],
+                            _6: Tag[T6],
+                            _7: Tag[T7],
+                            _8: Tag[T8],
+                            _9: Tag[T9],
+                            _10: Tag[T10],
+                            _11: Tag[T11],
+                            _12: Tag[T12],
+                            _13: Tag[T13],
+                            _14: Tag[T14],
+                            _15: Tag[T15],
+                            _16: Tag[T16],
+                            _17: Tag[T17],
+                            _18: Tag[T18],
+                            _19: Tag[T19],
+                            _20: Tag[T20],
+                            _21: Tag[T21],
+                            _22: Tag[T22])
       extends Tag[
         native.CStruct22[T1,
                          T2,
@@ -10479,7 +10467,7 @@ object Tag {
                    T22]
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 146)
       {
-    final def size: Int = {
+    @alwaysinline def size: Int = {
       var res = 0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 150)
       res = align(res, _1.alignment) + _1.size
@@ -10528,7 +10516,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 152)
       align(res, alignment)
     }
-    final def alignment: Int = {
+    @alwaysinline def alignment: Int = {
       var res = 1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 157)
       res = res max _1.alignment
@@ -10577,7 +10565,7 @@ object Tag {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 159)
       res
     }
-    override def offset(idx: Int): Int = idx match {
+    @alwaysinline override def offset(idx: Int): Int = idx match {
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 163)
       case 0 =>
         var res = 0
@@ -11158,114 +11146,120 @@ object Tag {
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 176)
 
-  implicit def materializePtrTag[T](implicit tag: Tag[T]): Tag[native.Ptr[T]] =
+  @alwaysinline implicit def materializePtrTag[T](
+      implicit tag: Tag[T]): Tag[native.Ptr[T]] =
     Tag.Ptr(tag)
-  implicit def materializeClassTag[T <: AnyRef: ClassTag]: Tag[T] =
+  @alwaysinline implicit def materializeClassTag[T <: AnyRef: ClassTag]
+    : Tag[T] =
     Tag.Class(
       implicitly[ClassTag[T]].runtimeClass.asInstanceOf[java.lang.Class[T]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeUnitTag: Tag[scala.Unit] =
+  @alwaysinline implicit def materializeUnitTag: Tag[scala.Unit] =
     Unit
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeBooleanTag: Tag[scala.Boolean] =
+  @alwaysinline implicit def materializeBooleanTag: Tag[scala.Boolean] =
     Boolean
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeCharTag: Tag[scala.Char] =
+  @alwaysinline implicit def materializeCharTag: Tag[scala.Char] =
     Char
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeByteTag: Tag[scala.Byte] =
+  @alwaysinline implicit def materializeByteTag: Tag[scala.Byte] =
     Byte
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeUByteTag: Tag[native.UByte] =
+  @alwaysinline implicit def materializeUByteTag: Tag[native.UByte] =
     UByte
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeShortTag: Tag[scala.Short] =
+  @alwaysinline implicit def materializeShortTag: Tag[scala.Short] =
     Short
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeUShortTag: Tag[native.UShort] =
+  @alwaysinline implicit def materializeUShortTag: Tag[native.UShort] =
     UShort
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeIntTag: Tag[scala.Int] =
+  @alwaysinline implicit def materializeIntTag: Tag[scala.Int] =
     Int
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeUIntTag: Tag[native.UInt] =
+  @alwaysinline implicit def materializeUIntTag: Tag[native.UInt] =
     UInt
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeLongTag: Tag[scala.Long] =
+  @alwaysinline implicit def materializeLongTag: Tag[scala.Long] =
     Long
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeULongTag: Tag[native.ULong] =
+  @alwaysinline implicit def materializeULongTag: Tag[native.ULong] =
     ULong
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeFloatTag: Tag[scala.Float] =
+  @alwaysinline implicit def materializeFloatTag: Tag[scala.Float] =
     Float
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 182)
-  implicit def materializeDoubleTag: Tag[scala.Double] =
+  @alwaysinline implicit def materializeDoubleTag: Tag[scala.Double] =
     Double
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat0Tag: Tag[native.Nat._0] =
+  @alwaysinline implicit def materializeNat0Tag: Tag[native.Nat._0] =
     Nat0
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat1Tag: Tag[native.Nat._1] =
+  @alwaysinline implicit def materializeNat1Tag: Tag[native.Nat._1] =
     Nat1
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat2Tag: Tag[native.Nat._2] =
+  @alwaysinline implicit def materializeNat2Tag: Tag[native.Nat._2] =
     Nat2
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat3Tag: Tag[native.Nat._3] =
+  @alwaysinline implicit def materializeNat3Tag: Tag[native.Nat._3] =
     Nat3
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat4Tag: Tag[native.Nat._4] =
+  @alwaysinline implicit def materializeNat4Tag: Tag[native.Nat._4] =
     Nat4
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat5Tag: Tag[native.Nat._5] =
+  @alwaysinline implicit def materializeNat5Tag: Tag[native.Nat._5] =
     Nat5
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat6Tag: Tag[native.Nat._6] =
+  @alwaysinline implicit def materializeNat6Tag: Tag[native.Nat._6] =
     Nat6
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat7Tag: Tag[native.Nat._7] =
+  @alwaysinline implicit def materializeNat7Tag: Tag[native.Nat._7] =
     Nat7
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat8Tag: Tag[native.Nat._8] =
+  @alwaysinline implicit def materializeNat8Tag: Tag[native.Nat._8] =
     Nat8
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
-  implicit def materializeNat9Tag: Tag[native.Nat._9] =
+  @alwaysinline implicit def materializeNat9Tag: Tag[native.Nat._9] =
     Nat9
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 189)
-  implicit def materializeNatDigitTag[N <: native.Nat.Base: Tag,
-                                      M <: native.Nat: Tag]
+  @alwaysinline implicit def materializeNatDigitTag[N <: native.Nat.Base: Tag,
+                                                    M <: native.Nat: Tag]
     : Tag[native.Nat.Digit[N, M]] =
     Tag.Digit(implicitly[Tag[N]], implicitly[Tag[M]])
-  implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]
+  @alwaysinline implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]
     : Tag.CArray[T, N] =
     Tag.CArray(implicitly[Tag[T]], implicitly[Tag[N]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct0Tag: Tag.CStruct0 =
+  @alwaysinline implicit def materializeCStruct0Tag: Tag.CStruct0 =
     Tag.CStruct0()
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct1Tag[T1: Tag]: Tag.CStruct1[T1] =
+  @alwaysinline implicit def materializeCStruct1Tag[T1: Tag]: Tag.CStruct1[T1] =
     Tag.CStruct1(implicitly[Tag[T1]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct2Tag[T1: Tag, T2: Tag]: Tag.CStruct2[T1, T2] =
+  @alwaysinline implicit def materializeCStruct2Tag[T1: Tag, T2: Tag]
+    : Tag.CStruct2[T1, T2] =
     Tag.CStruct2(implicitly[Tag[T1]], implicitly[Tag[T2]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct3Tag[T1: Tag, T2: Tag, T3: Tag]
+  @alwaysinline implicit def materializeCStruct3Tag[T1: Tag, T2: Tag, T3: Tag]
     : Tag.CStruct3[T1, T2, T3] =
     Tag.CStruct3(implicitly[Tag[T1]], implicitly[Tag[T2]], implicitly[Tag[T3]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct4Tag[T1: Tag, T2: Tag, T3: Tag, T4: Tag]
+  @alwaysinline implicit def materializeCStruct4Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag]
     : Tag.CStruct4[T1, T2, T3, T4] =
     Tag.CStruct4(implicitly[Tag[T1]],
                  implicitly[Tag[T2]],
                  implicitly[Tag[T3]],
                  implicitly[Tag[T4]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct5Tag[T1: Tag,
-                                      T2: Tag,
-                                      T3: Tag,
-                                      T4: Tag,
-                                      T5: Tag]
+  @alwaysinline implicit def materializeCStruct5Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag,
+                                                    T5: Tag]
     : Tag.CStruct5[T1, T2, T3, T4, T5] =
     Tag.CStruct5(implicitly[Tag[T1]],
                  implicitly[Tag[T2]],
@@ -11273,12 +11267,12 @@ object Tag {
                  implicitly[Tag[T4]],
                  implicitly[Tag[T5]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct6Tag[T1: Tag,
-                                      T2: Tag,
-                                      T3: Tag,
-                                      T4: Tag,
-                                      T5: Tag,
-                                      T6: Tag]
+  @alwaysinline implicit def materializeCStruct6Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag,
+                                                    T5: Tag,
+                                                    T6: Tag]
     : Tag.CStruct6[T1, T2, T3, T4, T5, T6] =
     Tag.CStruct6(implicitly[Tag[T1]],
                  implicitly[Tag[T2]],
@@ -11287,13 +11281,13 @@ object Tag {
                  implicitly[Tag[T5]],
                  implicitly[Tag[T6]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct7Tag[T1: Tag,
-                                      T2: Tag,
-                                      T3: Tag,
-                                      T4: Tag,
-                                      T5: Tag,
-                                      T6: Tag,
-                                      T7: Tag]
+  @alwaysinline implicit def materializeCStruct7Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag,
+                                                    T5: Tag,
+                                                    T6: Tag,
+                                                    T7: Tag]
     : Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7] =
     Tag.CStruct7(implicitly[Tag[T1]],
                  implicitly[Tag[T2]],
@@ -11303,14 +11297,14 @@ object Tag {
                  implicitly[Tag[T6]],
                  implicitly[Tag[T7]])
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct8Tag[T1: Tag,
-                                      T2: Tag,
-                                      T3: Tag,
-                                      T4: Tag,
-                                      T5: Tag,
-                                      T6: Tag,
-                                      T7: Tag,
-                                      T8: Tag]
+  @alwaysinline implicit def materializeCStruct8Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag,
+                                                    T5: Tag,
+                                                    T6: Tag,
+                                                    T7: Tag,
+                                                    T8: Tag]
     : Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8] =
     Tag.CStruct8(
       implicitly[Tag[T1]],
@@ -11323,15 +11317,15 @@ object Tag {
       implicitly[Tag[T8]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct9Tag[T1: Tag,
-                                      T2: Tag,
-                                      T3: Tag,
-                                      T4: Tag,
-                                      T5: Tag,
-                                      T6: Tag,
-                                      T7: Tag,
-                                      T8: Tag,
-                                      T9: Tag]
+  @alwaysinline implicit def materializeCStruct9Tag[T1: Tag,
+                                                    T2: Tag,
+                                                    T3: Tag,
+                                                    T4: Tag,
+                                                    T5: Tag,
+                                                    T6: Tag,
+                                                    T7: Tag,
+                                                    T8: Tag,
+                                                    T9: Tag]
     : Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9] =
     Tag.CStruct9(
       implicitly[Tag[T1]],
@@ -11345,16 +11339,16 @@ object Tag {
       implicitly[Tag[T9]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct10Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag]
+  @alwaysinline implicit def materializeCStruct10Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag]
     : Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] =
     Tag.CStruct10(
       implicitly[Tag[T1]],
@@ -11369,17 +11363,17 @@ object Tag {
       implicitly[Tag[T10]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct11Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag]
+  @alwaysinline implicit def materializeCStruct11Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag]
     : Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] =
     Tag.CStruct11(
       implicitly[Tag[T1]],
@@ -11395,18 +11389,18 @@ object Tag {
       implicitly[Tag[T11]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct12Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag]
+  @alwaysinline implicit def materializeCStruct12Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag]
     : Tag.CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] =
     Tag.CStruct12(
       implicitly[Tag[T1]],
@@ -11423,19 +11417,19 @@ object Tag {
       implicitly[Tag[T12]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct13Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag]
+  @alwaysinline implicit def materializeCStruct13Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag]
     : Tag.CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] =
     Tag.CStruct13(
       implicitly[Tag[T1]],
@@ -11453,33 +11447,34 @@ object Tag {
       implicitly[Tag[T13]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct14Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag]: Tag.CStruct14[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14] =
+  @alwaysinline implicit def materializeCStruct14Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag]
+    : Tag.CStruct14[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14] =
     Tag.CStruct14(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11497,35 +11492,36 @@ object Tag {
       implicitly[Tag[T14]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct15Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag]: Tag.CStruct15[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15] =
+  @alwaysinline implicit def materializeCStruct15Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag]
+    : Tag.CStruct15[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15] =
     Tag.CStruct15(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11544,37 +11540,38 @@ object Tag {
       implicitly[Tag[T15]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct16Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag]: Tag.CStruct16[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16] =
+  @alwaysinline implicit def materializeCStruct16Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag]
+    : Tag.CStruct16[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16] =
     Tag.CStruct16(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11594,39 +11591,40 @@ object Tag {
       implicitly[Tag[T16]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct17Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag]: Tag.CStruct17[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17] =
+  @alwaysinline implicit def materializeCStruct17Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag]
+    : Tag.CStruct17[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17] =
     Tag.CStruct17(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11647,41 +11645,42 @@ object Tag {
       implicitly[Tag[T17]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct18Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag,
-                                       T18: Tag]: Tag.CStruct18[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17,
-                                                                T18] =
+  @alwaysinline implicit def materializeCStruct18Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag,
+                                                     T18: Tag]
+    : Tag.CStruct18[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17,
+                    T18] =
     Tag.CStruct18(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11703,43 +11702,44 @@ object Tag {
       implicitly[Tag[T18]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct19Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag,
-                                       T18: Tag,
-                                       T19: Tag]: Tag.CStruct19[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17,
-                                                                T18,
-                                                                T19] =
+  @alwaysinline implicit def materializeCStruct19Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag,
+                                                     T18: Tag,
+                                                     T19: Tag]
+    : Tag.CStruct19[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17,
+                    T18,
+                    T19] =
     Tag.CStruct19(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11762,45 +11762,46 @@ object Tag {
       implicitly[Tag[T19]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct20Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag,
-                                       T18: Tag,
-                                       T19: Tag,
-                                       T20: Tag]: Tag.CStruct20[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17,
-                                                                T18,
-                                                                T19,
-                                                                T20] =
+  @alwaysinline implicit def materializeCStruct20Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag,
+                                                     T18: Tag,
+                                                     T19: Tag,
+                                                     T20: Tag]
+    : Tag.CStruct20[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17,
+                    T18,
+                    T19,
+                    T20] =
     Tag.CStruct20(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11824,47 +11825,48 @@ object Tag {
       implicitly[Tag[T20]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct21Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag,
-                                       T18: Tag,
-                                       T19: Tag,
-                                       T20: Tag,
-                                       T21: Tag]: Tag.CStruct21[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17,
-                                                                T18,
-                                                                T19,
-                                                                T20,
-                                                                T21] =
+  @alwaysinline implicit def materializeCStruct21Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag,
+                                                     T18: Tag,
+                                                     T19: Tag,
+                                                     T20: Tag,
+                                                     T21: Tag]
+    : Tag.CStruct21[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17,
+                    T18,
+                    T19,
+                    T20,
+                    T21] =
     Tag.CStruct21(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
@@ -11889,49 +11891,50 @@ object Tag {
       implicitly[Tag[T21]]
     )
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
-  implicit def materializeCStruct22Tag[T1: Tag,
-                                       T2: Tag,
-                                       T3: Tag,
-                                       T4: Tag,
-                                       T5: Tag,
-                                       T6: Tag,
-                                       T7: Tag,
-                                       T8: Tag,
-                                       T9: Tag,
-                                       T10: Tag,
-                                       T11: Tag,
-                                       T12: Tag,
-                                       T13: Tag,
-                                       T14: Tag,
-                                       T15: Tag,
-                                       T16: Tag,
-                                       T17: Tag,
-                                       T18: Tag,
-                                       T19: Tag,
-                                       T20: Tag,
-                                       T21: Tag,
-                                       T22: Tag]: Tag.CStruct22[T1,
-                                                                T2,
-                                                                T3,
-                                                                T4,
-                                                                T5,
-                                                                T6,
-                                                                T7,
-                                                                T8,
-                                                                T9,
-                                                                T10,
-                                                                T11,
-                                                                T12,
-                                                                T13,
-                                                                T14,
-                                                                T15,
-                                                                T16,
-                                                                T17,
-                                                                T18,
-                                                                T19,
-                                                                T20,
-                                                                T21,
-                                                                T22] =
+  @alwaysinline implicit def materializeCStruct22Tag[T1: Tag,
+                                                     T2: Tag,
+                                                     T3: Tag,
+                                                     T4: Tag,
+                                                     T5: Tag,
+                                                     T6: Tag,
+                                                     T7: Tag,
+                                                     T8: Tag,
+                                                     T9: Tag,
+                                                     T10: Tag,
+                                                     T11: Tag,
+                                                     T12: Tag,
+                                                     T13: Tag,
+                                                     T14: Tag,
+                                                     T15: Tag,
+                                                     T16: Tag,
+                                                     T17: Tag,
+                                                     T18: Tag,
+                                                     T19: Tag,
+                                                     T20: Tag,
+                                                     T21: Tag,
+                                                     T22: Tag]
+    : Tag.CStruct22[T1,
+                    T2,
+                    T3,
+                    T4,
+                    T5,
+                    T6,
+                    T7,
+                    T8,
+                    T9,
+                    T10,
+                    T11,
+                    T12,
+                    T13,
+                    T14,
+                    T15,
+                    T16,
+                    T17,
+                    T18,
+                    T19,
+                    T20,
+                    T21,
+                    T22] =
     Tag.CStruct22(
       implicitly[Tag[T1]],
       implicitly[Tag[T2]],
