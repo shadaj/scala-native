@@ -25,8 +25,8 @@ final class Ptr[T](private[scalanative] val rawptr: RawPtr) {
   @alwaysinline def toInt: scala.Int =
     Intrinsics.castRawPtrToInt(rawptr)
 
-  @alwaysinline def toLong: scala.Int =
-    Intrinsics.castRawPtrToInt(rawptr)
+  @alwaysinline def toLong: scala.Long =
+    Intrinsics.castRawPtrToLong(rawptr)
 
   @alwaysinline def unary_!(implicit tag: Tag[T]): T =
     tag.load(this)
