@@ -154,7 +154,7 @@ object Tag {
     @alwaysinline def alignment: Int = {
       var res = 1
       % for i in range(1, N + 1):
-      res = res max _${i}.alignment
+      res = Math.max(res, _${i}.alignment)
       % end
       res
     }
