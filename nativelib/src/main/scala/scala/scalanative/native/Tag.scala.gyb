@@ -127,6 +127,14 @@ object Tag {
     @alwaysinline def size: Int = of.size * n.asInstanceOf[NatTag].toInt
     @alwaysinline def alignment: Int = of.alignment
     @alwaysinline override def offset(idx: Int): Int = of.size * idx
+    @alwaysinline override def load(ptr: native.Ptr[native.CArray[T, N]]): native.CArray[T, N] = {
+      new native.CArray[T, N](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[native.CArray[T, N]], value: native.CArray[T, N]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
+    }
   }
 
   private[scalanative] sealed trait StructTag

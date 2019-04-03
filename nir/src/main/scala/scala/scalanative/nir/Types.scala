@@ -93,6 +93,7 @@ object Type {
     Type.Ref(Global.Top("scala.scalanative.native.UShort")) -> Type.Short,
     Type.Ref(Global.Top("scala.scalanative.native.UInt"))   -> Type.Int,
     Type.Ref(Global.Top("scala.scalanative.native.ULong"))  -> Type.Long,
+    Type.Ref(Global.Top("scala.scalanative.native.CArray")) -> Type.Ptr,
     Type.Ref(Global.Top("scala.scalanative.native.Ptr"))    -> Type.Ptr,
     Type.Ref(Global.Top("java.lang.Boolean"))               -> Type.Bool,
     Type.Ref(Global.Top("java.lang.Character"))             -> Type.Char,
@@ -114,6 +115,13 @@ object Type {
     case _ =>
       unreachable
   }.toSeq
+
+  def isPtrBox(ty: Type): Boolean = ty match {
+    case refty: Type.RefKind =>
+      box.get(Type.Ref(refty.className)) == Some(Type.Ptr)
+    case _ =>
+      false
+  }
 
   val typeToArray = Map[Type, Global](
     Type.Bool    -> Global.Top("scala.scalanative.runtime.BooleanArray"),

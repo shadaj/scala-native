@@ -20,7 +20,7 @@ final class Ptr[T](private[scalanative] val rawptr: RawPtr) {
         false
     })
 
-  @alwaysinline override def toString: String =
+  override def toString: String =
     "Ptr@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
   @alwaysinline def toInt: scala.Int =

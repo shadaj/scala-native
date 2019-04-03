@@ -10,6 +10,8 @@ object Boxes {
   @inline def boxToULong(v: Long): ULong    = new ULong(v)
   @inline def boxToPtr[T](v: RawPtr): Ptr[T] =
     if (v == null) null else new Ptr[T](v)
+  @inline def boxToCArray[T, N <: Nat](v: RawPtr): CArray[T, N] =
+    if (v == null) null else new CArray[T, N](v)
 
   @inline def unboxToUByte(o: java.lang.Object): Byte =
     if (o == null) 0.toByte
@@ -25,4 +27,6 @@ object Boxes {
     else o.asInstanceOf[ULong].underlying
   @inline def unboxToPtr(o: java.lang.Object): RawPtr =
     if (o == null) null else o.asInstanceOf[Ptr[_]].rawptr
+  @inline def unboxToCArray(o: java.lang.Object): RawPtr =
+    if (o == null) null else o.asInstanceOf[CArray[_, _]].rawptr
 }

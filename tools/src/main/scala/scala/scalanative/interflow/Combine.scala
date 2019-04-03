@@ -426,18 +426,14 @@ trait Combine { self: Interflow =>
       case (Ine, Val.Null, v @ Of(ty: Type.RefKind)) if !ty.isNullable =>
         Val.True
 
-      // Boxed pointer is null if underlying pointer is null.
-      case (Ieq, DelayedRef(Op.Box(refty: Type.RefKind, x)), Val.Null)
-          if refty.className == Rt.BoxedPtr.name =>
+      // Ptr boxes are null if underlying pointer is null.
+      case (Ieq, DelayedRef(Op.Box(ty, x)), Val.Null) if Type.isPtrBox(ty) =>
         combine(Ieq, Type.Ptr, x, Val.Null)
-      case (Ieq, Val.Null, DelayedRef(Op.Box(refty: Type.RefKind, x)))
-          if refty.className == Rt.BoxedPtr.name =>
+      case (Ieq, Val.Null, DelayedRef(Op.Box(ty, x))) if Type.isPtrBox(ty) =>
         combine(Ieq, Type.Ptr, x, Val.Null)
-      case (Ine, DelayedRef(Op.Box(refty: Type.RefKind, x)), Val.Null)
-          if refty.className == Rt.BoxedPtr.name =>
+      case (Ine, DelayedRef(Op.Box(ty, x)), Val.Null) if Type.isPtrBox(ty) =>
         combine(Ine, Type.Ptr, x, Val.Null)
-      case (Ine, Val.Null, DelayedRef(Op.Box(refty: Type.RefKind, x)))
-          if refty.className == Rt.BoxedPtr.name =>
+      case (Ine, Val.Null, DelayedRef(Op.Box(ty, x))) if Type.isPtrBox(ty) =>
         combine(Ine, Type.Ptr, x, Val.Null)
 
       // Comparing two non-null module references will
