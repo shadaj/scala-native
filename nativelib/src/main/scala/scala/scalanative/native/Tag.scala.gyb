@@ -74,11 +74,40 @@ object Tag {
 
   % end
 
+  private[scalanative] sealed trait NatTag {
+    def toInt: Int 
+  }
+
   % for N in range(0, 10):
 
-  object Nat${N} extends Tag[native.Nat._${N}] {
+  object Nat${N} extends Tag[native.Nat._${N}] with NatTag {
     @noinline def size: Int = throwUndefined()
     @noinline def alignment: Int = throwUndefined()
+    @alwaysinline def toInt: Int = ${N}
+  }
+
+  % end
+
+  % for N in range(2, 10):
+  %   Ns      = ["N" + str(i) for i in range(1, N + 1)]
+  %   BoundNs = "[" + ", ".join(N + " <: Nat.Base" for N in Ns) + "]"
+  %   JustNs  = "[" + ", ".join(Ns) + "]"
+  %   TagNs   = ["Tag[{}]".format(N) for N in Ns]
+  %   args    = ", ".join("_{}: {}".format(i + 1, T) for (i, T) in enumerate(TagNs))
+
+  case class Digit${N}${BoundNs}(${args})
+      extends Tag[native.Nat.Digit${N}${JustNs}]
+      with NatTag
+  {
+    @alwaysinline def size: Int = throwUndefined()
+    @alwaysinline def alignment: Int = throwUndefined()
+    @alwaysinline def toInt: Int = {
+      var res = 0
+      % for i in range(1, N + 1): 
+      res = res * 10 + _${i}.asInstanceOf[NatTag].toInt
+      % end
+      res
+    }
   }
 
   % end
@@ -89,39 +118,18 @@ object Tag {
 
   % end
 
-  case class Digit[N <: native.Nat.Base, M <: native.Nat](n: Tag[N], m: Tag[M])
-      extends Tag[native.Nat.Digit[N, M]]
-  {
-    @alwaysinline def size: Int = throwUndefined()
-    @alwaysinline def alignment: Int = throwUndefined()
-  }
-
   case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
       extends Tag[native.CArray[T, N]]
   % for N in range(1, 23):
       with Field${N}[native.CArray[T, N], T]
   % end
   {
-    @alwaysinline def size: Int = {
-      var mul = 1
-      def natToInt(tag: Tag[_]): Int = tag match {
-        % for N in range(0, 10):
-        case Tag.Nat${N} => ${N}
-        % end
-        case Tag.Digit(n, m) =>
-          val mint = natToInt(m)
-          mul *= 10
-          natToInt(n) * mul + mint
-        case _ =>
-          throwUndefined()
-      }
-      of.size * natToInt(n)
-    }
+    @alwaysinline def size: Int = of.size * n.asInstanceOf[NatTag].toInt
     @alwaysinline def alignment: Int = of.alignment
     @alwaysinline override def offset(idx: Int): Int = of.size * idx
   }
 
-  private[scalanative] sealed trait CStruct
+  private[scalanative] sealed trait StructTag
 
   @alwaysinline private[scalanative] def align(offset: Int, alignment: Int) = {
     val alignmentMask = alignment - 1
@@ -139,7 +147,7 @@ object Tag {
 
   case class CStruct${N}${JustTs}(${args})
     extends Tag[native.CStruct${N}${JustTs}]
-    with CStruct
+    with StructTag
   % for M in range(1, N + 1):
     with Field${M}[native.CStruct${N}${JustTs}, ${Ts[M - 1]}]
   % end
@@ -186,10 +194,14 @@ object Tag {
   @alwaysinline implicit def materializeNat${N}Tag: Tag[native.Nat._${N}] =
     Nat${N}
   %end
-  @alwaysinline implicit def materializeNatDigitTag[N <: native.Nat.Base: Tag, M <: native.Nat: Tag]: Tag[native.Nat.Digit[N, M]] =
-    Tag.Digit(implicitly[Tag[N]], implicitly[Tag[M]])
-  @alwaysinline implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]: Tag.CArray[T, N] =
-    Tag.CArray(implicitly[Tag[T]], implicitly[Tag[N]])
+  % for N in range(2, 10):
+  %   Ns      = ["N" + str(i) for i in range(1, N + 1)]
+  %   BoundNs = "[" + ", ".join(N + " <: Nat.Base : Tag" for N in Ns) + "]"
+  %   JustNs  = "[" + ", ".join(Ns) + "]"
+  %   tags    = ", ".join("implicitly[Tag[{}]]".format(N) for N in Ns)
+  @alwaysinline implicit def materializeNatDigit${N}Tag${BoundNs}: Tag.Digit${N}${JustNs} =
+    Tag.Digit${N}(${tags})
+  % end
   % for N in range(0, 23):
   %   Ts      = ["T" + str(i) for i in range(1, N + 1)]
   %   BoundTs = "" if N == 0 else "[" + ", ".join(map(lambda T: T + ": Tag", Ts)) + "]"
@@ -198,4 +210,6 @@ object Tag {
   @alwaysinline implicit def materializeCStruct${N}Tag${BoundTs}: Tag.CStruct${N}${JustTs} =
     Tag.CStruct${N}(${tags})
   % end
+  @alwaysinline implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]: Tag.CArray[T, N] =
+    Tag.CArray(implicitly[Tag[T]], implicitly[Tag[N]])
 }

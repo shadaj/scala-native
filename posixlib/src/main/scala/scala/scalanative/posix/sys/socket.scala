@@ -8,7 +8,7 @@ import scalanative.native._
 object socket {
   type socklen_t   = CUnsignedInt
   type sa_family_t = CUnsignedShort
-  type _14         = Nat.Digit[Nat._1, Nat._4]
+  type _14         = Nat.Digit2[Nat._1, Nat._4]
   type sockaddr =
     CStruct2[sa_family_t, // sa_family
              CArray[CChar, _14]] // sa_data, size = 14 in OS X and Linux

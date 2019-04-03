@@ -1,10 +1,11 @@
 package scala.scalanative.posix.sys
 
 import scala.scalanative.native._
+import scala.scalanative.native.Nat._
 
 @extern
 object utsname {
-  type _256        = Nat.Digit[Nat._2, Nat.Digit[Nat._5, Nat._6]]
+  type _256        = Digit3[_2, _5, _6]
   private type str = CArray[Byte, _256]
   type utsname     = CStruct5[str, str, str, str, str]
   @extern def uname(utsname: Ptr[utsname]): CInt = extern
