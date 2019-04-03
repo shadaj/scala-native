@@ -791,6 +791,16 @@ object Tag {
       case _ =>
         throwUndefined()
     }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct0]): native.CStruct0 = {
+      new native.CStruct0(ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[native.CStruct0],
+                                     value: native.CStruct0): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
+    }
   }
 
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 155)
@@ -825,6 +835,16 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct1[T1]]): native.CStruct1[T1] = {
+      new native.CStruct1[T1](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[native.CStruct1[T1]],
+                                     value: native.CStruct1[T1]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -873,6 +893,16 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct2[T1, T2]]): native.CStruct2[T1, T2] = {
+      new native.CStruct2[T1, T2](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[native.CStruct2[T1, T2]],
+                                     value: native.CStruct2[T1, T2]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -936,6 +966,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct3[T1, T2, T3]])
+      : native.CStruct3[T1, T2, T3] = {
+      new native.CStruct3[T1, T2, T3](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct3[T1, T2, T3]],
+        value: native.CStruct3[T1, T2, T3]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1019,6 +1061,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct4[T1, T2, T3, T4]])
+      : native.CStruct4[T1, T2, T3, T4] = {
+      new native.CStruct4[T1, T2, T3, T4](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct4[T1, T2, T3, T4]],
+        value: native.CStruct4[T1, T2, T3, T4]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1122,6 +1176,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct5[T1, T2, T3, T4, T5]])
+      : native.CStruct5[T1, T2, T3, T4, T5] = {
+      new native.CStruct5[T1, T2, T3, T4, T5](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct5[T1, T2, T3, T4, T5]],
+        value: native.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1247,6 +1313,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct6[T1, T2, T3, T4, T5, T6]])
+      : native.CStruct6[T1, T2, T3, T4, T5, T6] = {
+      new native.CStruct6[T1, T2, T3, T4, T5, T6](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct6[T1, T2, T3, T4, T5, T6]],
+        value: native.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1396,6 +1474,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct7[T1, T2, T3, T4, T5, T6, T7]])
+      : native.CStruct7[T1, T2, T3, T4, T5, T6, T7] = {
+      new native.CStruct7[T1, T2, T3, T4, T5, T6, T7](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct7[T1, T2, T3, T4, T5, T6, T7]],
+        value: native.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1571,6 +1661,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]])
+      : native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8] = {
+      new native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]],
+        value: native.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -1774,6 +1876,18 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]])
+      : native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9] = {
+      new native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]],
+        value: native.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -2008,6 +2122,21 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]])
+      : native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] = {
+      new native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[
+          native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]],
+        value: native.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+      : Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -2297,6 +2426,22 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]])
+      : native.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] = {
+      new native.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
+        ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[
+          native.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]],
+        value: native.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
+      : Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -2622,6 +2767,32 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]])
+      : native.CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] = {
+      new native.CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
+        ptr.rawptr)
+    }
+    @alwaysinline override def store(
+        ptr: native.Ptr[
+          native.CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]],
+        value: native.CStruct12[T1,
+                                T2,
+                                T3,
+                                T4,
+                                T5,
+                                T6,
+                                T7,
+                                T8,
+                                T9,
+                                T10,
+                                T11,
+                                T12]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -3140,6 +3311,66 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(ptr: native.Ptr[
+      native.CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]])
+      : native.CStruct13[T1,
+                         T2,
+                         T3,
+                         T4,
+                         T5,
+                         T6,
+                         T7,
+                         T8,
+                         T9,
+                         T10,
+                         T11,
+                         T12,
+                         T13] = {
+      new native.CStruct13[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct13[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13]],
+                                     value: native.CStruct13[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -3736,6 +3967,83 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct14[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14]]): native.CStruct14[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14] = {
+      new native.CStruct14[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct14[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14]],
+                                     value: native.CStruct14[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -4403,6 +4711,88 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct15[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15]]): native.CStruct15[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15] = {
+      new native.CStruct15[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct15[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15]],
+                                     value: native.CStruct15[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -5145,6 +5535,93 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct16[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16]]): native.CStruct16[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16] = {
+      new native.CStruct16[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct16[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16]],
+                                     value: native.CStruct16[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -5966,6 +6443,98 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct17[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17]]): native.CStruct17[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17] = {
+      new native.CStruct17[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct17[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17]],
+                                     value: native.CStruct17[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -6870,6 +7439,103 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct18[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18]]): native.CStruct18[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17,
+                                                    T18] = {
+      new native.CStruct18[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct18[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17,
+                                                        T18]],
+                                     value: native.CStruct18[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17,
+                                                             T18]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -7861,6 +8527,108 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct19[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19]]): native.CStruct19[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17,
+                                                    T18,
+                                                    T19] = {
+      new native.CStruct19[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct19[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17,
+                                                        T18,
+                                                        T19]],
+                                     value: native.CStruct19[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17,
+                                                             T18,
+                                                             T19]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -8943,6 +9711,113 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct20[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20]]): native.CStruct20[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17,
+                                                    T18,
+                                                    T19,
+                                                    T20] = {
+      new native.CStruct20[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct20[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17,
+                                                        T18,
+                                                        T19,
+                                                        T20]],
+                                     value: native.CStruct20[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17,
+                                                             T18,
+                                                             T19,
+                                                             T20]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -10120,6 +10995,118 @@ object Tag {
 // ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 186)
       case _ =>
         throwUndefined()
+    }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct21[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20,
+                           T21]]): native.CStruct21[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17,
+                                                    T18,
+                                                    T19,
+                                                    T20,
+                                                    T21] = {
+      new native.CStruct21[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20,
+                           T21](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct21[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17,
+                                                        T18,
+                                                        T19,
+                                                        T20,
+                                                        T21]],
+                                     value: native.CStruct21[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17,
+                                                             T18,
+                                                             T19,
+                                                             T20,
+                                                             T21]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
     }
   }
 
@@ -11397,9 +12384,126 @@ object Tag {
       case _ =>
         throwUndefined()
     }
+    @alwaysinline override def load(
+        ptr: native.Ptr[
+          native.CStruct22[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20,
+                           T21,
+                           T22]]): native.CStruct22[T1,
+                                                    T2,
+                                                    T3,
+                                                    T4,
+                                                    T5,
+                                                    T6,
+                                                    T7,
+                                                    T8,
+                                                    T9,
+                                                    T10,
+                                                    T11,
+                                                    T12,
+                                                    T13,
+                                                    T14,
+                                                    T15,
+                                                    T16,
+                                                    T17,
+                                                    T18,
+                                                    T19,
+                                                    T20,
+                                                    T21,
+                                                    T22] = {
+      new native.CStruct22[T1,
+                           T2,
+                           T3,
+                           T4,
+                           T5,
+                           T6,
+                           T7,
+                           T8,
+                           T9,
+                           T10,
+                           T11,
+                           T12,
+                           T13,
+                           T14,
+                           T15,
+                           T16,
+                           T17,
+                           T18,
+                           T19,
+                           T20,
+                           T21,
+                           T22](ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[
+                                       native.CStruct22[T1,
+                                                        T2,
+                                                        T3,
+                                                        T4,
+                                                        T5,
+                                                        T6,
+                                                        T7,
+                                                        T8,
+                                                        T9,
+                                                        T10,
+                                                        T11,
+                                                        T12,
+                                                        T13,
+                                                        T14,
+                                                        T15,
+                                                        T16,
+                                                        T17,
+                                                        T18,
+                                                        T19,
+                                                        T20,
+                                                        T21,
+                                                        T22]],
+                                     value: native.CStruct22[T1,
+                                                             T2,
+                                                             T3,
+                                                             T4,
+                                                             T5,
+                                                             T6,
+                                                             T7,
+                                                             T8,
+                                                             T9,
+                                                             T10,
+                                                             T11,
+                                                             T12,
+                                                             T13,
+                                                             T14,
+                                                             T15,
+                                                             T16,
+                                                             T17,
+                                                             T18,
+                                                             T19,
+                                                             T20,
+                                                             T21,
+                                                             T22]): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
+    }
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 192)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 200)
 
   @alwaysinline implicit def materializePtrTag[T](
       implicit tag: Tag[T]): Tag[native.Ptr[T]] =
@@ -11408,87 +12512,87 @@ object Tag {
     : Tag[T] =
     Tag.Class(
       implicitly[ClassTag[T]].runtimeClass.asInstanceOf[java.lang.Class[T]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeUnitTag: Tag[scala.Unit] =
     Unit
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeBooleanTag: Tag[scala.Boolean] =
     Boolean
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeCharTag: Tag[scala.Char] =
     Char
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeByteTag: Tag[scala.Byte] =
     Byte
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeUByteTag: Tag[native.UByte] =
     UByte
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeShortTag: Tag[scala.Short] =
     Short
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeUShortTag: Tag[native.UShort] =
     UShort
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeIntTag: Tag[scala.Int] =
     Int
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeUIntTag: Tag[native.UInt] =
     UInt
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeLongTag: Tag[scala.Long] =
     Long
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeULongTag: Tag[native.ULong] =
     ULong
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeFloatTag: Tag[scala.Float] =
     Float
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 198)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 206)
   @alwaysinline implicit def materializeDoubleTag: Tag[scala.Double] =
     Double
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat0Tag: Tag[native.Nat._0] =
     Nat0
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat1Tag: Tag[native.Nat._1] =
     Nat1
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat2Tag: Tag[native.Nat._2] =
     Nat2
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat3Tag: Tag[native.Nat._3] =
     Nat3
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat4Tag: Tag[native.Nat._4] =
     Nat4
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat5Tag: Tag[native.Nat._5] =
     Nat5
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat6Tag: Tag[native.Nat._6] =
     Nat6
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat7Tag: Tag[native.Nat._7] =
     Nat7
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat8Tag: Tag[native.Nat._8] =
     Nat8
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 202)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
   @alwaysinline implicit def materializeNat9Tag: Tag[native.Nat._9] =
     Nat9
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit2Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag]
     : Tag.Digit2[N1, N2] =
     Tag.Digit2(implicitly[Tag[N1]], implicitly[Tag[N2]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit3Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag]
     : Tag.Digit3[N1, N2, N3] =
     Tag.Digit3(implicitly[Tag[N1]], implicitly[Tag[N2]], implicitly[Tag[N3]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit4Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11498,7 +12602,7 @@ object Tag {
                implicitly[Tag[N2]],
                implicitly[Tag[N3]],
                implicitly[Tag[N4]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit5Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11510,7 +12614,7 @@ object Tag {
                implicitly[Tag[N3]],
                implicitly[Tag[N4]],
                implicitly[Tag[N5]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit6Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11524,7 +12628,7 @@ object Tag {
                implicitly[Tag[N4]],
                implicitly[Tag[N5]],
                implicitly[Tag[N6]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit7Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11540,7 +12644,7 @@ object Tag {
                implicitly[Tag[N5]],
                implicitly[Tag[N6]],
                implicitly[Tag[N7]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit8Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11560,7 +12664,7 @@ object Tag {
       implicitly[Tag[N7]],
       implicitly[Tag[N8]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 210)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
   @alwaysinline implicit def materializeNatDigit9Tag[N1 <: Nat.Base: Tag,
                                                      N2 <: Nat.Base: Tag,
                                                      N3 <: Nat.Base: Tag,
@@ -11582,21 +12686,21 @@ object Tag {
       implicitly[Tag[N8]],
       implicitly[Tag[N9]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct0Tag: Tag.CStruct0 =
     Tag.CStruct0()
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct1Tag[T1: Tag]: Tag.CStruct1[T1] =
     Tag.CStruct1(implicitly[Tag[T1]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct2Tag[T1: Tag, T2: Tag]
     : Tag.CStruct2[T1, T2] =
     Tag.CStruct2(implicitly[Tag[T1]], implicitly[Tag[T2]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct3Tag[T1: Tag, T2: Tag, T3: Tag]
     : Tag.CStruct3[T1, T2, T3] =
     Tag.CStruct3(implicitly[Tag[T1]], implicitly[Tag[T2]], implicitly[Tag[T3]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct4Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11606,7 +12710,7 @@ object Tag {
                  implicitly[Tag[T2]],
                  implicitly[Tag[T3]],
                  implicitly[Tag[T4]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct5Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11618,7 +12722,7 @@ object Tag {
                  implicitly[Tag[T3]],
                  implicitly[Tag[T4]],
                  implicitly[Tag[T5]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct6Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11632,7 +12736,7 @@ object Tag {
                  implicitly[Tag[T4]],
                  implicitly[Tag[T5]],
                  implicitly[Tag[T6]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct7Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11648,7 +12752,7 @@ object Tag {
                  implicitly[Tag[T5]],
                  implicitly[Tag[T6]],
                  implicitly[Tag[T7]])
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct8Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11668,7 +12772,7 @@ object Tag {
       implicitly[Tag[T7]],
       implicitly[Tag[T8]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct9Tag[T1: Tag,
                                                     T2: Tag,
                                                     T3: Tag,
@@ -11690,7 +12794,7 @@ object Tag {
       implicitly[Tag[T8]],
       implicitly[Tag[T9]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct10Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11714,7 +12818,7 @@ object Tag {
       implicitly[Tag[T9]],
       implicitly[Tag[T10]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct11Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11740,7 +12844,7 @@ object Tag {
       implicitly[Tag[T10]],
       implicitly[Tag[T11]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct12Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11768,7 +12872,7 @@ object Tag {
       implicitly[Tag[T11]],
       implicitly[Tag[T12]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct13Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11798,7 +12902,7 @@ object Tag {
       implicitly[Tag[T12]],
       implicitly[Tag[T13]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct14Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11843,7 +12947,7 @@ object Tag {
       implicitly[Tag[T13]],
       implicitly[Tag[T14]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct15Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11891,7 +12995,7 @@ object Tag {
       implicitly[Tag[T14]],
       implicitly[Tag[T15]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct16Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11942,7 +13046,7 @@ object Tag {
       implicitly[Tag[T15]],
       implicitly[Tag[T16]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct17Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -11996,7 +13100,7 @@ object Tag {
       implicitly[Tag[T16]],
       implicitly[Tag[T17]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct18Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -12053,7 +13157,7 @@ object Tag {
       implicitly[Tag[T17]],
       implicitly[Tag[T18]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct19Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -12113,7 +13217,7 @@ object Tag {
       implicitly[Tag[T18]],
       implicitly[Tag[T19]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct20Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -12176,7 +13280,7 @@ object Tag {
       implicitly[Tag[T19]],
       implicitly[Tag[T20]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct21Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -12242,7 +13346,7 @@ object Tag {
       implicitly[Tag[T20]],
       implicitly[Tag[T21]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 218)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 226)
   @alwaysinline implicit def materializeCStruct22Tag[T1: Tag,
                                                      T2: Tag,
                                                      T3: Tag,
@@ -12311,7 +13415,7 @@ object Tag {
       implicitly[Tag[T21]],
       implicitly[Tag[T22]]
     )
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 221)
+// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/Tag.scala.gyb", line: 229)
   @alwaysinline implicit def materializeCArrayTag[T: Tag, N <: native.Nat: Tag]
     : Tag.CArray[T, N] =
     Tag.CArray(implicitly[Tag[T]], implicitly[Tag[N]])

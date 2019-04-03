@@ -186,6 +186,14 @@ object Tag {
       case _ =>
         throwUndefined()
     }
+    @alwaysinline override def load(ptr: native.Ptr[native.CStruct${N}${JustTs}]): native.CStruct${N}${JustTs} = {
+      new native.CStruct${N}${JustTs}(ptr.rawptr)
+    }
+    @alwaysinline override def store(ptr: native.Ptr[native.CStruct${N}${JustTs}], value: native.CStruct${N}${JustTs}): Unit = {
+      val dst = ptr.rawptr
+      val src = value.rawptr
+      libc.memcpy(dst, src, size)
+    }
   }
 
   % end
