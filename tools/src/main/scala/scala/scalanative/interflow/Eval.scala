@@ -29,8 +29,12 @@ trait Eval { self: Interflow =>
           if (value.ty == Type.Nothing) {
             return Inst.Unreachable(unwind)
           } else {
+            val ty = value match {
+              case InstanceRef(ty) => ty
+              case _               => value.ty
+            }
             val shortUnitValue =
-              if (value.ty == Type.Unit) Val.Unit else value
+              if (ty == Type.Unit) Val.Unit else value
             state.storeLocal(local, shortUnitValue)
             pc += 1
           }
@@ -193,12 +197,26 @@ trait Eval { self: Interflow =>
         }
       case Op.Classalloc(ClassRef(cls)) =>
         Val.Virtual(state.allocClass(cls))
-      case Op.Fieldload(ty, obj, name @ FieldRef(cls, fld)) =>
-        eval(obj) match {
+      case Op.Fieldload(ty, rawObj, name @ FieldRef(cls, fld)) =>
+        eval(rawObj) match {
           case VirtualRef(_, _, values) =>
             values(fld.index)
+          case DelayedRef(op: Op.Box) =>
+            val name = op.ty.asInstanceOf[Type.RefKind].className
+            eval(Op.Unbox(Type.Ref(name), rawObj))
           case obj =>
-            emit(Op.Fieldload(ty, materialize(obj), name))
+            val objty = obj match {
+              case InstanceRef(ty) => ty
+              case _               => obj.ty
+            }
+            objty match {
+              case refty: Type.RefKind
+                  if nir.Type.boxClasses.contains(refty.className)
+                    && !refty.isNullable =>
+                eval(Op.Unbox(Type.Ref(refty.className), rawObj))
+              case _ =>
+                emit(Op.Fieldload(ty, materialize(obj), name))
+            }
         }
       case Op.Fieldstore(ty, obj, name @ FieldRef(cls, fld), value) =>
         eval(obj) match {

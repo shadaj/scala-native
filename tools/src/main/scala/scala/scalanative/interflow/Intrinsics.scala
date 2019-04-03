@@ -52,7 +52,7 @@ trait Intrinsics { self: Interflow =>
               case _               => value.ty
             }
             ty match {
-              case refty: Type.RefKind if refty.isExact && !refty.isNullable =>
+              case refty: Type.RefKind if refty.isExact =>
                 Some(Val.Global(refty.className, Type.Ptr))
               case _ =>
                 Some(emit)

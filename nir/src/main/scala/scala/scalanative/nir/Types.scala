@@ -1,7 +1,7 @@
 package scala.scalanative
 package nir
 
-import util.unsupported
+import util.{unreachable, unsupported}
 
 sealed abstract class Type {
 
@@ -108,7 +108,12 @@ object Type {
 
   val box = boxesTo.map { case (l, r) => (r, l) }.toMap
 
-  val boxClasses = unbox.keys.map { case ty: Type.Ref => ty.name }.toSeq
+  val boxClasses = unbox.keys.map {
+    case ty: Type.Ref =>
+      ty.name
+    case _ =>
+      unreachable
+  }.toSeq
 
   val typeToArray = Map[Type, Global](
     Type.Bool    -> Global.Top("scala.scalanative.runtime.BooleanArray"),
