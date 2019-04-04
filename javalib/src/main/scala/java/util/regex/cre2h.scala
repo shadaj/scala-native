@@ -7,10 +7,10 @@ import java.nio.charset.Charset
 
 object cre2h {
   implicit class RE2StringOps(val ptr: Ptr[cre2.string_t]) extends AnyVal {
-    def data: CString            = !ptr._1
-    def length: CInt             = !ptr._2
-    def data_=(v: CString): Unit = !ptr._1 = v
-    def length_=(v: CInt): Unit  = !ptr._2 = v
+    def data: CString            = ptr._1
+    def length: CInt             = ptr._2
+    def data_=(v: CString): Unit = ptr._1 = v
+    def length_=(v: CInt): Unit  = ptr._2 = v
   }
 
   def fromRE2String(restr: Ptr[cre2.string_t]): String = {

@@ -111,11 +111,13 @@ object SocketHelpers {
         addr = (!ret).ai_addr
           .asInstanceOf[Ptr[sockaddr_in]]
           .sin_addr
+          .toPtr
           .asInstanceOf[Ptr[Byte]]
       } else {
         addr = (!ret).ai_addr
           .asInstanceOf[Ptr[sockaddr_in6]]
           .sin6_addr
+          .toPtr
           .asInstanceOf[Ptr[Byte]]
       }
       inet_ntop((!ret).ai_family, addr, ipstr, INET6_ADDRSTRLEN.toUInt)
@@ -148,11 +150,13 @@ object SocketHelpers {
           addr = p.ai_addr
             .asInstanceOf[Ptr[sockaddr_in]]
             .sin_addr
+            .toPtr
             .asInstanceOf[Ptr[Byte]]
         } else {
           addr = p.ai_addr
             .asInstanceOf[Ptr[sockaddr_in6]]
             .sin6_addr
+            .toPtr
             .asInstanceOf[Ptr[Byte]]
         }
         inet_ntop(p.ai_family, addr, ipstr, INET6_ADDRSTRLEN.toUInt)
@@ -174,7 +178,7 @@ object SocketHelpers {
         addr6.sin6_family = AF_INET6.toUShort
         inet_pton(AF_INET6,
                   toCString(ip),
-                  addr6.sin6_addr.asInstanceOf[Ptr[Byte]])
+                  addr6.sin6_addr.toPtr.asInstanceOf[Ptr[Byte]])
         status = getnameinfo(addr6.asInstanceOf[Ptr[sockaddr]],
                              sizeof[sockaddr_in6].toUInt,
                              host,
@@ -187,7 +191,7 @@ object SocketHelpers {
         addr4.sin_family = AF_INET.toUShort
         inet_pton(AF_INET,
                   toCString(ip),
-                  addr4.sin_addr.asInstanceOf[Ptr[Byte]])
+                  addr4.sin_addr.toPtr.asInstanceOf[Ptr[Byte]])
         status = getnameinfo(addr4.asInstanceOf[Ptr[sockaddr]],
                              sizeof[sockaddr_in].toUInt,
                              host,

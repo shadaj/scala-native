@@ -75,7 +75,7 @@ object Tag {
   % end
 
   private[scalanative] sealed trait NatTag {
-    def toInt: Int 
+    def toInt: Int
   }
 
   % for N in range(0, 10):
@@ -92,7 +92,7 @@ object Tag {
   %   Ns      = ["N" + str(i) for i in range(1, N + 1)]
   %   BoundNs = "[" + ", ".join(N + " <: Nat.Base" for N in Ns) + "]"
   %   JustNs  = "[" + ", ".join(Ns) + "]"
-  %   TagNs   = ["Tag[{}]".format(N) for N in Ns]
+  %   TagNs   = ["Tag[{}]".format(n) for n in Ns]
   %   args    = ", ".join("_{}: {}".format(i + 1, T) for (i, T) in enumerate(TagNs))
 
   case class Digit${N}${BoundNs}(${args})
@@ -103,7 +103,7 @@ object Tag {
     @alwaysinline def alignment: Int = throwUndefined()
     @alwaysinline def toInt: Int = {
       var res = 0
-      % for i in range(1, N + 1): 
+      % for i in range(1, N + 1):
       res = res * 10 + _${i}.asInstanceOf[NatTag].toInt
       % end
       res
@@ -112,17 +112,8 @@ object Tag {
 
   % end
 
-  % for N in range(1, 23):
-
-  sealed trait Field${N}[T, F] extends Tag[T]
-
-  % end
-
   case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
       extends Tag[native.CArray[T, N]]
-  % for N in range(1, 23):
-      with Field${N}[native.CArray[T, N], T]
-  % end
   {
     @alwaysinline def size: Int = of.size * n.asInstanceOf[NatTag].toInt
     @alwaysinline def alignment: Int = of.alignment
@@ -156,9 +147,6 @@ object Tag {
   case class CStruct${N}${JustTs}(${args})
     extends Tag[native.CStruct${N}${JustTs}]
     with StructTag
-  % for M in range(1, N + 1):
-    with Field${M}[native.CStruct${N}${JustTs}, ${Ts[M - 1]}]
-  % end
   {
     @alwaysinline def size: Int = {
       var res = 0
@@ -209,7 +197,7 @@ object Tag {
   % for N in range(0, 10):
   @alwaysinline implicit def materializeNat${N}Tag: Tag[native.Nat._${N}] =
     Nat${N}
-  %end
+  % end
   % for N in range(2, 10):
   %   Ns      = ["N" + str(i) for i in range(1, N + 1)]
   %   BoundNs = "[" + ", ".join(N + " <: Nat.Base : Tag" for N in Ns) + "]"

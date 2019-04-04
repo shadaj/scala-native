@@ -37,21 +37,21 @@ class Inflater(noHeader: Boolean) {
     if (stream == null) {
       throw new IllegalStateException()
     } else {
-      (!(stream._13)).toInt
+      stream._13.toInt
     }
 
   def getBytesRead(): Long =
     if (stream == null) {
       throw new NullPointerException()
     } else {
-      (!(stream._3)).toLong
+      stream._3.toLong
     }
 
   def getBytesWritten(): Long =
     if (stream == null) {
       throw new NullPointerException()
     } else {
-      (!(stream._6)).toLong
+      stream._6.toLong
     }
 
   def getRemaining(): Int =
@@ -142,23 +142,23 @@ class Inflater(noHeader: Boolean) {
       inRead = 0
       inLength = nbytes
       if (buf.length == 0) {
-        !(stream._1) = Inflater.empty.asInstanceOf[ByteArray].at(off)
+        stream._1 = Inflater.empty.asInstanceOf[ByteArray].at(off)
       } else {
-        !(stream._1) = buf.asInstanceOf[ByteArray].at(off)
+        stream._1 = buf.asInstanceOf[ByteArray].at(off)
       }
-      !(stream._2) = nbytes.toUInt
+      stream._2 = nbytes.toUInt
     } else {
       throw new ArrayIndexOutOfBoundsException()
     }
 
   private def inflateImpl(buf: Array[Byte], off: Int, nbytes: Int): Int = {
-    !(stream._5) = nbytes.toUInt
-    val sin  = !(stream._3)
-    val sout = !(stream._6)
+    stream._5 = nbytes.toUInt
+    val sin  = stream._3
+    val sout = stream._6
     if (buf.length == 0) {
-      !(stream._4) = Inflater.empty.asInstanceOf[ByteArray].at(off)
+      stream._4 = Inflater.empty.asInstanceOf[ByteArray].at(off)
     } else {
-      !(stream._4) = buf.asInstanceOf[ByteArray].at(off)
+      stream._4 = buf.asInstanceOf[ByteArray].at(off)
     }
     val err = zlib.inflate(stream, zlib.Z_SYNC_FLUSH)
 
@@ -166,7 +166,7 @@ class Inflater(noHeader: Boolean) {
       if (err == zlib.Z_STREAM_ERROR) {
         0
       } else if (err == zlib.Z_STREAM_END || err == zlib.Z_NEED_DICT) {
-        val totalIn = !(stream._3)
+        val totalIn = stream._3
         inRead += (totalIn - sin).toInt
 
         if (err == zlib.Z_STREAM_END) {
@@ -174,14 +174,14 @@ class Inflater(noHeader: Boolean) {
         } else {
           doesNeedDictionary = true
         }
-        val totalOut = !(stream._6)
+        val totalOut = stream._6
         (totalOut - sout).toInt
       } else {
         throw new DataFormatException(err.toString)
       }
     } else {
-      val totalIn  = !(stream._3)
-      val totalOut = !(stream._6)
+      val totalIn  = stream._3
+      val totalOut = stream._6
       inRead += (totalIn - sin).toInt
       (totalOut - sout).toInt
     }

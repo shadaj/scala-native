@@ -11,8 +11,8 @@ package object runtime {
   type Type = CStruct2[Int, String]
 
   implicit class TypeOps(val self: Ptr[Type]) extends AnyVal {
-    @alwaysinline def id: Int          = !(self._1)
-    @alwaysinline def name: String     = !(self._2)
+    @alwaysinline def id: Int          = self._1
+    @alwaysinline def name: String     = self._2
     @alwaysinline def isClass: Boolean = id >= 0
   }
 
@@ -20,10 +20,10 @@ package object runtime {
   type ClassType = CStruct3[Type, Int, Int]
 
   implicit class ClassTypeOps(val self: Ptr[ClassType]) extends AnyVal {
-    @alwaysinline def id: Int            = self._1.id
-    @alwaysinline def name: String       = self._1.name
-    @alwaysinline def size: Int          = !(self._2)
-    @alwaysinline def idRangeUntil: Long = !(self._3)
+    @alwaysinline def id: Int            = self._1._1
+    @alwaysinline def name: String       = self._1._2
+    @alwaysinline def size: Int          = self._2
+    @alwaysinline def idRangeUntil: Long = self._3
   }
 
   /** Used as a stub right hand of intrinsified methods. */

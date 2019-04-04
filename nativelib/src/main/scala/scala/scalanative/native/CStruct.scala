@@ -1,13 +1,15 @@
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 1)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 1)
 package scala.scalanative
 package native
 
-import scalanative.runtime.RawPtr
+import scalanative.runtime.{fromRawPtr, RawPtr}
 import scalanative.runtime.Intrinsics._
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+sealed abstract class CStruct
 
-final class CStruct0(private[scalanative] val rawptr: RawPtr) {
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
+
+final class CStruct0(private[scalanative] val rawptr: RawPtr) extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct0 =>
@@ -22,12 +24,16 @@ final class CStruct0(private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct0@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+  @alwaysinline def toPtr: Ptr[CStruct0] =
+    fromRawPtr[CStruct0](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
-final class CStruct1[T1](private[scalanative] val rawptr: RawPtr) {
+final class CStruct1[T1](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct1[_] =>
@@ -42,26 +48,30 @@ final class CStruct1[T1](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct1@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct1[T1]] =
+    fromRawPtr[CStruct1[T1]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct1[T1]): T1 = {
+  @alwaysinline def _1(implicit tag: Tag.CStruct1[T1]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct1[T1]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct1[T1]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
-final class CStruct2[T1, T2](private[scalanative] val rawptr: RawPtr) {
+final class CStruct2[T1, T2](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct2[_, _] =>
@@ -76,40 +86,46 @@ final class CStruct2[T1, T2](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct2@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct2[T1, T2]] =
+    fromRawPtr[CStruct2[T1, T2]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct2[T1, T2]): T1 = {
+  @alwaysinline def _1(implicit tag: Tag.CStruct2[T1, T2]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct2[T1, T2]): Unit = {
+  @alwaysinline def _1_=(value: T1)(
+      implicit tag: Tag.CStruct2[T1, T2]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct2[T1, T2]): T2 = {
+  @alwaysinline def _2(implicit tag: Tag.CStruct2[T1, T2]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct2[T1, T2]): Unit = {
+  @alwaysinline def _2_=(value: T2)(
+      implicit tag: Tag.CStruct2[T1, T2]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
-final class CStruct3[T1, T2, T3](private[scalanative] val rawptr: RawPtr) {
+final class CStruct3[T1, T2, T3](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct3[_, _, _] =>
@@ -124,54 +140,61 @@ final class CStruct3[T1, T2, T3](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct3@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct3[T1, T2, T3]] =
+    fromRawPtr[CStruct3[T1, T2, T3]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct3[T1, T2, T3]): T1 = {
+  @alwaysinline def _1(implicit tag: Tag.CStruct3[T1, T2, T3]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
+  @alwaysinline def _1_=(value: T1)(
+      implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct3[T1, T2, T3]): T2 = {
+  @alwaysinline def _2(implicit tag: Tag.CStruct3[T1, T2, T3]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
+  @alwaysinline def _2_=(value: T2)(
+      implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct3[T1, T2, T3]): T3 = {
+  @alwaysinline def _3(implicit tag: Tag.CStruct3[T1, T2, T3]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
+  @alwaysinline def _3_=(value: T3)(
+      implicit tag: Tag.CStruct3[T1, T2, T3]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
-final class CStruct4[T1, T2, T3, T4](private[scalanative] val rawptr: RawPtr) {
+final class CStruct4[T1, T2, T3, T4](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct4[_, _, _, _] =>
@@ -186,69 +209,77 @@ final class CStruct4[T1, T2, T3, T4](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct4@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct4[T1, T2, T3, T4]] =
+    fromRawPtr[CStruct4[T1, T2, T3, T4]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T1 = {
+  @alwaysinline def _1(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
+  @alwaysinline def _1_=(value: T1)(
+      implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T2 = {
+  @alwaysinline def _2(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
+  @alwaysinline def _2_=(value: T2)(
+      implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T3 = {
+  @alwaysinline def _3(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
+  @alwaysinline def _3_=(value: T3)(
+      implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T4 = {
+  @alwaysinline def _4(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
+  @alwaysinline def _4_=(value: T4)(
+      implicit tag: Tag.CStruct4[T1, T2, T3, T4]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct5[T1, T2, T3, T4, T5](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct5[_, _, _, _, _] =>
@@ -263,83 +294,92 @@ final class CStruct5[T1, T2, T3, T4, T5](
   override def toString: String =
     "CStruct5@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct5[T1, T2, T3, T4, T5]] =
+    fromRawPtr[CStruct5[T1, T2, T3, T4, T5]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T1 = {
+  @alwaysinline def _1(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+  @alwaysinline def _1_=(value: T1)(
+      implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T2 = {
+  @alwaysinline def _2(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+  @alwaysinline def _2_=(value: T2)(
+      implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T3 = {
+  @alwaysinline def _3(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+  @alwaysinline def _3_=(value: T3)(
+      implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T4 = {
+  @alwaysinline def _4(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+  @alwaysinline def _4_=(value: T4)(
+      implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T5 = {
+  @alwaysinline def _5(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
+  @alwaysinline def _5_=(value: T5)(
+      implicit tag: Tag.CStruct5[T1, T2, T3, T4, T5]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct6[T1, T2, T3, T4, T5, T6](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct6[_, _, _, _, _, _] =>
@@ -354,103 +394,113 @@ final class CStruct6[T1, T2, T3, T4, T5, T6](
   override def toString: String =
     "CStruct6@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct6[T1, T2, T3, T4, T5, T6]] =
+    fromRawPtr[CStruct6[T1, T2, T3, T4, T5, T6]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T1 = {
+  @alwaysinline def _1(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T2 = {
+  @alwaysinline def _2(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T3 = {
+  @alwaysinline def _3(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T4 = {
+  @alwaysinline def _4(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T5 = {
+  @alwaysinline def _5(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T6 = {
+  @alwaysinline def _6(
+      implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.unary_!(tag._6)
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct6[T1, T2, T3, T4, T5, T6]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct7[T1, T2, T3, T4, T5, T6, T7](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct7[_, _, _, _, _, _, _] =>
@@ -465,118 +515,129 @@ final class CStruct7[T1, T2, T3, T4, T5, T6, T7](
   override def toString: String =
     "CStruct7@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct7[T1, T2, T3, T4, T5, T6, T7]] =
+    fromRawPtr[CStruct7[T1, T2, T3, T4, T5, T6, T7]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T1 = {
+  @alwaysinline def _1(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T2 = {
+  @alwaysinline def _2(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T3 = {
+  @alwaysinline def _3(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T4 = {
+  @alwaysinline def _4(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T5 = {
+  @alwaysinline def _5(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T6 = {
+  @alwaysinline def _6(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.unary_!(tag._6)
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T7 = {
+  @alwaysinline def _7(
+      implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): T7 = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.unary_!(tag._7)
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(
+  @alwaysinline def _7_=(value: T7)(
       implicit tag: Tag.CStruct7[T1, T2, T3, T4, T5, T6, T7]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct8[T1, T2, T3, T4, T5, T6, T7, T8](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct8[_, _, _, _, _, _, _, _] =>
@@ -591,133 +652,145 @@ final class CStruct8[T1, T2, T3, T4, T5, T6, T7, T8](
   override def toString: String =
     "CStruct8@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]] =
+    fromRawPtr[CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T1 = {
+  @alwaysinline def _1(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T2 = {
+  @alwaysinline def _2(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T3 = {
+  @alwaysinline def _3(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T4 = {
+  @alwaysinline def _4(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T5 = {
+  @alwaysinline def _5(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T6 = {
+  @alwaysinline def _6(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.unary_!(tag._6)
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T7 = {
+  @alwaysinline def _7(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T7 = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.unary_!(tag._7)
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(
+  @alwaysinline def _7_=(value: T7)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T8 = {
+  @alwaysinline def _8(
+      implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): T8 = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.unary_!(tag._8)
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(
+  @alwaysinline def _8_=(value: T8)(
       implicit tag: Tag.CStruct8[T1, T2, T3, T4, T5, T6, T7, T8]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct9[_, _, _, _, _, _, _, _, _] =>
@@ -732,148 +805,161 @@ final class CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9](
   override def toString: String =
     "CStruct9@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]] =
+    fromRawPtr[CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T1 = {
+  @alwaysinline def _1(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T2 = {
+  @alwaysinline def _2(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T3 = {
+  @alwaysinline def _3(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T4 = {
+  @alwaysinline def _4(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T5 = {
+  @alwaysinline def _5(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T6 = {
+  @alwaysinline def _6(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.unary_!(tag._6)
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T7 = {
+  @alwaysinline def _7(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T7 = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.unary_!(tag._7)
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(
+  @alwaysinline def _7_=(value: T7)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T8 = {
+  @alwaysinline def _8(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T8 = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.unary_!(tag._8)
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(
+  @alwaysinline def _8_=(value: T8)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T9 = {
+  @alwaysinline def _9(
+      implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): T9 = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.unary_!(tag._9)
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(
+  @alwaysinline def _9_=(value: T9)(
       implicit tag: Tag.CStruct9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct10[_, _, _, _, _, _, _, _, _, _] =>
@@ -888,183 +974,198 @@ final class CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
   override def toString: String =
     "CStruct10@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr
+    : Ptr[CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]] =
+    fromRawPtr[CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _1(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.unary_!(tag._1)
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _2(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.unary_!(tag._2)
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _3(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.unary_!(tag._3)
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _4(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.unary_!(tag._4)
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _5(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.unary_!(tag._5)
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _6(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.unary_!(tag._6)
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _7(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T7 = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.unary_!(tag._7)
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(
+  @alwaysinline def _7_=(value: T7)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _8(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T8 = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.unary_!(tag._8)
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(
+  @alwaysinline def _8_=(value: T8)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _9(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T9 = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.unary_!(tag._9)
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(
+  @alwaysinline def _9_=(value: T9)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
+  @alwaysinline def _10(
+      implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : T10 = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.unary_!(tag._10)
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(
+  @alwaysinline def _10_=(value: T10)(
       implicit tag: Tag.CStruct10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10])
     : Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct11[_, _, _, _, _, _, _, _, _, _, _] =>
@@ -1079,10 +1180,14 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   override def toString: String =
     "CStruct11@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr
+    : Ptr[CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]] =
+    fromRawPtr[CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T1 = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
@@ -1090,17 +1195,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(
+  @alwaysinline def _1_=(value: T1)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T2 = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
@@ -1108,17 +1213,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(
+  @alwaysinline def _2_=(value: T2)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T3 = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
@@ -1126,17 +1231,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(
+  @alwaysinline def _3_=(value: T3)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T4 = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
@@ -1144,17 +1249,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(
+  @alwaysinline def _4_=(value: T4)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T5 = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
@@ -1162,17 +1267,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(
+  @alwaysinline def _5_=(value: T5)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T6 = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
@@ -1180,17 +1285,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(
+  @alwaysinline def _6_=(value: T6)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T7 = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
@@ -1198,17 +1303,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(
+  @alwaysinline def _7_=(value: T7)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T8 = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
@@ -1216,17 +1321,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(
+  @alwaysinline def _8_=(value: T8)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T9 = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
@@ -1234,17 +1339,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(
+  @alwaysinline def _9_=(value: T9)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T10 = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
@@ -1252,17 +1357,17 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(
+  @alwaysinline def _10_=(value: T10)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : T11 = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
@@ -1270,20 +1375,21 @@ final class CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(
+  @alwaysinline def _11_=(value: T11)(
       implicit tag: Tag.CStruct11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11])
     : Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct12[_, _, _, _, _, _, _, _, _, _, _, _] =>
@@ -1298,10 +1404,15 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   override def toString: String =
     "CStruct12@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr
+    : Ptr[CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]] =
+    fromRawPtr[CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]](
+      rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1319,26 +1430,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1356,26 +1467,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1393,26 +1504,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1430,26 +1541,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1467,26 +1578,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1504,26 +1615,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1541,26 +1652,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1578,26 +1689,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1615,26 +1726,26 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct12[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct12[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1652,26 +1763,27 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct12[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct12[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1689,26 +1801,27 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct12[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct12[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct12[T1,
                                   T2,
                                   T3,
@@ -1726,29 +1839,31 @@ final class CStruct12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct12[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct12[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct13[_, _, _, _, _, _, _, _, _, _, _, _, _] =>
@@ -1763,10 +1878,15 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   override def toString: String =
     "CStruct13@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr
+    : Ptr[CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]] =
+    fromRawPtr[
+      CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1785,27 +1905,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1824,27 +1944,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1863,27 +1983,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1902,27 +2022,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1941,27 +2061,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -1980,27 +2100,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2019,27 +2139,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2058,27 +2178,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2097,27 +2217,27 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct13[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct13[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2136,27 +2256,28 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct13[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct13[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2175,27 +2296,28 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct13[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct13[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2214,27 +2336,28 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct13[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct13[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct13[T1,
                                   T2,
                                   T3,
@@ -2253,30 +2376,32 @@ final class CStruct13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct13[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct13[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14](private[scalanative] val rawptr: RawPtr) {
+T14](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct14[_, _, _, _, _, _, _, _, _, _, _, _, _, _] =>
@@ -2291,10 +2416,16 @@ T14](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct14@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]] =
+    fromRawPtr[
+      CStruct14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]](
+      rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2314,28 +2445,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2355,28 +2486,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2396,28 +2527,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2437,28 +2568,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2478,28 +2609,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2519,28 +2650,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2560,28 +2691,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2601,28 +2732,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2642,28 +2773,28 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct14[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct14[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2683,28 +2814,29 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct14[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct14[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2724,28 +2856,29 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct14[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct14[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2765,28 +2898,29 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct14[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct14[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2806,28 +2940,29 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct14[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct14[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct14[T1,
                                   T2,
                                   T3,
@@ -2847,31 +2982,33 @@ T14](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct14[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct14[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15](private[scalanative] val rawptr: RawPtr) {
+T14, T15](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct15[_, _, _, _, _, _, _, _, _, _, _, _, _, _, _] =>
@@ -2886,10 +3023,43 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct15@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct15[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15]] =
+    fromRawPtr[
+      CStruct15[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -2910,29 +3080,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -2953,29 +3123,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -2996,29 +3166,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3039,29 +3209,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3082,29 +3252,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3125,29 +3295,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3168,29 +3338,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3211,29 +3381,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3254,29 +3424,29 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct15[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct15[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3297,29 +3467,30 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3340,29 +3511,30 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3383,29 +3555,30 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3426,29 +3599,30 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3469,29 +3643,30 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct15[T1,
                                   T2,
                                   T3,
@@ -3512,32 +3687,34 @@ T14, T15](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct15[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct15[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct16[_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _] =>
@@ -3552,10 +3729,45 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct16@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct16[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16]] =
+    fromRawPtr[
+      CStruct16[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3577,30 +3789,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3622,30 +3834,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3667,30 +3879,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3712,30 +3924,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3757,30 +3969,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3802,30 +4014,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3847,30 +4059,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3892,30 +4104,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3937,30 +4149,30 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct16[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct16[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -3982,30 +4194,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4027,30 +4240,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4072,30 +4286,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4117,30 +4332,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4162,30 +4378,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4207,30 +4424,31 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct16[T1,
                                   T2,
                                   T3,
@@ -4252,33 +4470,35 @@ T14, T15, T16](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct16[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct16[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct17[_,
@@ -4309,10 +4529,47 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct17@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct17[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17]] =
+    fromRawPtr[
+      CStruct17[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4335,31 +4592,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4382,31 +4639,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4429,31 +4686,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4476,31 +4733,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4523,31 +4780,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4570,31 +4827,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4617,31 +4874,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4664,31 +4921,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4711,31 +4968,31 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct17[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct17[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4758,31 +5015,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4805,31 +5063,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4852,31 +5111,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4899,31 +5159,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4946,31 +5207,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -4993,31 +5255,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -5040,31 +5303,32 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct17[T1,
                                   T2,
                                   T3,
@@ -5087,34 +5351,36 @@ T14, T15, T16, T17](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct17[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct17[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct18[_,
@@ -5146,10 +5412,49 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct18@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct18[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17,
+              T18]] =
+    fromRawPtr[
+      CStruct18[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17,
+                T18]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5173,32 +5478,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5222,32 +5527,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5271,32 +5576,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5320,32 +5625,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5369,32 +5674,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5418,32 +5723,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5467,32 +5772,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5516,32 +5821,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5565,32 +5870,32 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct18[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct18[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5614,32 +5919,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5663,32 +5969,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5712,32 +6019,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5761,32 +6069,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5810,32 +6119,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5859,32 +6169,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5908,32 +6219,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -5957,32 +6269,33 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 18. */
-  def _18(
+  @alwaysinline def _18(
       implicit tag: Tag.CStruct18[T1,
                                   T2,
                                   T3,
@@ -6006,35 +6319,37 @@ T14, T15, T16, T17, T18](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 18. */
-  def _18_=(value: T18)(implicit tag: Tag.CStruct18[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18]): Unit = {
+  @alwaysinline def _18_=(value: T18)(
+      implicit tag: Tag.CStruct18[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18]): Unit = {
     val ptr = new Ptr[T18](elemRawPtr(rawptr, tag.offset(17)))
     ptr.`unary_!_=`(value)(tag._18)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct19[_,
@@ -6067,10 +6382,51 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct19@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct19[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17,
+              T18,
+              T19]] =
+    fromRawPtr[
+      CStruct19[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17,
+                T18,
+                T19]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6095,33 +6451,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6146,33 +6502,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6197,33 +6553,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6248,33 +6604,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6299,33 +6655,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6350,33 +6706,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6401,33 +6757,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6452,33 +6808,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6503,33 +6859,33 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct19[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct19[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6554,33 +6910,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6605,33 +6962,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6656,33 +7014,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6707,33 +7066,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6758,33 +7118,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6809,33 +7170,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6860,33 +7222,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6911,33 +7274,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 18. */
-  def _18(
+  @alwaysinline def _18(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -6962,33 +7326,34 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 18. */
-  def _18_=(value: T18)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _18_=(value: T18)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T18](elemRawPtr(rawptr, tag.offset(17)))
     ptr.`unary_!_=`(value)(tag._18)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 19. */
-  def _19(
+  @alwaysinline def _19(
       implicit tag: Tag.CStruct19[T1,
                                   T2,
                                   T3,
@@ -7013,36 +7378,38 @@ T14, T15, T16, T17, T18, T19](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 19. */
-  def _19_=(value: T19)(implicit tag: Tag.CStruct19[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19]): Unit = {
+  @alwaysinline def _19_=(value: T19)(
+      implicit tag: Tag.CStruct19[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19]): Unit = {
     val ptr = new Ptr[T19](elemRawPtr(rawptr, tag.offset(18)))
     ptr.`unary_!_=`(value)(tag._19)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct20[_,
@@ -7076,10 +7443,53 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   override def toString: String =
     "CStruct20@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct20[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17,
+              T18,
+              T19,
+              T20]] =
+    fromRawPtr[
+      CStruct20[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17,
+                T18,
+                T19,
+                T20]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7105,34 +7515,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7158,34 +7568,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7211,34 +7621,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7264,34 +7674,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7317,34 +7727,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7370,34 +7780,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7423,34 +7833,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7476,34 +7886,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7529,34 +7939,34 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct20[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct20[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7582,34 +7992,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7635,34 +8046,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7688,34 +8100,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7741,34 +8154,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7794,34 +8208,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7847,34 +8262,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7900,34 +8316,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -7953,34 +8370,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 18. */
-  def _18(
+  @alwaysinline def _18(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -8006,34 +8424,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 18. */
-  def _18_=(value: T18)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _18_=(value: T18)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T18](elemRawPtr(rawptr, tag.offset(17)))
     ptr.`unary_!_=`(value)(tag._18)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 19. */
-  def _19(
+  @alwaysinline def _19(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -8059,34 +8478,35 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 19. */
-  def _19_=(value: T19)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _19_=(value: T19)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T19](elemRawPtr(rawptr, tag.offset(18)))
     ptr.`unary_!_=`(value)(tag._19)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 20. */
-  def _20(
+  @alwaysinline def _20(
       implicit tag: Tag.CStruct20[T1,
                                   T2,
                                   T3,
@@ -8112,38 +8532,39 @@ T14, T15, T16, T17, T18, T19, T20](private[scalanative] val rawptr: RawPtr) {
   }
 
   /** Store a value to a field number 20. */
-  def _20_=(value: T20)(implicit tag: Tag.CStruct20[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20]): Unit = {
+  @alwaysinline def _20_=(value: T20)(
+      implicit tag: Tag.CStruct20[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20]): Unit = {
     val ptr = new Ptr[T20](elemRawPtr(rawptr, tag.offset(19)))
     ptr.`unary_!_=`(value)(tag._20)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-T14, T15, T16, T17, T18, T19, T20, T21](
-    private[scalanative] val rawptr: RawPtr) {
+T14, T15, T16, T17, T18, T19, T20, T21](private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct21[_,
@@ -8178,10 +8599,55 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   override def toString: String =
     "CStruct21@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct21[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17,
+              T18,
+              T19,
+              T20,
+              T21]] =
+    fromRawPtr[
+      CStruct21[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17,
+                T18,
+                T19,
+                T20,
+                T21]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8208,35 +8674,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8263,35 +8729,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8318,35 +8784,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8373,35 +8839,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8428,35 +8894,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8483,35 +8949,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8538,35 +9004,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8593,35 +9059,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8648,35 +9114,35 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct21[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct21[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8703,35 +9169,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8758,35 +9225,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8813,35 +9281,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8868,35 +9337,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8923,35 +9393,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -8978,35 +9449,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9033,35 +9505,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9088,35 +9561,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 18. */
-  def _18(
+  @alwaysinline def _18(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9143,35 +9617,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 18. */
-  def _18_=(value: T18)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _18_=(value: T18)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T18](elemRawPtr(rawptr, tag.offset(17)))
     ptr.`unary_!_=`(value)(tag._18)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 19. */
-  def _19(
+  @alwaysinline def _19(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9198,35 +9673,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 19. */
-  def _19_=(value: T19)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _19_=(value: T19)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T19](elemRawPtr(rawptr, tag.offset(18)))
     ptr.`unary_!_=`(value)(tag._19)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 20. */
-  def _20(
+  @alwaysinline def _20(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9253,35 +9729,36 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 20. */
-  def _20_=(value: T20)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _20_=(value: T20)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T20](elemRawPtr(rawptr, tag.offset(19)))
     ptr.`unary_!_=`(value)(tag._20)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 21. */
-  def _21(
+  @alwaysinline def _21(
       implicit tag: Tag.CStruct21[T1,
                                   T2,
                                   T3,
@@ -9308,39 +9785,41 @@ T14, T15, T16, T17, T18, T19, T20, T21](
   }
 
   /** Store a value to a field number 21. */
-  def _21_=(value: T21)(implicit tag: Tag.CStruct21[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21]): Unit = {
+  @alwaysinline def _21_=(value: T21)(
+      implicit tag: Tag.CStruct21[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21]): Unit = {
     val ptr = new Ptr[T21](elemRawPtr(rawptr, tag.offset(20)))
     ptr.`unary_!_=`(value)(tag._21)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 10)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 
 final class CStruct22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
 T14, T15, T16, T17, T18, T19, T20, T21, T22](
-    private[scalanative] val rawptr: RawPtr) {
+    private[scalanative] val rawptr: RawPtr)
+    extends CStruct {
   override def equals(other: Any): Boolean =
     (this eq other.asInstanceOf[AnyRef]) || (other match {
       case other: CStruct22[_,
@@ -9376,10 +9855,57 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   override def toString: String =
     "CStruct22@" + java.lang.Long.toHexString(castRawPtrToLong(rawptr))
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+  @alwaysinline def toPtr: Ptr[
+    CStruct22[T1,
+              T2,
+              T3,
+              T4,
+              T5,
+              T6,
+              T7,
+              T8,
+              T9,
+              T10,
+              T11,
+              T12,
+              T13,
+              T14,
+              T15,
+              T16,
+              T17,
+              T18,
+              T19,
+              T20,
+              T21,
+              T22]] =
+    fromRawPtr[
+      CStruct22[T1,
+                T2,
+                T3,
+                T4,
+                T5,
+                T6,
+                T7,
+                T8,
+                T9,
+                T10,
+                T11,
+                T12,
+                T13,
+                T14,
+                T15,
+                T16,
+                T17,
+                T18,
+                T19,
+                T20,
+                T21,
+                T22]](rawptr)
+
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 1. */
-  def _1(
+  @alwaysinline def _1(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9407,36 +9933,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 1. */
-  def _1_=(value: T1)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _1_=(value: T1)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T1](elemRawPtr(rawptr, tag.offset(0)))
     ptr.`unary_!_=`(value)(tag._1)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 2. */
-  def _2(
+  @alwaysinline def _2(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9464,36 +9990,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 2. */
-  def _2_=(value: T2)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _2_=(value: T2)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T2](elemRawPtr(rawptr, tag.offset(1)))
     ptr.`unary_!_=`(value)(tag._2)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 3. */
-  def _3(
+  @alwaysinline def _3(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9521,36 +10047,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 3. */
-  def _3_=(value: T3)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _3_=(value: T3)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T3](elemRawPtr(rawptr, tag.offset(2)))
     ptr.`unary_!_=`(value)(tag._3)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 4. */
-  def _4(
+  @alwaysinline def _4(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9578,36 +10104,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 4. */
-  def _4_=(value: T4)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _4_=(value: T4)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T4](elemRawPtr(rawptr, tag.offset(3)))
     ptr.`unary_!_=`(value)(tag._4)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 5. */
-  def _5(
+  @alwaysinline def _5(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9635,36 +10161,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 5. */
-  def _5_=(value: T5)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _5_=(value: T5)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T5](elemRawPtr(rawptr, tag.offset(4)))
     ptr.`unary_!_=`(value)(tag._5)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 6. */
-  def _6(
+  @alwaysinline def _6(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9692,36 +10218,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 6. */
-  def _6_=(value: T6)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _6_=(value: T6)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T6](elemRawPtr(rawptr, tag.offset(5)))
     ptr.`unary_!_=`(value)(tag._6)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 7. */
-  def _7(
+  @alwaysinline def _7(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9749,36 +10275,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 7. */
-  def _7_=(value: T7)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _7_=(value: T7)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T7](elemRawPtr(rawptr, tag.offset(6)))
     ptr.`unary_!_=`(value)(tag._7)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 8. */
-  def _8(
+  @alwaysinline def _8(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9806,36 +10332,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 8. */
-  def _8_=(value: T8)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _8_=(value: T8)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T8](elemRawPtr(rawptr, tag.offset(7)))
     ptr.`unary_!_=`(value)(tag._8)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 9. */
-  def _9(
+  @alwaysinline def _9(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9863,36 +10389,36 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 9. */
-  def _9_=(value: T9)(implicit tag: Tag.CStruct22[T1,
-                                                  T2,
-                                                  T3,
-                                                  T4,
-                                                  T5,
-                                                  T6,
-                                                  T7,
-                                                  T8,
-                                                  T9,
-                                                  T10,
-                                                  T11,
-                                                  T12,
-                                                  T13,
-                                                  T14,
-                                                  T15,
-                                                  T16,
-                                                  T17,
-                                                  T18,
-                                                  T19,
-                                                  T20,
-                                                  T21,
-                                                  T22]): Unit = {
+  @alwaysinline def _9_=(value: T9)(implicit tag: Tag.CStruct22[T1,
+                                                                T2,
+                                                                T3,
+                                                                T4,
+                                                                T5,
+                                                                T6,
+                                                                T7,
+                                                                T8,
+                                                                T9,
+                                                                T10,
+                                                                T11,
+                                                                T12,
+                                                                T13,
+                                                                T14,
+                                                                T15,
+                                                                T16,
+                                                                T17,
+                                                                T18,
+                                                                T19,
+                                                                T20,
+                                                                T21,
+                                                                T22]): Unit = {
     val ptr = new Ptr[T9](elemRawPtr(rawptr, tag.offset(8)))
     ptr.`unary_!_=`(value)(tag._9)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 10. */
-  def _10(
+  @alwaysinline def _10(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9920,36 +10446,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 10. */
-  def _10_=(value: T10)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _10_=(value: T10)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T10](elemRawPtr(rawptr, tag.offset(9)))
     ptr.`unary_!_=`(value)(tag._10)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 11. */
-  def _11(
+  @alwaysinline def _11(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -9977,36 +10504,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 11. */
-  def _11_=(value: T11)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _11_=(value: T11)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T11](elemRawPtr(rawptr, tag.offset(10)))
     ptr.`unary_!_=`(value)(tag._11)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 12. */
-  def _12(
+  @alwaysinline def _12(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10034,36 +10562,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 12. */
-  def _12_=(value: T12)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _12_=(value: T12)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T12](elemRawPtr(rawptr, tag.offset(11)))
     ptr.`unary_!_=`(value)(tag._12)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 13. */
-  def _13(
+  @alwaysinline def _13(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10091,36 +10620,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 13. */
-  def _13_=(value: T13)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _13_=(value: T13)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T13](elemRawPtr(rawptr, tag.offset(12)))
     ptr.`unary_!_=`(value)(tag._13)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 14. */
-  def _14(
+  @alwaysinline def _14(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10148,36 +10678,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 14. */
-  def _14_=(value: T14)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _14_=(value: T14)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T14](elemRawPtr(rawptr, tag.offset(13)))
     ptr.`unary_!_=`(value)(tag._14)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 15. */
-  def _15(
+  @alwaysinline def _15(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10205,36 +10736,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 15. */
-  def _15_=(value: T15)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _15_=(value: T15)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T15](elemRawPtr(rawptr, tag.offset(14)))
     ptr.`unary_!_=`(value)(tag._15)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 16. */
-  def _16(
+  @alwaysinline def _16(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10262,36 +10794,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 16. */
-  def _16_=(value: T16)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _16_=(value: T16)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T16](elemRawPtr(rawptr, tag.offset(15)))
     ptr.`unary_!_=`(value)(tag._16)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 17. */
-  def _17(
+  @alwaysinline def _17(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10319,36 +10852,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 17. */
-  def _17_=(value: T17)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _17_=(value: T17)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T17](elemRawPtr(rawptr, tag.offset(16)))
     ptr.`unary_!_=`(value)(tag._17)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 18. */
-  def _18(
+  @alwaysinline def _18(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10376,36 +10910,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 18. */
-  def _18_=(value: T18)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _18_=(value: T18)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T18](elemRawPtr(rawptr, tag.offset(17)))
     ptr.`unary_!_=`(value)(tag._18)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 19. */
-  def _19(
+  @alwaysinline def _19(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10433,36 +10968,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 19. */
-  def _19_=(value: T19)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _19_=(value: T19)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T19](elemRawPtr(rawptr, tag.offset(18)))
     ptr.`unary_!_=`(value)(tag._19)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 20. */
-  def _20(
+  @alwaysinline def _20(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10490,36 +11026,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 20. */
-  def _20_=(value: T20)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _20_=(value: T20)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T20](elemRawPtr(rawptr, tag.offset(19)))
     ptr.`unary_!_=`(value)(tag._20)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 21. */
-  def _21(
+  @alwaysinline def _21(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10547,36 +11084,37 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 21. */
-  def _21_=(value: T21)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _21_=(value: T21)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T21](elemRawPtr(rawptr, tag.offset(20)))
     ptr.`unary_!_=`(value)(tag._21)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 32)
 
   /** Load a value of a field number 22. */
-  def _22(
+  @alwaysinline def _22(
       implicit tag: Tag.CStruct22[T1,
                                   T2,
                                   T3,
@@ -10604,31 +11142,32 @@ T14, T15, T16, T17, T18, T19, T20, T21, T22](
   }
 
   /** Store a value to a field number 22. */
-  def _22_=(value: T22)(implicit tag: Tag.CStruct22[T1,
-                                                    T2,
-                                                    T3,
-                                                    T4,
-                                                    T5,
-                                                    T6,
-                                                    T7,
-                                                    T8,
-                                                    T9,
-                                                    T10,
-                                                    T11,
-                                                    T12,
-                                                    T13,
-                                                    T14,
-                                                    T15,
-                                                    T16,
-                                                    T17,
-                                                    T18,
-                                                    T19,
-                                                    T20,
-                                                    T21,
-                                                    T22]): Unit = {
+  @alwaysinline def _22_=(value: T22)(
+      implicit tag: Tag.CStruct22[T1,
+                                  T2,
+                                  T3,
+                                  T4,
+                                  T5,
+                                  T6,
+                                  T7,
+                                  T8,
+                                  T9,
+                                  T10,
+                                  T11,
+                                  T12,
+                                  T13,
+                                  T14,
+                                  T15,
+                                  T16,
+                                  T17,
+                                  T18,
+                                  T19,
+                                  T20,
+                                  T21,
+                                  T22]): Unit = {
     val ptr = new Ptr[T22](elemRawPtr(rawptr, tag.offset(21)))
     ptr.`unary_!_=`(value)(tag._22)
   }
 
-// ###sourceLocation(file: "/Users/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 41)
+// ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 46)
 }
