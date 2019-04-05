@@ -414,8 +414,7 @@ trait NirGenExpr { self: NirGenPhase =>
     def genReturn(value: Val): Val = {
       val retv =
         if (curMethodIsExtern.get) {
-          val Type.Function(_, retty) = genExternMethodSig(curMethodSym)
-          toExtern(retty, value)
+          toExtern(curMethodSym.tpe.resultType, value)
         } else {
           value
         }
@@ -512,23 +511,29 @@ trait NirGenExpr { self: NirGenPhase =>
 
       val sym   = tree.symbol
       val owner = sym.owner
+
       if (sym.isModule) {
         genModule(sym)
       } else if (sym.isStaticMember) {
         genStaticMember(sym)
       } else if (sym.isMethod) {
         genApplyMethod(sym, statically = false, qualp, Seq())
-      } else if (owner.isStruct) {
-        val index = owner.info.decls.filter(_.isField).toList.indexOf(sym)
-        val qual  = genExpr(qualp)
-        buf.extract(qual, Seq(index), unwind)
+      } else if (owner.isNamedStruct) {
+        val fields   = genFields(owner)
+        val tys      = genStructFieldTypes(owner)
+        val structty = Type.StructValue(tys)
+        val index    = fields.indexOf(sym)
+        val qual     = genExpr(qualp)
+        val rawptr   = buf.unbox(genType(qualp.tpe), qual, unwind)
+        val elempath = Seq(Val.Int(0), Val.Int(index))
+        val elemptr  = buf.elem(structty, rawptr, elempath, unwind)
+        buf.load(tys(index), elemptr, unwind)
       } else {
         val ty   = genType(tree.symbol.tpe)
         val qual = genExpr(qualp)
         val name = genFieldName(tree.symbol)
         if (sym.owner.isExternModule) {
-          val externTy = genExternType(tree.symbol.tpe)
-          genLoadExtern(ty, externTy, tree.symbol)
+          genLoadExtern(tree.symbol.tpe, tree.symbol)
         } else {
           buf.fieldload(ty, qual, name, unwind)
         }
@@ -550,13 +555,25 @@ trait NirGenExpr { self: NirGenPhase =>
 
       lhsp match {
         case sel @ Select(qualp, _) =>
+          val sym   = sel.symbol
+          val owner = sym.owner
+
           val ty   = genType(sel.tpe)
           val qual = genExpr(qualp)
           val rhs  = genExpr(rhsp)
           val name = genFieldName(sel.symbol)
-          if (sel.symbol.owner.isExternModule) {
-            val externTy = genExternType(sel.tpe)
-            genStoreExtern(externTy, sel.symbol, rhs)
+
+          if (owner.isExternModule) {
+            genStoreExtern(sel.tpe, sel.symbol, rhs)
+          } else if (owner.isNamedStruct) {
+            val fields   = genFields(owner)
+            val tys      = genStructFieldTypes(owner)
+            val structty = Type.StructValue(tys)
+            val index    = fields.indexOf(sym)
+            val rawptr   = buf.unbox(genType(qualp.tpe), qual, unwind)
+            val elempath = Seq(Val.Int(0), Val.Int(index))
+            val elemptr  = buf.elem(structty, rawptr, elempath, unwind)
+            buf.store(tys(index), elemptr, rhs, unwind)
           } else {
             buf.fieldstore(ty, qual, name, rhs, unwind)
           }
@@ -1479,8 +1496,8 @@ trait NirGenExpr { self: NirGenPhase =>
         case SimpleType(ArrayClass, Seq(targ)) =>
           genApplyNewArray(targ, args)
 
-        case st if st.isStruct =>
-          genApplyNewStruct(st, args)
+        case st if st.isNamedStruct =>
+          genApplyNewNamedStruct(st, fun.symbol, args)
 
         case SimpleType(cls, Seq()) =>
           genApplyNew(cls, fun.symbol, args)
@@ -1490,17 +1507,16 @@ trait NirGenExpr { self: NirGenPhase =>
       }
     }
 
-    def genApplyNewStruct(st: SimpleType, argsp: Seq[Tree]): Val = {
-      val ty       = genType(st)
-      val args     = genSimpleArgs(argsp)
-      var res: Val = Val.Zero(ty)
+    def newNamedStruct(st: SimpleType): Val = {
+      val ty    = genStructType(st)
+      val alloc = buf.stackalloc(ty, Val.Int(1), unwind)
+      buf.box(genType(st), alloc, unwind)
+    }
 
-      args.zipWithIndex.foreach {
-        case (value, index) =>
-          res = buf.insert(res, value, Seq(index), unwind)
-      }
-
-      res
+    def genApplyNewNamedStruct(st: SimpleType, ctorsym: Symbol, argsp: Seq[Tree]): Val = {
+      val alloc = newNamedStruct(st)
+      val call  = genApplyMethod(ctorsym, statically = true, alloc, argsp)
+      alloc
     }
 
     def genApplyNewArray(targ: SimpleType, argsp: Seq[Tree]): Val = {
@@ -1543,34 +1559,39 @@ trait NirGenExpr { self: NirGenPhase =>
     def genApplyExternAccessor(sym: Symbol, argsp: Seq[Tree]): Val = {
       argsp match {
         case Seq() =>
-          val ty = genMethodSig(sym).ret
-          val externTy = genExternMethodSig(sym).ret
-          genLoadExtern(ty, externTy, sym)
+          genLoadExtern(sym.tpe.resultType, sym)
         case Seq(valuep) =>
-          val externTy = genExternType(sym.tpe.paramss.flatten.last.tpe)
-          genStoreExtern(externTy, sym, genExpr(valuep))
+          val tpe = sym.tpe.paramss.flatten.last.tpe
+          genStoreExtern(tpe, sym, genExpr(valuep))
       }
     }
 
-    def genLoadExtern(ty: nir.Type, externTy: nir.Type, sym: Symbol): Val = {
+    def genLoadExtern(ty: SimpleType, sym: Symbol): Val = {
       assert(sym.owner.isExternModule)
 
-      val name = Val.Global(genName(sym), Type.Ptr)
+      val externTy = genExternType(ty)
+      val name     = Val.Global(genName(sym), Type.Ptr)
 
       fromExtern(ty, buf.load(externTy, name, unwind))
     }
 
-    def genStoreExtern(externTy: nir.Type, sym: Symbol, value: Val): Val = {
+    def genStoreExtern(ty: SimpleType, sym: Symbol, value: Val): Val = {
       assert(sym.owner.isExternModule)
 
       val name        = Val.Global(genName(sym), Type.Ptr)
-      val externValue = toExtern(externTy, value)
+      val externTy    = genExternType(ty)
+      val externValue = toExtern(ty, value)
 
       buf.store(externTy, name, externValue, unwind)
     }
 
-    def toExtern(expectedTy: nir.Type, value: Val): Val =
+    def toExtern(expected: SimpleType, value: Val): Val = {
+      val expectedTy = genExternType(expected)
+
       (expectedTy, value.ty) match {
+        case (_, refty: Type.Ref) if expected.isNamedStruct =>
+          val rawptr = buf.unbox(refty, value, unwind)
+          load(genStructType(expected), rawptr, unwind)
         case (_, refty: Type.Ref)
             if Type.boxClasses.contains(refty.name)
             && Type.unbox(Type.Ref(refty.name)) == expectedTy =>
@@ -1580,9 +1601,17 @@ trait NirGenExpr { self: NirGenPhase =>
         case _ =>
           value
       }
+    }
 
-    def fromExtern(expectedTy: nir.Type, value: Val): Val =
+    def fromExtern(expected: SimpleType, value: Val): Val = {
+      val expectedTy = genType(expected)
+
       (expectedTy, value.ty) match {
+        case (refty: nir.Type.Ref, _) if expected.isNamedStruct =>
+          val alloc  = newNamedStruct(expected)
+          val rawptr = buf.unbox(refty, alloc, unwind)
+          store(genStructType(expected), rawptr, value, unwind)
+          alloc
         case (refty: nir.Type.Ref, ty)
             if Type.boxClasses.contains(refty.name)
             && Type.unbox(Type.Ref(refty.name)) == ty =>
@@ -1592,6 +1621,7 @@ trait NirGenExpr { self: NirGenPhase =>
         case _ =>
           value
       }
+    }
 
     def genApplyMethod(sym: Symbol,
                        statically: Boolean,
@@ -1613,7 +1643,7 @@ trait NirGenExpr { self: NirGenPhase =>
           sig.args.tail
       val args = genMethodArgs(sym, argsp, argsPt)
       val method =
-        if (isImplClass(owner) || statically || owner.isStruct || owner.isExternModule) {
+        if (isImplClass(owner) || statically || owner.isExternModule) {
           Val.Global(name, nir.Type.Ptr)
         } else {
           val Global.Member(_, sig) = name
@@ -1630,8 +1660,7 @@ trait NirGenExpr { self: NirGenPhase =>
       if (!owner.isExternModule) {
         res
       } else {
-        val Type.Function(_, retty) = origSig
-        fromExtern(retty, res)
+        fromExtern(sym.tpe.resultType, res)
       }
     }
 
@@ -1698,8 +1727,7 @@ trait NirGenExpr { self: NirGenPhase =>
             if (wasRepeated) {
               res ++= genExpandRepeatedArg(argp).get
             } else {
-              val externType = genExternType(paramSym.tpe)
-              res += toExtern(externType, genExpr(argp))
+              res += toExtern(paramSym.tpe, genExpr(argp))
             }
         }
 
@@ -1715,11 +1743,11 @@ trait NirGenExpr { self: NirGenPhase =>
           val values = mutable.UnrolledBuffer.empty[Val]
           elems.foreach {
             case CVararg(argp) =>
-              val arg = genExpr(argp)
+              val arg =  genExpr(argp)
 
               arg.ty match {
                 case refty: Type.Ref if Type.boxClasses.contains(refty.name) =>
-                  values += toExtern(Type.unbox(Type.Ref(refty.name)), arg)
+                  values += buf.unbox(refty, arg, unwind)
                 case _ =>
                   values += arg
               }

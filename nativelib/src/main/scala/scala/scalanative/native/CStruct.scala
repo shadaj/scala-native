@@ -5,7 +5,7 @@ package native
 import scalanative.runtime.{fromRawPtr, RawPtr}
 import scalanative.runtime.Intrinsics._
 
-sealed abstract class CStruct
+abstract class CStruct
 
 // ###sourceLocation(file: "/home/denys/.src/native/nativelib/src/main/scala/scala/scalanative/native/CStruct.scala.gyb", line: 12)
 

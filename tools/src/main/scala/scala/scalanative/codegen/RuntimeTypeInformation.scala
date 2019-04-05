@@ -21,6 +21,8 @@ class RuntimeTypeInformation(meta: Metadata, info: ScopeInfo) {
           Rt.Type,
           Type.Int, // size
           Type.Int, // idRangeUntil
+          Type.Int, // struct size
+          Type.Int, // struct alignment
           meta.layout(cls).referenceOffsetsTy
         ) ++ dynmap ++ Seq(
           meta.vtable(cls).ty
@@ -43,6 +45,16 @@ class RuntimeTypeInformation(meta: Metadata, info: ScopeInfo) {
     })
     val base =
       Val.StructValue(Seq(typeId, traitId, typeStr))
+    val structSize = info.attrs.struct
+      .map { struct =>
+        MemoryLayout.sizeOf(Type.StructValue(struct.tys)).toInt
+      }
+      .getOrElse(-1)
+    val structAlignment = info.attrs.struct
+      .map { struct =>
+        MemoryLayout.alignmentOf(Type.StructValue(struct.tys)).toInt
+      }
+      .getOrElse(-1)
     info match {
       case cls: Class =>
         val dynmap =
@@ -57,6 +69,8 @@ class RuntimeTypeInformation(meta: Metadata, info: ScopeInfo) {
             base,
             Val.Int(meta.layout(cls).size.toInt),
             Val.Int(range.last),
+            Val.Int(structSize),
+            Val.Int(structAlignment),
             meta.layout(cls).referenceOffsetsValue
           ) ++ dynmap ++ Seq(
             meta.vtable(cls).value

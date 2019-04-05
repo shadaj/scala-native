@@ -1,7 +1,8 @@
 package scala.scalanative
 package runtime
 
-import native._
+import scalanative.native._
+import scalanative.runtime.Intrinsics._
 
 object Boxes {
   @inline def boxToUByte(v: Byte): UByte    = new UByte(v)
@@ -12,6 +13,15 @@ object Boxes {
     if (v == null) null else new Ptr[T](v)
   @inline def boxToCArray[T, N <: Nat](v: RawPtr): CArray[T, N] =
     if (v == null) null else new CArray[T, N](v)
+  @inline def boxToCStruct(rawty: RawPtr, v: RawPtr): CStruct = {
+    if (rawty == null) {
+      null
+    } else {
+      val alloc = GC.alloc_atomic(rawty, sizeof[Ptr[_]] * 2)
+      storeRawPtr(elemRawPtr(alloc, sizeof[Ptr[_]]), v)
+      castRawPtrToObject(alloc).asInstanceOf[CStruct]
+    }
+  }
 
   @inline def unboxToUByte(o: java.lang.Object): Byte =
     if (o == null) 0.toByte
@@ -29,4 +39,13 @@ object Boxes {
     if (o == null) null else o.asInstanceOf[Ptr[_]].rawptr
   @inline def unboxToCArray(o: java.lang.Object): RawPtr =
     if (o == null) null else o.asInstanceOf[CArray[_, _]].rawptr
+  @inline def unboxToCStruct(o: Object): RawPtr = {
+    if (o == null) {
+      null
+    } else {
+      val rawptr  = castObjectToRawPtr(o.asInstanceOf[CStruct])
+      val elemptr = elemRawPtr(rawptr, sizeof[Ptr[_]])
+      loadRawPtr(elemptr)
+    }
+  }
 }

@@ -810,31 +810,81 @@ object Lower {
     def genBoxOp(buf: Buffer, n: Local, op: Op.Box): Unit = {
       val Op.Box(ty, from) = op
 
-      val methodName = BoxTo(ty)
-      val moduleName = methodName.top
+      BoxTo
+        .get(ty)
+        .fold {
+          val Type.Ref(name, _, _) = ty
 
-      val boxTy =
-        Type.Function(Seq(Type.Ref(moduleName), Type.unbox(ty)), ty)
+          val nonNullL, isNullL, mergeL = fresh()
 
-      buf.let(
-        n,
-        Op.Call(boxTy, Val.Global(methodName, Type.Ptr), Seq(Val.Null, from)),
-        unwind)
+          val cond = buf.comp(Comp.Ieq, Type.Ptr, from, Val.Null, unwind)
+          buf.branch(cond, Next(isNullL), Next(nonNullL))
+
+          buf.label(isNullL)
+          buf.jump(Next.Label(mergeL, Seq(Val.Null)))
+
+          buf.label(nonNullL)
+          val alloc =
+            Val.Local(fresh(), Type.Ref(name, exact = true, nullable = false))
+          genClassallocOp(buf, alloc.name, Op.Classalloc(name))
+          val structty = Type.StructValue(Seq(Type.Ptr, Type.Ptr))
+          val elempath = Seq(Val.Int(0), Val.Int(1))
+          val fieldptr = buf.elem(structty, alloc, elempath, unwind)
+          buf.store(Type.Ptr, fieldptr, from, unwind)
+          buf.jump(Next.Label(mergeL, Seq(alloc)))
+
+          buf.label(mergeL, Seq(Val.Local(n, op.resty)))
+
+        } { methodName =>
+          val moduleName = methodName.top
+
+          val boxTy =
+            Type.Function(Seq(Type.Ref(moduleName), Type.unbox(ty)), ty)
+
+          buf.let(n,
+                  Op.Call(boxTy,
+                          Val.Global(methodName, Type.Ptr),
+                          Seq(Val.Null, from)),
+                  unwind)
+        }
     }
 
     def genUnboxOp(buf: Buffer, n: Local, op: Op.Unbox): Unit = {
       val Op.Unbox(ty, from) = op
 
-      val methodName = UnboxTo(ty)
-      val moduleName = methodName.top
+      UnboxTo
+        .get(ty)
+        .fold {
+          val nonNullL, isNullL, mergeL = fresh()
 
-      val unboxTy =
-        Type.Function(Seq(Type.Ref(moduleName), ty), Type.unbox(ty))
+          val cond = buf.comp(Comp.Ieq, Type.Ptr, from, Val.Null, unwind)
+          buf.branch(cond, Next(isNullL), Next(nonNullL))
 
-      buf.let(
-        n,
-        Op.Call(unboxTy, Val.Global(methodName, Type.Ptr), Seq(Val.Null, from)),
-        unwind)
+          buf.label(isNullL)
+          buf.jump(Next.Label(mergeL, Seq(Val.Null)))
+
+          buf.label(nonNullL)
+          val Type.Ref(name, _, _) = ty
+          val structty             = Type.StructValue(Seq(Type.Ptr, Type.Ptr))
+          val elempath             = Seq(Val.Int(0), Val.Int(1))
+          val fieldptr             = buf.elem(structty, from, elempath, unwind)
+          val res                  = buf.load(Type.Ptr, fieldptr, unwind)
+          buf.jump(Next.Label(mergeL, Seq(res)))
+
+          buf.label(mergeL, Seq(Val.Local(n, op.resty)))
+
+        } { methodName =>
+          val moduleName = methodName.top
+
+          val unboxTy =
+            Type.Function(Seq(Type.Ref(moduleName), ty), Type.unbox(ty))
+
+          buf.let(n,
+                  Op.Call(unboxTy,
+                          Val.Global(methodName, Type.Ptr),
+                          Seq(Val.Null, from)),
+                  unwind)
+        }
     }
 
     def genModuleOp(buf: Buffer, n: Local, op: Op.Module) = {

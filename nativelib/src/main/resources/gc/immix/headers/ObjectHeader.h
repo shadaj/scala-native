@@ -22,6 +22,8 @@ typedef struct {
     } rt;
     int32_t size;
     int32_t idRangeUntil;
+    int32_t structSize;
+    int32_t structAlignment;
     int64_t *refMapStruct;
 } Rtti;
 

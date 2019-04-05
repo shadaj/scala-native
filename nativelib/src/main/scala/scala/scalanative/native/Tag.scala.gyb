@@ -4,6 +4,7 @@ package native
 import scala.reflect.ClassTag
 import scalanative.runtime._
 import scalanative.runtime.Intrinsics._
+import scalanative.runtime.Boxes.{boxToCStruct, unboxToCStruct}
 
 sealed abstract class Tag[T] {
   def size: Int
@@ -14,7 +15,7 @@ sealed abstract class Tag[T] {
 }
 
 object Tag {
-  case class Ptr[T](of: Tag[T])
+  final case class Ptr[T](of: Tag[T])
       extends Tag[native.Ptr[T]] {
     @alwaysinline def size: Int = 8
     @alwaysinline def alignment: Int = 8
@@ -24,10 +25,10 @@ object Tag {
       storeRawPtr(toRawPtr(ptr), toRawPtr(value))
   }
 
-  case class Class[T <: AnyRef](of: java.lang.Class[T])
+  final case class Class[T <: AnyRef](of: java.lang.Class[T])
       extends Tag[T] {
-    @alwaysinline def size: Int = 8
-    @alwaysinline def alignment: Int = 8
+    @alwaysinline def size: Int =  8
+    @alwaysinline def alignment: Int =  8
     @alwaysinline override def load(ptr: native.Ptr[T]): T =
       loadObject(toRawPtr(ptr)).asInstanceOf[T]
     @alwaysinline override def store(ptr: native.Ptr[T], value: T): Unit =
@@ -49,7 +50,7 @@ object Tag {
   %          ('Double', 'scala.Double', 8)]
   % for (name, T, size) in prims:
 
-  object ${name} extends Tag[${T}] {
+  final case object ${name} extends Tag[${T}] {
     @alwaysinline def size: Int = ${size}
     @alwaysinline def alignment: Int = ${size}
     @alwaysinline override def load(ptr: native.Ptr[${T}]): ${T} =
@@ -80,7 +81,7 @@ object Tag {
 
   % for N in range(0, 10):
 
-  object Nat${N} extends Tag[native.Nat._${N}] with NatTag {
+  final case object Nat${N} extends Tag[native.Nat._${N}] with NatTag {
     @noinline def size: Int = throwUndefined()
     @noinline def alignment: Int = throwUndefined()
     @alwaysinline def toInt: Int = ${N}
@@ -95,7 +96,7 @@ object Tag {
   %   TagNs   = ["Tag[{}]".format(n) for n in Ns]
   %   args    = ", ".join("_{}: {}".format(i + 1, T) for (i, T) in enumerate(TagNs))
 
-  case class Digit${N}${BoundNs}(${args})
+  final case class Digit${N}${BoundNs}(${args})
       extends Tag[native.Nat.Digit${N}${JustNs}]
       with NatTag
   {
@@ -112,7 +113,7 @@ object Tag {
 
   % end
 
-  case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
+  final case class CArray[T, N <: native.Nat](of: Tag[T], n: Tag[N])
       extends Tag[native.CArray[T, N]]
   {
     @alwaysinline def size: Int = of.size * n.asInstanceOf[NatTag].toInt
@@ -138,13 +139,32 @@ object Tag {
     offset + padding
   }
 
+  final case class CStruct[T <: native.CStruct](of: java.lang.Class[T])
+      extends Tag[T] {
+    @alwaysinline def size: Int =
+      getRawTypeStructSize(toRawType(of))
+    @alwaysinline def alignment: Int =
+      getRawTypeStructAlignment(toRawType(of))
+    @alwaysinline override def load(ptr: native.Ptr[T]): T = {
+      val rawty = toRawType(of)
+      val size  = getRawTypeStructSize(rawty)
+      boxToCStruct(rawty, toRawPtr(ptr)).asInstanceOf[T]
+    }
+    @alwaysinline override def store(ptr: native.Ptr[T], value: T): Unit = {
+      val rawptr = toRawPtr(ptr)
+      val rawty  = toRawType(of)
+      val ssize  = getRawTypeStructSize(rawty)
+      libc.memcpy(rawptr, unboxToCStruct(value), ssize)
+    }
+  }
+
   % for N in range(0, 23):
   %   Ts      = ["T" + str(i) for i in range(1, N + 1)]
   %   JustTs  = "" if N == 0 else "[" + ", ".join(Ts) + "]"
   %   TagTs   = ["Tag[{}]".format(T) for T in Ts]
   %   args    = ", ".join("_{}: {}".format(i + 1, T) for (i, T) in enumerate(TagTs))
 
-  case class CStruct${N}${JustTs}(${args})
+  final case class CStruct${N}${JustTs}(${args})
     extends Tag[native.CStruct${N}${JustTs}]
     with StructTag
   {
@@ -186,6 +206,8 @@ object Tag {
 
   % end
 
+  @alwaysinline implicit def materializeCStructTag[T <: native.CStruct: ClassTag]: Tag[T] =
+    Tag.CStruct(implicitly[ClassTag[T]].runtimeClass.asInstanceOf[java.lang.Class[T]])
   @alwaysinline implicit def materializePtrTag[T](implicit tag: Tag[T]): Tag[native.Ptr[T]] =
     Tag.Ptr(tag)
   @alwaysinline implicit def materializeClassTag[T <: AnyRef: ClassTag]: Tag[T] =

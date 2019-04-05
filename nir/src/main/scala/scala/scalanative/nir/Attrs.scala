@@ -29,7 +29,9 @@ object Attr {
   final case object Stub              extends Attr
   final case object Extern            extends Attr
   final case class Link(name: String) extends Attr
-  final case object Abstract          extends Attr
+
+  final case object Abstract              extends Attr
+  final case class Struct(tys: Seq[Type]) extends Attr
 }
 
 final case class Attrs(inline: Inline = MayInline,
@@ -39,6 +41,7 @@ final case class Attrs(inline: Inline = MayInline,
                        isDyn: Boolean = false,
                        isStub: Boolean = false,
                        isAbstract: Boolean = false,
+                       struct: Option[Struct] = scala.None,
                        links: Seq[Attr.Link] = Seq()) {
   def toSeq: Seq[Attr] = {
     val out = mutable.UnrolledBuffer.empty[Attr]
@@ -50,6 +53,9 @@ final case class Attrs(inline: Inline = MayInline,
     if (isDyn) out += Dyn
     if (isStub) out += Stub
     if (isAbstract) out += Abstract
+    struct.foreach { struct =>
+      out += struct
+    }
     out ++= links
 
     out
@@ -66,7 +72,7 @@ object Attrs {
     var isDyn      = false
     var isStub     = false
     var isAbstract = false
-    val overrides  = mutable.UnrolledBuffer.empty[Global]
+    var struct     = scala.None: Option[Struct]
     val links      = mutable.UnrolledBuffer.empty[Attr.Link]
 
     attrs.foreach {
@@ -76,8 +82,9 @@ object Attrs {
       case Extern           => isExtern = true
       case Dyn              => isDyn = true
       case Stub             => isStub = true
-      case link: Attr.Link  => links += link
+      case attr: Attr.Link  => links += attr
       case Abstract         => isAbstract = true
+      case attr: Struct     => struct = Some(attr)
     }
 
     new Attrs(inline,
@@ -87,6 +94,7 @@ object Attrs {
               isDyn,
               isStub,
               isAbstract,
+              struct,
               links)
   }
 }

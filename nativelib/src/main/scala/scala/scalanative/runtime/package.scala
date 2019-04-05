@@ -8,23 +8,33 @@ import scalanative.runtime.LLVMIntrinsics._
 package object runtime {
 
   /** Runtime Type Information. */
-  type Type = CStruct2[Int, String]
+  type Type = CStruct3[Int, Int, String]
 
   implicit class TypeOps(val self: Ptr[Type]) extends AnyVal {
     @alwaysinline def id: Int          = self._1
-    @alwaysinline def name: String     = self._2
+    @alwaysinline def traitId: Int     = self._2
+    @alwaysinline def name: String     = self._3
     @alwaysinline def isClass: Boolean = id >= 0
   }
 
   /** Class runtime type information. */
-  type ClassType = CStruct3[Type, Int, Int]
+  type ClassType = CStruct5[Type, Int, Int, Int, Int]
 
   implicit class ClassTypeOps(val self: Ptr[ClassType]) extends AnyVal {
-    @alwaysinline def id: Int            = self._1._1
-    @alwaysinline def name: String       = self._1._2
-    @alwaysinline def size: Int          = self._2
-    @alwaysinline def idRangeUntil: Long = self._3
+    @alwaysinline def id: Int              = self._1._1
+    @alwaysinline def traitId: Int         = self._1._2
+    @alwaysinline def name: String         = self._1._3
+    @alwaysinline def size: Int            = self._2
+    @alwaysinline def idRangeUntil: Int    = self._3
+    @alwaysinline def structSize: Int      = self._4
+    @alwaysinline def structAlignment: Int = self._5
   }
+
+  @alwaysinline def getRawTypeStructSize(rawty: RawPtr): Int =
+    loadInt(elemRawPtr(rawty, 24))
+
+  @alwaysinline def getRawTypeStructAlignment(rawty: RawPtr): Int =
+    loadInt(elemRawPtr(rawty, 28))
 
   /** Used as a stub right hand of intrinsified methods. */
   def intrinsic: Nothing = throwUndefined()

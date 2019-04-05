@@ -50,6 +50,12 @@ trait NirDefinitions { self: NirGlobalAddons =>
       "scala.scalanative.native.package$CCast")
     lazy val CCastMethod = getDecl(CCastClass, TermName("cast"))
 
+    lazy val CStructClass = getRequiredClass("scala.scalanative.native.CStruct")
+
+    lazy val CStructNClass = (0 to 22).map { n =>
+      getRequiredClass("scala.scalanative.native.CStruct" + n)
+    }
+
     lazy val FuncPtrClass = (0 to 22).map { n =>
       getRequiredClass("scala.scalanative.native.FuncPtr" + n)
     }
@@ -95,8 +101,6 @@ trait NirDefinitions { self: NirGlobalAddons =>
     lazy val NotEqMethodName = newTermName("$bang$eq")
 
     // Native runtime
-
-    lazy val StructClass = getRequiredClass("scala.scalanative.runtime.struct")
 
     lazy val RuntimePackage = getPackage(TermName("scala.scalanative.runtime"))
 

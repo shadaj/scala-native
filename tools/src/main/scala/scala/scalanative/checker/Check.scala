@@ -264,7 +264,7 @@ final class Check(implicit linked: linker.Result) {
       Type.unbox
         .get(ty)
         .fold {
-          error(s"uknown box type ${ty.show}")
+          expect(Type.Ptr, value)
         } { unboxedty =>
           expect(unboxedty, value)
         }

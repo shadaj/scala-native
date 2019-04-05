@@ -20,8 +20,15 @@ trait NirGenType { self: NirGenPhase =>
     def isExternModule: Boolean =
       isScalaModule && sym.annotations.exists(_.symbol == ExternClass)
 
-    def isStruct: Boolean =
-      sym.annotations.exists(_.symbol == StructClass)
+    def isNamedStruct: Boolean =
+      sym.baseClasses.exists(base => base == CStructClass) && !isAnonymousStruct
+
+    def isAnonymousStruct: Boolean =
+      CStructNClass.contains(sym) || {
+        sym.info.parents.exists { parent =>
+          CStructNClass.contains(parent.typeSymbol)
+        }
+      }
 
     def isField: Boolean =
       !sym.isMethod && sym.isTerm && !isScalaModule
@@ -53,6 +60,8 @@ trait NirGenType { self: NirGenPhase =>
 
     implicit def fromSymbol(sym: Symbol): SimpleType =
       SimpleType(sym, Seq.empty)
+
+    implicit def toSymbol(st: SimpleType): Symbol = st.sym
   }
 
   def genArrayCode(st: SimpleType): Char =
@@ -76,6 +85,8 @@ trait NirGenType { self: NirGenPhase =>
         nir.Type.Ptr
       case refty: nir.Type.Ref if nir.Type.boxClasses.contains(refty.name) =>
         nir.Type.unbox(nir.Type.Ref(refty.name))
+      case _ if st.isNamedStruct =>
+        genStructType(st)
       case ty =>
         ty
     }
@@ -96,13 +107,12 @@ trait NirGenType { self: NirGenPhase =>
   }
 
   def genRefType(st: SimpleType): nir.Type = st.sym match {
-    case ObjectClass      => nir.Rt.Object
-    case UnitClass        => nir.Type.Unit
-    case BoxedUnitClass   => nir.Rt.BoxedUnit
-    case NullClass        => genRefType(RuntimeNullClass)
-    case ArrayClass       => nir.Type.Array(genType(st.targs.head))
-    case _ if st.isStruct => genStruct(st)
-    case _                => nir.Type.Ref(genTypeName(st.sym))
+    case ObjectClass    => nir.Rt.Object
+    case UnitClass      => nir.Type.Unit
+    case BoxedUnitClass => nir.Rt.BoxedUnit
+    case NullClass      => genRefType(RuntimeNullClass)
+    case ArrayClass     => nir.Type.Array(genType(st.targs.head))
+    case _              => nir.Type.Ref(genTypeName(st.sym))
   }
 
   def genTypeValue(st: SimpleType): nir.Val =
@@ -117,20 +127,6 @@ trait NirGenType { self: NirGenPhase =>
         genTypeValue(RuntimePrimitive(code))
     }
 
-  def genStructFields(st: SimpleType): Seq[nir.Type] = {
-    for {
-      f <- st.sym.info.decls if f.isField
-    } yield {
-      genType(f.tpe)
-    }
-  }.toSeq
-
-  def genStruct(st: SimpleType): nir.Type = {
-    val fields = genStructFields(st)
-
-    nir.Type.StructValue(fields)
-  }
-
   def genPrimCode(st: SimpleType): Char = st.sym match {
     case CharClass    => 'C'
     case BooleanClass => 'B'
@@ -141,6 +137,37 @@ trait NirGenType { self: NirGenPhase =>
     case FloatClass   => 'F'
     case DoubleClass  => 'D'
     case _            => 'O'
+  }
+
+  def methodSig(sym: Symbol): (Seq[(Boolean, SimpleType)], SimpleType) = {
+    require(sym.isMethod || sym.isStaticMember)
+
+    val tpe      = sym.tpe
+    val owner    = sym.owner
+    val paramtys = methodSigParams(sym)
+    val selfty =
+      if (owner.isExternModule || owner.isImplClass) None
+      else Some((false, SimpleType.fromType(owner.tpe)))
+    val retty =
+      if (sym.isClassConstructor) SimpleType.fromSymbol(UnitClass)
+      else SimpleType.fromType(sym.tpe.resultType)
+
+    (selfty ++: paramtys, retty)
+  }
+
+  private def methodSigParams(sym: Symbol): Seq[(Boolean, SimpleType)] = {
+    val wereRepeated = exitingPhase(currentRun.typerPhase) {
+      for {
+        params <- sym.tpe.paramss
+        param  <- params
+      } yield {
+        param.name -> isScalaRepeatedParamType(param.tpe)
+      }
+    }.toMap
+
+    sym.tpe.params.map { p =>
+      (wereRepeated.getOrElse(p.name, false), SimpleType.fromType(p.tpe))
+    }
   }
 
   def genMethodSig(sym: Symbol): nir.Type.Function =
@@ -192,4 +219,14 @@ trait NirGenType { self: NirGenPhase =>
         }
     }
   }
+
+  def genFields(sym: Symbol): Seq[Symbol] = {
+    for (f <- sym.info.decls if f.isField) yield f
+  }.toSeq
+
+  def genStructFieldTypes(sym: Symbol): Seq[nir.Type] =
+    genFields(sym).map(f => genType(f.tpe))
+
+  def genStructType(sym: Symbol): nir.Type =
+    nir.Type.StructValue(genStructFieldTypes(sym))
 }

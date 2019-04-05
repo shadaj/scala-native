@@ -69,23 +69,9 @@ trait NirGenStat { self: NirGenPhase =>
       scoped(
         curClassSym := cd.symbol
       ) {
-        if (cd.symbol.isStruct) genStruct(cd)
-        else genNormalClass(cd)
+        genNormalClass(cd)
       }
     }
-
-    def genStruct(cd: ClassDef): Unit = {
-      val sym    = cd.symbol
-      val attrs  = genStructAttrs(sym)
-      val name   = genTypeName(sym)
-      val fields = genStructFields(sym)
-      val body   = cd.impl.body
-
-      buf += Defn.Class(attrs, name, None, Seq.empty)
-      genMethods(cd)
-    }
-
-    def genStructAttrs(sym: Symbol): Attrs = Attrs.None
 
     def genFuncPtrExternForwarder(cd: ClassDef): Defn = {
       val applys = cd.impl.body.collect {
@@ -115,18 +101,20 @@ trait NirGenStat { self: NirGenPhase =>
         val fresh = Fresh()
         val buf   = new ExprBuffer()(fresh)
 
-        val Type.Function(origtys, origretty) = applySig
-        val Type.Function(paramtys, retty)    = sig
+        val (paramsts, retst)          = methodSig(applySym)
+        val Type.Function(paramtys, _) = sig
+
+        // val Type.Function(origtys, origretty) = applySig
 
         val params = paramtys.map(ty => Val.Local(fresh(), ty))
         buf.label(fresh(), params)
-        val boxedParams = params.zip(origtys.tail).map {
-          case (param, ty) =>
-            buf.fromExtern(ty, param)
+        val boxedParams = params.zip(paramsts.tail).map {
+          case (param, (_, st)) =>
+            buf.fromExtern(st, param)
         }
         val res =
           buf.call(applySig, applyName, Val.Null +: boxedParams, Next.None)
-        val unboxedRes = buf.toExtern(retty, res)
+        val unboxedRes = buf.toExtern(retst, res)
         buf.ret(unboxedRes)
 
         buf.toSeq
@@ -169,20 +157,29 @@ trait NirGenStat { self: NirGenPhase =>
       }
 
     def genClassAttrs(cd: ClassDef): Attrs = {
+      val out = mutable.UnrolledBuffer.empty[Attr]
+
       val sym = cd.symbol
-      val annotationAttrs = sym.annotations.collect {
+
+      sym.annotations.foreach {
         case ann if ann.symbol == ExternClass =>
-          Attr.Extern
+          out += Attr.Extern
         case ann if ann.symbol == LinkClass =>
           val Apply(_, Seq(Literal(Constant(name: String)))) = ann.tree
-          Attr.Link(name)
+          out += Attr.Link(name)
         case ann if ann.symbol == StubClass =>
-          Attr.Stub
+          out += Attr.Stub
+        case _ =>
+          ()
       }
-      val abstractAttr =
-        if (sym.isAbstract) Seq(Attr.Abstract) else Seq()
+      if (sym.isAbstract) {
+        out += Attr.Abstract
+      }
+      if (sym.isNamedStruct) {
+        out += Attr.Struct(genStructFieldTypes(sym))
+      }
 
-      Attrs.fromSeq(annotationAttrs ++ abstractAttr)
+      Attrs.fromSeq(out)
     }
 
     def genClassInterfaces(sym: Symbol) =
@@ -193,16 +190,21 @@ trait NirGenStat { self: NirGenPhase =>
         genTypeName(psym)
       }
 
-    def genClassFields(sym: Symbol): Unit = {
-      val attrs = nir.Attrs(isExtern = sym.isExternModule)
+    def genClassFields(sym: Symbol): Unit =
+      if (sym.isNamedStruct) {
+        val name = genTypeName(sym).member(nir.Sig.Field("underlying"))
 
-      for (f <- sym.info.decls if f.isField) {
-        val ty   = genType(f.tpe)
-        val name = genFieldName(f)
+        buf += Defn.Var(Attrs.None, name, Type.Ptr, Val.Null)
+      } else {
+        val attrs = nir.Attrs(isExtern = sym.isExternModule)
 
-        buf += Defn.Var(attrs, name, ty, Val.Zero(ty))
+        genFields(sym).foreach { f =>
+          val ty   = genType(f.tpe)
+          val name = genFieldName(f)
+
+          buf += Defn.Var(attrs, name, ty, Val.Zero(ty))
+        }
       }
-    }
 
     def genMethods(cd: ClassDef): Unit =
       cd.impl.body.foreach {
@@ -236,9 +238,6 @@ trait NirGenStat { self: NirGenPhase =>
 
           case _ if dd.name == nme.CONSTRUCTOR && owner.isExternModule =>
             validateExternCtor(dd.rhs)
-            ()
-
-          case _ if dd.name == nme.CONSTRUCTOR && owner.isStruct =>
             ()
 
           case rhs if owner.isExternModule =>
@@ -345,8 +344,7 @@ trait NirGenStat { self: NirGenPhase =>
         if (isExtern) {
           paramSyms.zip(params).foreach {
             case (Some(sym), param) if isExtern =>
-              val ty    = genType(sym.tpe)
-              val value = buf.fromExtern(ty, param)
+              val value = buf.fromExtern(sym.tpe, param)
               curMethodEnv.enter(sym, value)
             case _ =>
               ()

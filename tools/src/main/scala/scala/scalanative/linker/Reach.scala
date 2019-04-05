@@ -406,6 +406,9 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
                 parent.map(classInfoOrObject),
                 traits.flatMap(traitInfo),
                 isModule = false))
+    if (attrs.struct.nonEmpty) {
+      reachAllocation(infos(name).asInstanceOf[Class])
+    }
     reachAttrs(attrs)
   }
 
@@ -556,9 +559,15 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
       reachVal(v)
     case Op.Sizeof(ty) =>
       reachType(ty)
-    case Op.Box(code, obj) =>
+    case Op.Box(refty, obj) =>
+      refty match {
+        case refty: Type.RefKind =>
+          classInfo(refty.className).foreach(reachAllocation)
+        case _ =>
+          ()
+      }
       reachVal(obj)
-    case Op.Unbox(code, obj) =>
+    case Op.Unbox(refty, obj) =>
       reachVal(obj)
     case Op.Var(ty) =>
       reachType(ty)

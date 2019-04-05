@@ -29,7 +29,7 @@ sealed abstract class Op {
     case Op.Sizeof(_)               => Type.Long
     case Op.Box(refty: Type.RefKind, _) =>
       Type.Ref(refty.className, exact = true, nullable = false)
-    case Op.Unbox(ty, _)      => Type.unbox(ty)
+    case Op.Unbox(ty, _)      => Type.unbox.get(ty).getOrElse(Type.Ptr)
     case Op.Var(ty)           => Type.Var(ty)
     case Op.Varload(slot)     => val Type.Var(ty) = slot.ty; ty
     case Op.Varstore(slot, _) => Type.Unit
