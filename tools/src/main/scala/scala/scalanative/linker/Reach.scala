@@ -272,7 +272,10 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
             dynimpls += impl
             reachGlobal(impl)
           }
-        case (sig: Sig.Generated, impl) if sig.id == "$extern$forwarder" =>
+        case (sig, impl)
+            if sig.isGenerated && sig.unmangled
+              .asInstanceOf[Sig.Generated]
+              .id == "$extern$forwarder" =>
           reachGlobal(impl)
         case _ =>
           ()

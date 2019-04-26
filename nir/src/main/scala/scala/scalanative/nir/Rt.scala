@@ -28,13 +28,13 @@ object Rt {
   val ReverseBytesSig = Sig.Method("reverseBytes", Seq(Int, Int)).mangled
   val NumberOfLeadingZerosSig =
     Sig.Method("numberOfLeadingZeros", Seq(Int, Int)).mangled
-  val CosSig  = Sig.Method("cos", Seq(Double, Double)).mangled
-  val SinSig  = Sig.Method("sin", Seq(Double, Double)).mangled
-  val PowSig  = Sig.Method("pow", Seq(Double, Double, Double)).mangled
-  val MaxSig  = Sig.Method("max", Seq(Double, Double, Double)).mangled
-  val SqrtSig = Sig.Method("sqrt", Seq(Double, Double)).mangled
-  val FromRawPtrSig = Sig.Method("fromRawPtr", Seq(Ptr, BoxedPtr))
-  val ToRawPtrSig   = Sig.Method("toRawPtr", Seq(BoxedPtr, Ptr))
+  val CosSig        = Sig.Method("cos", Seq(Double, Double)).mangled
+  val SinSig        = Sig.Method("sin", Seq(Double, Double)).mangled
+  val PowSig        = Sig.Method("pow", Seq(Double, Double, Double)).mangled
+  val MaxSig        = Sig.Method("max", Seq(Double, Double, Double)).mangled
+  val SqrtSig       = Sig.Method("sqrt", Seq(Double, Double)).mangled
+  val FromRawPtrSig = Sig.Method("fromRawPtr", Seq(Ptr, BoxedPtr)).mangled
+  val ToRawPtrSig   = Sig.Method("toRawPtr", Seq(BoxedPtr, Ptr)).mangled
 
   val GetRawTypeTy   = Function(Seq(Runtime, Object), Ptr)
   val GetRawTypeName = Global.Member(Runtime.name, GetRawTypeSig)
