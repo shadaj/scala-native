@@ -31,6 +31,7 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
     new Result(infos,
                entries,
                unavailable.toSeq,
+               from,
                links.toSeq,
                defns,
                dynsigs.toSeq,
@@ -216,7 +217,7 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
               case Rt.JavaHashCodeSig =>
                 update(Rt.ScalaHashCodeSig)
                 update(Rt.JavaHashCodeSig)
-              case sig @ (_: Sig.Method | _: Sig.Ctor | _: Sig.Generated) =>
+              case sig if sig.isMethod || sig.isCtor || sig.isGenerated =>
                 update(sig)
               case _ =>
                 ()
@@ -261,7 +262,7 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
       // 2. FuncPtr extern forwarder becomes reachable if
       //    class itself is reachable.
       info.responds.foreach {
-        case (sig: Sig.Method, impl) =>
+        case (sig, impl) if sig.isMethod =>
           val dynsig = sig.toProxy
           if (!dynsigs.contains(dynsig)) {
             val buf =
